@@ -1,0 +1,27 @@
+@charset "utf-8";
+.mui-input-row label{
+	width: 27%;
+	line-height: 0.6;
+	padding: 10px 0px;
+	font-size: 14px;
+}
+.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+	width: 73%;
+	line-height: 30px;
+	height: 30px;
+	font-size: 14px;
+}
+.free{
+	background: gainsboro;
+	margin: 10px 0 0 16px;
+	line-height: 1.6;
+}
+#applyed{
+	width: 90%;
+	margin-left: 5%;
+	height: 45px;
+	margin-top: 30px;
+	font-size: 16px;
+	letter-spacing: 2px;
+	border-radius: 10px;
+}

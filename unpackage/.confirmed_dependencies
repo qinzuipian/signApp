@@ -18,7 +18,13 @@
 	},
 	"page/index1/chooseteam.html": {
 		"refer": [
-			"page/index1/team_des.html"
+			"page/index1/team_des.html",
+			"page/index1/apply_for.html"
+		]
+	},
+	"page/index1/apply_for.html": {
+		"refer": [
+			"page/index1/free.html"
 		]
 	}
 }

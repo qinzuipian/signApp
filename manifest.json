@@ -150,7 +150,15 @@
 			"page/index1/chooseteam.html": {
 				"resources": [],
 				"refer": [
-					"page/index1/team_des.html"
+					"page/index1/team_des.html",
+					"page/index1/apply_for.html"
+				],
+				"priority": 0
+			},
+			"page/index1/apply_for.html": {
+				"resources": [],
+				"refer": [
+					"page/index1/free.html"
 				],
 				"priority": 0
 			}
