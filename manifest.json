@@ -125,5 +125,47 @@
 				}
 			}
 		}
+	},
+	"dependencies": {
+		"pages": {
+			"index.html": {
+				"resources": [
+					"img/首页-选中.png",
+					"page/index1.html"
+				],
+				"refer": [
+					"page/own.html",
+					"page/heathy.html",
+					"page/msg.html"
+				],
+				"priority": 0
+			},
+			"page/index1.html": {
+				"resources": [],
+				"refer": [
+					"page/index1/chooseteam.html"
+				],
+				"priority": 0
+			},
+			"page/index1/chooseteam.html": {
+				"resources": [],
+				"refer": [
+					"page/index1/team_des.html"
+				],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"img/own.png",
+				"img/msg.png",
+				"js/mui.min.js",
+				"fonts/mui.ttf",
+				"css/mui.min.css",
+				"js/mui.js",
+				"img/健康.png",
+				"css/mui.css"
+			]
+		}
 	}
 }

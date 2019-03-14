@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>选择团队</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/chooseteam.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title mui-text-center">选择团队</h1>
+		</header>
+		<div id="app"> 
+			<div id="team" class="team"> 
+				<p class="teamname">家庭医生团队一</p>
+				<div class="team_des">
+					<span class="doc_name">主治医生:</span>
+					<span class="name">XXX</span>
+					<span class="num mui-pull-right">5</span>
+					<span class="team_meb mui-pull-right">团队成员：</span>
+				</div>
+				<div class="location">
+					<span style="font-size: 16px;color: deepskyblue;padding: 4px 0 0 12px ;" class="mui-icon iconfont">&#xe656;</span>
+					<span class="address" >沙河村李家庙</span> 
+				</div>
+				<div class="toSign">
+					<button id="team_des" type="button" class="mui-btn mui-btn-primary mui-btn-outlined" style="margin: 6px 0 0 60px; border-radius: 10px;line-height: 0.99;">团队详情</button>
+					<button id="apply_for" type="button" class="mui-btn mui-btn-warning mui-btn-outlined" style="margin: 6px 0 0 80px; border-radius: 10px;line-height: 0.99;">申请签约</button>
+				</div>
+			</div>
+			<div id="team" class="team"> 
+				<p class="teamname">家庭医生团队二</p>  
+				<div class="team_des">
+					<span class="doc_name">主治医生:</span>
+					<span class="name">XXX</span>
+					<span class="num mui-pull-right">5</span>
+					<span class="team_meb mui-pull-right">团队成员：</span>
+				</div>
+				<div class="location">
+					<span style="font-size: 16px;color: deepskyblue;padding: 4px 0 0 12px ;" class="mui-icon iconfont">&#xe656;</span>
+					<span class="address" >沙河村李家庙</span>
+				</div>
+				<div class="toSign">
+					<button  type="button" class="mui-btn mui-btn-primary mui-btn-outlined" style="margin: 6px 0 0 60px; border-radius: 10px;line-height: 0.99;">团队详情</button>
+					<button  type="button" class="mui-btn mui-btn-warning mui-btn-outlined" style="margin: 6px 0 0 80px; border-radius: 10px;line-height: 0.99;">申请签约</button>
+				</div>
+			</div>
+			<div id="team" class="team"> 
+				<p class="teamname">家庭医生团队三</p>
+				<div class="team_des">
+					<span class="doc_name">主治医生:</span>
+					<span class="name">XXX</span>
+					<span class="num mui-pull-right">5</span>
+					<span class="team_meb mui-pull-right">团队成员：</span>
+				</div>
+				<div class="location">
+					<span style="font-size: 16px;color: deepskyblue;padding: 4px 0 0 12px ;" class="mui-icon iconfont">&#xe656;</span>
+					<span class="address" >沙河村李家庙</span>
+				</div>
+				<div class="toSign">
+					<button  type="button" class="mui-btn mui-btn-primary mui-btn-outlined" style="margin: 6px 0 0 60px; border-radius: 10px;line-height: 0.99;">团队详情</button>
+					<button  type="button" class="mui-btn mui-btn-warning mui-btn-outlined" style="margin: 6px 0 0 80px; border-radius: 10px;line-height: 0.99;">申请签约</button>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function () {
+			    var apply_for = document.getElementById("apply_for");//申请签约
+			    var team_des = document.getElementById("team_des");//团队详情
+			})
+			//申请签约
+			apply_for.addEventListener("tap",function(){
+				var apply = plus.webview.create("./apply_for.html");
+				plus.webview.show(apply,"slide-in-right",300);
+			},{passive:false})
+			//团队详情
+			team_des.addEventListener("tap",function(){
+				var des = plus.webview.create("./team_des.html");
+				plus.webview.show(des,"slide-in-right",300);
+			},{passive:false})
+		</script>
+	</body>
+
+</html>

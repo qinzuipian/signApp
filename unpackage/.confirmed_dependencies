@@ -1,0 +1,24 @@
+{
+	"index.html": {
+		"resources": [
+			"img/首页-选中.png",
+			"page/index1.html"
+		],
+		"refer": [
+			"page/own.html",
+			"page/heathy.html",
+			"page/msg.html",
+			"page/index1.html"
+		]
+	},
+	"page/index1.html": {
+		"refer": [
+			"page/index1/chooseteam.html"
+		]
+	},
+	"page/index1/chooseteam.html": {
+		"refer": [
+			"page/index1/team_des.html"
+		]
+	}
+}

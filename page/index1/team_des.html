@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>团队详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/team_des.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title mui-text-center">团队详情</h1>
+		</header>
+		<div id="app"style="background: gainsboro;" >
+			<div class="banner mui-text-center" style="padding-top: 20px;">
+				<div class="photo"></div>
+				<p style="margin-top: 15px;">家庭医生团队一</p>
+				<span style="margin-top: 15px;font-size: 14px;">主治医生：</span>
+				<span style="margin-top: 15px;font-size: 14px;">XXX</span>
+			</div>
+			<div id="loc" class="loc" style="background: white;">
+					<span style="font-size: 18px;color: deepskyblue;padding: 4px 0 0 12px ;" class="mui-icon iconfont">&#xe656;</span>
+					<span style="font-size: 14px;line-height: 50px;">沙河村李家庙</span>
+					<span id="phone" style="line-height: 1.8;width: 60px;height: 50px;font-size: 28px;color: cornflowerblue;" class="iconfont mui-text-center mui-pull-right">&#xe608;</span>
+			</div>
+			<div class="team_meb" style="background: white;">
+				<div class="title">
+					<span style="font-size: 18px;color: deepskyblue;padding: 4px 0 0 12px ;" class="mui-icon iconfont">&#xe602;</span>
+					<span>团队成员</span>
+				</div>
+			</div>
+		<div id="footer">
+			<button type="button" class="mui-btn mui-btn-primary" data-loading-text="添加中" id="gotosign">发起签约</button>
+		</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function () {
+//			    var phone = document.getElementById("phone");
+			})
+			mui("#loc").on("tap", "#phone", function() {
+				plus.device.dial("10086", false);
+			})
+		</script>
+	</body>
+
+</html>
