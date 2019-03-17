@@ -10,27 +10,14 @@
 	</head>
 
 	<body>
-		<div class="swiper-container">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide" style="width: 100%; height: 150px;background: red;">slider1</div>
-				<div class="swiper-slide"  style="width: 100%; height: 150px;background: green;">slider2</div>
-				<div class="swiper-slide"  style="width: 100%; height: 150px;background: blue;">slider3</div>
-				<div class="swiper-slide"  style="width: 100%; height: 150px;background: blue;">slider4</div>
-				<div class="swiper-slide"  style="width: 100%; height: 150px;background: blue;">slider5</div>
-			</div>
-		</div>
+		
 
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/swiper.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function() {
-				var mySwiper = new Swiper('.swiper-container', {
-					slidesPerView: 3,
-					spaceBetween: 10,
-					autoplay:true,
-					//spaceBetween : '10%',按container的百分比
-				})
+				
 			})
 		</script>
 	</body>

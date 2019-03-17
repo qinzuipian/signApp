@@ -21,6 +21,7 @@
 	width: 100%;
 	height: 50px;
 	margin-top: 10px;
+	background: white;
 }
 .title{
 	/*background: beige;*/
@@ -48,3 +49,38 @@
 .MyClass{
 	bottom: 1px;
 }
+.bg{
+	background: gainsboro;
+}
+.doc{
+	margin-top: 15px;
+	font-size: 14px;
+}
+.doc_team{
+	margin-top: 15px;
+	font-size: 16px;
+}
+.iconloc{
+	font-size: 18px;
+	color: deepskyblue;
+	padding: 4px 0 0 12px ;
+}
+.iconaddress{
+	font-size: 14px;
+	line-height: 50px;
+}
+.callphone{
+	line-height: 1.8;
+	width: 60px;
+	height: 50px;
+	color: cornflowerblue;
+}
+.team_people{
+	font-size: 18px;
+	color: deepskyblue;
+	padding: 4px 0 0 12px ;
+}
+.swiper-wrapper div{
+	width: 100%; height: 140px;background: red;
+}
+

@@ -25,3 +25,28 @@
 	letter-spacing: 2px;
 	border-radius: 10px;
 }
+.chooseitem{
+	color: black;
+	line-height: 30px;
+	font-size: 14px;
+	margin-right: 12px;
+}
+.agreebox{
+	width: 16px;
+	margin: 10px 6px 0 10px;
+	line-height: 1.8;
+	height: 16px;
+}
+.agreeword{
+	font-size: 12px;
+	 margin-top: 8px;
+}
+.agreement{
+	color: red;
+	font-size: 12px;
+	margin-top: 8px;
+}
+.tip{
+	margin-top: 10px;
+	font-size: 12px;
+}

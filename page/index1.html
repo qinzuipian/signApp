@@ -7,9 +7,9 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/common.css" />
-		<link rel="stylesheet" type="text/css" href="../css/swiper.css"/>
-		<link rel="stylesheet" type="text/css" href="css/index1.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/swiper.css" />
+		<link rel="stylesheet" type="text/css" href="css/index1.css" />
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
 	</head>
 
 	<body>
@@ -21,48 +21,42 @@
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
-						<img style="width: 100%;height: 170px;" src="../img/banner1.jpg" />
+						<img class="bannerimg" src="../img/banner1.jpg" />
 					</div>
 					<div class="swiper-slide">
-						<img style="width: 100%;height: 170px;" src="../img/banner2.jpg" />
+						<img class="bannerimg" src="../img/banner2.jpg" />
 					</div>
 					<div class="swiper-slide">
-						<img style="width: 100%;height: 170px;" src="../img/banner3.jpg" />
+						<img class="bannerimg" src="../img/banner3.jpg" />
 					</div>
 				</div>
 				<!-- 如果需要分页器 -->
 				<div class="swiper-pagination"></div>
 			</div>
-			<div class="sign" style="background: whitesmoke;display: flex;">
+			<div class="sign">
 				<div style="width: 90%;">
-					<p style="color: black;font-size: 18px;padding: 20px 0 0 60px;">你的家庭医生</p>
-				 	<p style="color: black;font-size: 14px;padding: 2px 0 0 50px;">为你的健康保驾护航</p>
-					<button id="sign" type="button" class="mui-btn mui-btn-primary mui-btn-outlined" style="margin: 14px 0 0 30px; border-radius: 10px;line-height: 0.99;">免费签约</button>
-					<button id="tuijian" type="button" class="mui-btn mui-btn-primary mui-btn-outlined" style="margin: 14px 0 0 0px; border-radius: 10px;line-height: 0.99;">推荐APP</button>
+					<p class="yourdoctor">你的家庭医生</p>
+					<p class="title">为你的健康保驾护航</p>
+					<button id="sign" type="button" class="mui-btn mui-btn-primary mui-btn-outlined toSign">免费签约</button>
+					<button id="tuijian" class="mui-btn mui-btn-primary mui-btn-outlined shareAPP">推荐APP</button>
 				</div>
-				<p style="width:10%; height:120px; margin-left:calc(10% - 120px);padding-top: 20px;" >
-					<img style="width: 100px; height:100px;" src="../img/dd.jpg"/>
+				<p class="imgdoc">
+					<img src="../img/dd.jpg" />
 				</p>
 			</div>
-			
-			<!--<div class="bottom">
-				<p style="width: 100%; height:200px;" >
-					<img style="width: 100%; height:200px;" src="../img/doctor.jpg"/>
-				</p>
-			</div>-->
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/swiper.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init()
 			mui.plusReady(function() {
-				var sign = document.getElementById("sign");//免费签约
-				var tuijian = document.getElementById("tuijian");//推荐APP
+				var sign = document.getElementById("sign"); //免费签约
+				var tuijian = document.getElementById("tuijian"); //推荐APP
 				//轮播图的定时器
 				sblider();
 			})
 			//轮播图
-			function sblider(){
+			function sblider() {
 				setTimeout(function() {
 					// 初始化swiper
 					var mySwiper = new Swiper('.swiper-container', {
@@ -80,11 +74,12 @@
 				}, 100)
 			}
 			//免费签约
-			sign.addEventListener("tap",function(){
+			sign.addEventListener("tap", function() {
 				var chooseteam = plus.webview.create("./index1/chooseteam.html");
-				plus.webview.show(chooseteam,"slide-in-right",300);
-			},{passive:false})
-			
+				plus.webview.show(chooseteam, "slide-in-right", 300);
+			}, {
+				passive: false
+			})
 		</script>
 	</body>
 
