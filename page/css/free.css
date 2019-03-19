@@ -1,0 +1,173 @@
+@charset "utf-8";
+.title{
+	font-size: 16px;
+	background: white;
+	width: 100%;
+	height: 45px;
+	color: black;
+	line-height: 45px;
+	padding-left:10px;
+}
+.price{
+	display: flex;
+	background: white;
+	padding-left:10px;
+	height: 40px;
+	margin-bottom: 10px;
+	
+}
+
+.price_title{
+	width: 80%;
+	line-height: 40px;
+	font-size: 14px;
+	
+}
+.price_content{
+	width: 20%;
+	color:red;
+	line-height: 40px;
+	font-size: 14px;
+	padding-right: 20px;
+}
+.offer{
+	width: 100%;
+	background: white;
+	padding-left:10px;
+	height: 40px;
+	border-bottom: 0.1px solid lightgrey;
+	
+}
+.offer_title{
+	line-height: 40px;
+	font-size: 14px;
+	margin-bottom: 0px;
+
+}
+.offer_item{
+	width: 50%;
+	height:60px;
+	background: white;
+	padding-top: 10px;
+}
+.item_shebao{
+	color: black;
+	
+	text-align: center;
+	margin-bottom: 0px;
+}
+.item_nonghe{
+	color: black;
+	text-align: center;
+	margin-bottom: 0px;
+	
+}
+.item_qita{
+	color: black;
+	text-align: center;
+	margin-bottom: 0px;
+	
+}
+.item{
+	display: flex;
+	width: 100%;
+	margin-bottom: 10px;
+}
+.colored{
+	color: red;
+	text-align: center;
+}
+.period{
+	width: 100%;
+	background: white;
+	padding-left:10px;
+	height: 40px;
+	border-bottom: 0.1px solid lightgrey;
+	
+}
+.day{
+	background: white;
+	font-size: 16px;
+	padding-left:10px;
+	color: black ; 
+	line-height: 40px;
+	margin-bottom: 10px;
+}
+.person{
+	background: white;
+	font-size: 14px;
+	padding-left:10px;
+	color: black ;
+	line-height: 40px;
+	margin-bottom: 10px;
+}
+.sever_item{
+	width: 100%;
+	background: white;
+	padding-left:10px;
+	height: 40px;
+	border-bottom: 0.1px solid lightgrey;
+	
+}
+.detail{
+	background: gainsboro;
+	width: 85%;
+	margin-left: 7%;
+	margin-top: 10px;
+	border-radius: 4px;
+	overflow: hidden;
+
+	
+}
+.detail_title{
+	color: blue;
+	padding:10px 0px 0px 10px;
+	font-size: 16px;
+	margin-bottom: 0px;
+}
+.data{
+	padding:10px 0px 0px 10px;
+	margin-bottom: 0;
+	display: flex;
+}
+.data_long{
+	margin-bottom: 0px;
+	width: 60%;
+	color: black;
+}
+.ser_times{
+	width: 40%;
+	color: black;
+	padding-right: 20px;
+	
+}
+.content_items{
+	color: black;
+	padding: 0px 0 0 10px;
+	margin-bottom: 0px;
+}
+.all{
+	width: 85%;
+	background: gainsboro;
+	margin-left: 7%;
+	height: 34px;
+	text-align: center;
+	line-height: 34px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	color: grey; 
+}
+#close{
+	width: 85%;
+	margin-left: 7%;
+	background: gainsboro;
+	height: 34px;
+	text-align: center;
+	line-height: 34px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	color: grey; 
+	font-size: 14px;
+	display: none;
+
+}
