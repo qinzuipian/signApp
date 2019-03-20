@@ -24,7 +24,7 @@
 				</a>
 				<a id="msg" class="mui-tab-item">
 					<span style="font-size: 22px;" class="mui-icon iconfont">&#xe603;</span>
-					<span class="mui-tab-label">通知</span>
+					<span class="mui-tab-label">消息</span>
 				</a>
 				<a id="heathy" class="mui-tab-item">
 					<span style="font-size: 22px;" class="mui-icon iconfont">&#xe64f;</span>
@@ -81,9 +81,10 @@
 			});
 
 			mui.plusReady(function() {
-				var index, msg, heathy, own;
+				
 			});
 			
+			var index, msg, heathy, own;
 			// 首页
 			mui("#nav").on("tap", "#index_", function() { //点击触发   
 				index = plus.webview.getWebviewById("index_");

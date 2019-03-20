@@ -4,6 +4,15 @@
 .header-relative {
 	position: relative;
 }
+.header-relative p{
+	color: white;
+}
+.header-relative span{
+	color: white;
+}
+.header-relative i{
+	color: white;
+}
 
 .header-title {
 	position: absolute;

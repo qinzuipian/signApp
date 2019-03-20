@@ -18,6 +18,25 @@ li{
 	list-style: none;
 }
 
+.header-blue{
+	background: rgb(44, 154,255);
+}
+.header-blue p{
+	color: white;
+}
+.header-blue span{
+	color: white;
+}
+.header-blue i{
+	color: white;
+}
+.header-blue h1{
+	color: white;
+}
+.header-blue a{
+	color: white;
+}
+
 /*  距离顶部45px */
 .header-top{
 	margin-top: 45px;
