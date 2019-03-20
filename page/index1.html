@@ -36,17 +36,116 @@
 				<!-- 如果需要分页器 -->
 				<div class="swiper-pagination"></div>
 			</div>
-			<div class="sign">
-				<div style="width: 90%;">
-					<p class="yourdoctor">你的家庭医生</p>
-					<p class="title">为你的健康保驾护航</p>
-					<button id="sign" type="button" class="mui-btn mui-btn-primary mui-btn-outlined toSign">免费签约</button>
-					<button id="tuijian" class="mui-btn mui-btn-primary mui-btn-outlined shareAPP">推荐APP</button>
-				</div>
-				<p class="imgdoc">
-					<img src="../img/dd.jpg" />
-				</p>
+			<div class="service flex">
+				<li class="service-item" id="appointment">
+					<img src="../img/index/icon-test.png" >
+					<p>预约挂号</p>
+				</li>
+				<li class="service-item" id="hospital">
+					<img src="../img/index/yiyuan.png" >
+					<p>互联网医院</p>
+				</li>
+				<li class="service-item" id="bodycheck">
+					<img src="../img/index/tijian.png" >
+					<p>体检服务</p>
+				</li>
+				<li class="service-item" id="insurance">
+					<img src="../img/index/baoxian.png" >
+					<p>保险服务</p>
+				</li>
 			</div>
+			
+			<div class="sign flex">
+				<div class="sign-logo">
+					<img src="../img/index/yisheng.jpg" >
+				</div>
+				<div class="sign-box">
+					<p>我的家庭医生</p>
+					<!-- 已开启免费查询服务 -->
+					<p>为家庭健康保驾护航</p>
+					<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined">免费签约</button>
+				</div>
+			</div>
+			
+			<div class="shop">
+				<div class="flex">
+					<p class="shop-title">寻健康<span>小生活大健康</span></p>
+					<p class="mui-icon mui-icon-arrowright more-shop"></p>
+				</div>
+				
+				<div class="flex">
+					<div class="left">
+						<img src="../img/index/zhongyiyangsheng.jpg" >
+					</div>
+					<div class="right">
+						<div>
+							<img src="../img/index/fuyoubaojian.jpg" >
+						</div>
+						<div>
+							<img src="../img/index/ajiao.jpg" >
+						</div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="news">
+				<div class="flex">
+					<p class="shop-title">健康新闻</p>
+					<p class="mui-icon mui-icon-arrowright more-shop"></p>
+				</div>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media flex">
+						<div class="news-pic">
+							<img src="../img/index/hashiqi.jpg" >
+						</div>
+						<div class="news-title">
+							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
+							<p>2019-10-10</p>
+						</div>
+					</li>
+					
+					<li class="mui-table-view-cell mui-media flex">
+						<div class="news-pic">
+							<img src="../img/index/hashiqi.jpg" >
+						</div>
+						<div class="news-title">
+							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
+							<p>2019-10-10</p>
+						</div>
+					</li>
+					
+					<li class="mui-table-view-cell mui-media flex">
+						<div class="news-pic">
+							<img src="../img/index/hashiqi.jpg" >
+						</div>
+						<div class="news-title">
+							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
+							<p>2019-10-10</p>
+						</div>
+					</li>
+					
+					<li class="mui-table-view-cell mui-media flex">
+						<div class="news-pic">
+							<img src="../img/index/hashiqi.jpg" >
+						</div>
+						<div class="news-title">
+							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
+							<p>2019-10-10</p>
+						</div>
+					</li>
+					
+					<li class="mui-table-view-cell mui-media flex">
+						<div class="news-pic">
+							<img src="../img/index/hashiqi.jpg" >
+						</div>
+						<div class="news-title">
+							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
+							<p>2019-10-10</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/swiper.js" type="text/javascript" charset="utf-8"></script>
@@ -57,7 +156,6 @@
 			var cityName = document.getElementById("city-name"); //城市名字 
 
 			mui.plusReady(function() {
-				// 				var tuijian = document.getElementById("tuijian"); // 推荐APP
 				// 轮播图的定时器
 				sblider();
 			})
@@ -81,13 +179,32 @@
 			}
 
 			// 免费签约
-			sign.addEventListener("tap", function() {
-				var chooseteam = plus.webview.create("./index1/chooseteam.html");
-				plus.webview.show(chooseteam, "slide-in-right", 300);
-			}, {
-				passive: false
-			})
-
+// 			sign.addEventListener("tap", function() {
+// 				var chooseteam = plus.webview.create("./index1/chooseteam.html");
+// 				plus.webview.show(chooseteam, "slide-in-right", 300);
+// 			}, {
+// 				passive: false
+// 			})
+// 	
+			// 四大功能 appointment   hospital   insurance    bodycheck
+			var appointment = document.getElementById("appointment"),
+				hospital = document.getElementById("appointment"),
+				insurance = document.getElementById("insurance"),
+				bodycheck = document.getElementById("insurance");
+			
+			appointment.addEventListener("tap", function(){
+				plus.nativeUI.toast("暂未开放此功能")
+			},{passive: false});
+			hospital.addEventListener("tap", function(){
+				plus.nativeUI.toast("暂未开放此功能")
+			},{passive: false});
+			insurance.addEventListener("tap", function(){
+				plus.nativeUI.toast("暂未开放此功能")
+			},{passive: false});
+			bodycheck.addEventListener("tap", function(){
+				plus.nativeUI.toast("暂未开放此功能")
+			},{passive: false});
+			
 			// 选择城市
 			toCity.addEventListener("tap", function() {
 				var city = plus.webview.create("./index1/selectCity.html", "city");
@@ -96,6 +213,7 @@
 				passive: false
 			})
 			
+			// 监听从选择城市页面传来的值
 			document.addEventListener("selectCity",  function(e){
 				// console.log(JSON.stringify(e.detail.name));
 				cityName.innerHTML = e.detail.name

@@ -1,68 +1,187 @@
 @charset "utf-8";
 
-.header-relative{
+/* 选择城市和轮播图 */
+.header-relative {
 	position: relative;
 }
-.header-title{
+
+.header-title {
 	position: absolute;
 	left: 0;
 	right: 0;
 	top: 0;
 	text-align: center;
-    font-size: 18px;
-    color: black;
-    line-height: 44px;
+	font-size: 18px;
+	color: black;
+	line-height: 44px;
 	width: calc(100% - 180px);
-    margin-left: 90px;
+	margin-left: 90px;
 }
-#toCity{
-	width: 90px;
-}
-.choosecity{
+
+.choosecity {
 	line-height: 35px;
 	margin-left: 5px;
 	line-height: 45px;
 	color: black;
 }
-.sign{
-	width: 100%;
-	height: 140px;
-	margin-top: 4px;
-	background: whitesmoke;
-	display: flex;
-	
-}
-.bannerimg{
+
+.bannerimg {
 	width: 100%;
 	height: 170px;
 }
-.yourdoctor{
-	color: black;
-	font-size: 18px;
-	padding: 20px 0 0 60px;
+
+.swiper-slide {
+	height: 150px;
 }
-.title{
-	color: black;
+
+.swiper-slide img {
+	width: 100%;
+	height: 150px;
+}
+
+
+/* 四大功能 */
+
+.service {
+	background: white;
+}
+
+.service-item {
+	width: 25%;
+	text-align: center;
+	padding: 10px 0;
+}
+
+.service-item img {
+	width: 35px;
+}
+
+.service-item p {
 	font-size: 14px;
-	padding: 2px 0 0 50px;
 }
-.toSign{
-	margin: 14px 0 0 30px; 
-	border-radius: 10px;
-	line-height: 0.99;
+
+/* 家庭签约 */
+.sign {
+	background: white;
+	margin-top: 5px;
+	height: 150px;
 }
-.shareAPP{
-	margin: 14px 0 0 0px; 
-	border-radius: 10px;
-	line-height: 0.99;
+
+.sign-logo {
+	width: 150px;
 }
-.imgdoc{
-	width:10%; 
-	height:120px;
-	margin-left:calc(10% - 120px);
-	padding-top: 20px;
+
+.sign-logo img {
+	width: 100px;
+	margin-top: 15px;
+	margin-left: calc(50% - 50px);
+	border-radius: 50%;
 }
-.imgdoc img{
-	width: 100px; 
-	height:100px;
+
+.sign-box {
+	width: calc(100% - 150px);
+}
+
+.sign-box p:nth-child(1) {
+	margin-top: 25px;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.sign-box p:nth-child(2) {
+	font-size: 14px;
+	color: rgb(135, 135, 135);
+	line-height: 20px;
+}
+
+.sign-box button {
+	margin-top: 10px;
+	width: 70%;
+}
+
+/* 寻健康 */
+.shop {
+	width: 100%;
+	margin-top: 5px;
+	background: white;
+	height: 300px;
+}
+
+.shop-title {
+	width: 80%;
+	font-size: 18px;
+	line-height: 50px;
+	margin-left: 5%;
+	margin-bottom: 0;
+}
+
+.shop-title span {
+	font-size: 14px;
+	margin-left: 10px;
+	color: gray;
+}
+
+.more-shop {
+	width: 20%;
+	text-align: center;
+	color: gray;
+	font-size: 18px;
+	line-height: 50px;
+	margin-bottom: 0;
+}
+
+.left {
+	width: 40%;
+}
+
+.left img {
+	width: 120px;
+	height: 200px;
+	margin-left: 20px;
+}
+
+.right {
+	width: 55%;
+	margin-left: 5%;
+}
+
+.right img {
+	width: 150px;
+	height: 90px;
+}
+
+.right div:nth-child(1) {
+	margin-bottom: 15px;
+}
+
+/* 新闻 */
+.news {
+	width: 100%;
+	background: white;
+	margin-top: 5px;
+}
+
+.news-pic {
+	width: 100px;
+}
+
+.news-pic img {
+	width: 100%;
+}
+
+.news-title {
+	width: calc(100% - 110px);
+	margin-left: 10px;
+}
+
+.news-title p:nth-child(1) {
+	height: 60px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: pre-wrap;
+}
+
+.news-title p:nth-child(2) {
+	font-size: 12px;
+	text-align: right;
 }
