@@ -1,0 +1,116 @@
+@charset "utf-8";
+
+/* banner图 */
+.banner-pic{
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background: white;
+}
+.banner-pic img{
+	width: 90%;
+	height: 100px;
+	margin-left: 5%;
+	border-radius: 5px;
+}
+
+/* 运动健康 */
+.motion{
+	width: 100%;
+	margin-top: 10px;
+	background: white;
+}
+.motion-box{
+	width: 100%;
+	height: 50px;
+	/* margin-left: calc(50% - 50px); */
+	border-bottom: 1px solid #DDDDDD;
+}
+.motion-title{
+	width: 200px;
+	height: 50px;
+	margin-left: calc(50% - 100px);
+	border-bottom: 1px solid #DDDDDD;
+	position: relative;
+}
+.motion-title p{
+	width: 100%;
+	text-align: center;
+	line-height: 50px;
+	font-size: 18px;
+}
+.short-bar{
+	width: 5px;
+	height: 15px;
+	background: #cdecff;
+	position: absolute;
+}
+.long-bar{
+	width: 5px;
+	height: 25px;
+	background: #cdecff;
+	position: absolute;
+}
+.short-bar-l{
+	top: 17px;
+    left: 40px;
+}
+.long-bar-l{
+	left: 50px;
+    top: 12px;
+}
+.short-bar-r{
+	left: 154px;
+    top: 17px;
+}
+.long-bar-r{
+	top: 12px;
+    left: 143px;
+}
+.motion-item{
+	width: 20%;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: none;
+}
+.motion-item img{
+	width: 30px;
+}
+
+/* 健康评估 */
+
+.assess{
+	width: 100%;
+	margin-top: 10px;
+	padding-bottom: 10px;
+	background: white;
+}
+.assess-box{
+	flex-wrap: wrap;
+}
+.assess-item{
+	width: 33%;
+	text-align: center;
+	padding-top: 15px;
+	border: none;
+	border-radius: 50%;
+}
+.assess-item p:nth-child(1){
+	font-size: 18px;
+	color: rgb(44, 154,255);
+	margin: 0;
+	line-height: 20px;
+}
+.assess-item p:nth-child(2){
+	font-size: 13px;
+	color: gray;
+	margin: 0;
+}
+.assess-item img{
+	width: 60px;
+}
+
+
+
+
