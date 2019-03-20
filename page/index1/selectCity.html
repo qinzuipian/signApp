@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Document</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/selectCity.css" />
+	</head>
+	<body>
+
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title title">选择城市</h1>
+		</header>
+
+		<div id="app">
+			<div class="search-box header-top">
+				<div class="mui-input-row flex">
+					<input type="search" id="searchText" placeholder="请输入城市名字">
+					<p class="search-btn" id="search">查询</p>
+				</div>
+			</div>
+			
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell flex" onclick="getLocationOrToBack()">
+					<p class="location-now">当前定位: <span id="cityNameDom"></span></p>
+					<p class="reload-location">
+						<i class="mui-icon mui-icon-reload" id="rotateBtn"></i>
+						<span class="mui-btn reload-btn">重新定位</button>
+					</p>
+				</li>
+			</ul>
+
+			<div class="hotcity-box">
+				<p class="hot-city">热门城市</p>
+				<div class="flex hot-city-box">
+					<button type="button" class="mui-btn hot-city-item" v-for="(it, index) in hotCity" v-text="it" @click="chooseIt(it)"></button>
+				</div>
+			</div>
+
+			<div id="all-city" style="display: block;">
+				<p class="hot-city">所有城市</p>
+				<div>
+					<div class="city-box">
+						<p class="city-title">A</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityA" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">B</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityB" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">C</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityC" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">D</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityD" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">E</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityE" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">F</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityF" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">G</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityG" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">H</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityH" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+					<!-- 
+					<div class="city-box">
+						<p class="city-title">I</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityI" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+					 -->
+					<div class="city-box">
+						<p class="city-title">J</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityJ" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">K</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityK" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">L</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityL" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">M</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityM" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<div class="city-box">
+						<p class="city-title">N</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityN" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+					<!-- 	<div class="city-box">
+						<p class="city-title">O</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityO" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+					 -->
+
+					<div class="city-box">
+						<p class="city-title">P</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityP" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+
+					<div class="city-box">
+						<p class="city-title">Q</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityQ" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+
+					<div class="city-box">
+						<p class="city-title">R</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityR" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+
+					<div class="city-box">
+						<p class="city-title">S</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityS" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+
+					<div class="city-box">
+						<p class="city-title">T</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityT" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+
+					<!-- <div class="city-box">
+						<p class="city-title">U</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityU" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+					
+					 -->
+					<!-- <div class="city-box">
+						<p class="city-title">V</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityV" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+					 -->
+
+					<div class="city-box">
+						<p class="city-title">W</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityW" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+
+					<div class="city-box">
+						<p class="city-title">X</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityX" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+
+					<div class="city-box">
+						<p class="city-title">Y</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityY" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+
+
+					<div class="city-box">
+						<p class="city-title">Z</p>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell city-name" v-for="(it, index) in allCityZ" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div id="search-city" style="display: none;">
+				<p class="search-city">查询结果</p>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell city-name" v-for="(it, index) in searchCity" v-text="it.citysName" @click="chooseIt(it.citysName)"></li>
+				</ul>
+			</div>
+
+		</div>
+
+
+
+		<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function() {
+				getCityList();
+				getLocation();
+			});
+
+			var app = new Vue({
+				el: "#app",
+				data: {
+					hotCity: [],
+					allCity: [],
+					searchCity: [],
+					allCityA: [],
+					allCityB: [],
+					allCityC: [],
+					allCityD: [],
+					allCityE: [],
+					allCityF: [],
+					allCityG: [],
+					allCityH: [],
+					// allCityI: [],
+					allCityJ: [],
+					allCityK: [],
+					allCityL: [],
+					allCityM: [],
+					allCityN: [],
+					// allCityO: [],
+					allCityP: [],
+					allCityQ: [],
+					allCityR: [],
+					allCityS: [],
+					allCityT: [],
+					// allCityU: [],
+					// allCityV: [],
+					allCityW: [],
+					allCityX: [],
+					allCityY: [],
+					allCityZ: [],
+				},
+				methods: {
+					chooseIt: function(it) {
+						// alert("选择了" + it);
+						toBack(it)
+					}
+				}
+			})
+
+			var searchText = document.getElementById("searchText");
+			var allCityDom = document.getElementById("all-city");
+			var searchCityDom = document.getElementById("search-city");
+			var rotateBtn = document.getElementById("rotateBtn");
+			var cityNameDom = document.getElementById("cityNameDom");
+			var current = 0; // 动画参数
+			var cityName = "" // 城市名字
+
+
+			// 获取城市列表
+			function getCityList() {
+				mui.ajax('../../data/citys.json', {
+					data: {},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						app.hotCity = res.allData.hotCity;
+						app.allCity = res.allData.city;
+						var allCity = res.allData.city;
+						for (let i = 0; i < allCity.length; i++) {
+							if (allCity[i].type == "a") {
+								app.allCityA.push(allCity[i])
+							};
+							if (allCity[i].type == "b") {
+								app.allCityB.push(allCity[i])
+							};
+							if (allCity[i].type == "c") {
+								app.allCityC.push(allCity[i])
+							};
+							if (allCity[i].type == "d") {
+								app.allCityD.push(allCity[i])
+							};
+							if (allCity[i].type == "e") {
+								app.allCityE.push(allCity[i])
+							};
+							if (allCity[i].type == "f") {
+								app.allCityF.push(allCity[i])
+							};
+							if (allCity[i].type == "g") {
+								app.allCityG.push(allCity[i])
+							};
+							if (allCity[i].type == "h") {
+								app.allCityH.push(allCity[i])
+							};
+							// 							if(allCity[i].type == "i"){
+							// 								app.allCityI.push(allCity[i])
+							// 							};
+							if (allCity[i].type == "j") {
+								app.allCityJ.push(allCity[i])
+							};
+							if (allCity[i].type == "k") {
+								app.allCityK.push(allCity[i])
+							};
+							if (allCity[i].type == "l") {
+								app.allCityL.push(allCity[i])
+							};
+							if (allCity[i].type == "m") {
+								app.allCityM.push(allCity[i])
+							};
+							if (allCity[i].type == "n") {
+								app.allCityN.push(allCity[i])
+							};
+							// 							if(allCity[i].type == "o"){
+							// 								app.allCityO.push(allCity[i])
+							// 							};
+							if (allCity[i].type == "p") {
+								app.allCityP.push(allCity[i])
+							};
+							if (allCity[i].type == "q") {
+								app.allCityQ.push(allCity[i])
+							};
+							if (allCity[i].type == "r") {
+								app.allCityR.push(allCity[i])
+							};
+							if (allCity[i].type == "s") {
+								app.allCityS.push(allCity[i])
+							};
+							if (allCity[i].type == "t") {
+								app.allCityT.push(allCity[i])
+							};
+							// 							if(allCity[i].type == "u"){
+							// 								app.allCityU.push(allCity[i])
+							// 							};
+							// 							if(allCity[i].type == "v"){
+							// 								app.allCityV.push(allCity[i])
+							// 							};
+							if (allCity[i].type == "w") {
+								app.allCityW.push(allCity[i])
+							};
+							if (allCity[i].type == "x") {
+								app.allCityX.push(allCity[i])
+							};
+							if (allCity[i].type == "y") {
+								app.allCityY.push(allCity[i])
+							};
+							if (allCity[i].type == "z") {
+								app.allCityZ.push(allCity[i])
+							};
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.alert("本地文件丢失")
+					}
+				});
+			}
+
+			// 获取定位
+			function getLocation() {
+				rotate_();
+				plus.geolocation.getCurrentPosition(function(p){
+					if(p.address.city == ""){
+						p.address.city = "定位失败"
+					}
+					cityName = p.address.city;
+					cityNameDom.innerHTML = cityName
+				}, function(e) {
+                    mui.toast("异常:" + e.message);
+					cityName = "定位失败";
+					cityNameDom.innerHTML = cityName
+                });
+			}
+
+			// 查询
+			document.getElementById("search").addEventListener("tap", function() {
+				app.searchCity = [];
+				allCityDom.style.display = "none"
+				searchCityDom.style.display = "block"
+
+				console.log(searchText.value);
+				console.log(app.allCity[1].citysName);
+				// 输入值不为空
+				if (searchText.value.length != 0) {
+					for (let i = 0; i < app.allCity.length; i++) {
+						if (app.allCity[i].citysName.indexOf(searchText.value) != -1) {
+							// console.log(app.allCity[i].citysName);
+							app.searchCity.push(app.allCity[i]);
+						}
+					};
+					console.log(JSON.stringify(app.searchCity));
+				}
+			}, {
+				passive: false
+			})
+
+			// 输入框变化触发
+			searchText.addEventListener("input", function() {
+				if (searchText.value.length == 0) {
+					allCityDom.style.display = "block"
+					searchCityDom.style.display = "none"
+				}
+			}, {
+				passive: false
+			})
+
+			//带值返回
+			function toBack(name) {
+				var index_ = plus.webview.getWebviewById("index_");
+				mui.fire(index_, 'selectCity', {
+					name: name
+				});
+				mui.back();
+			}
+
+			// 动画函数
+			function rotate_() {
+				current = (current + 1) % 360;
+				rotateBtn.style.transform = 'rotate(' + current + 'deg)';
+
+				var i = 0;
+
+				var t1 = setInterval(function() {
+					current = (current + 5) % 360;
+					rotateBtn.style.transform = 'rotate(' + current + 'deg)';
+					if (i > 120) {
+						clearInterval(t1);
+					} else {
+						i++
+					}
+				}, 1)
+			}
+			
+			// 选择该城市或者重新定位
+			function getLocationOrToBack(){
+				console.log(cityName);
+				if(cityName == "定位失败"){
+					getLocation();
+				}else{
+					toBack(cityName)
+				}
+			}
+		
+		</script>
+	</body>
+</html>

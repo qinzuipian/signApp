@@ -1,7 +1,58 @@
 @charset "utf-8";
-#app{
+
+
+
+/* 
+	#669999 为边框色  选择城市中的搜索框内的查询按钮的背景色
+	
+ */
+
+
+
+/* 通用 */
+p{
+	color: black;
+	font-size: 15px;
+}
+
+/*  距离顶部45px */
+.header-top{
 	margin-top: 45px;
 }
 .fontcolor{
 	color: blue;
+}
+.flex{
+	display: flex;
+}
+
+
+
+/* 搜索框封装
+ <div class="search-box">
+ 	<div class="mui-input-row flex">
+ 		<input type="search" placeholder="请输入城市名字">
+ 		<p>查询</p>
+ 	</div>
+ </div>
+ */
+.search-box input{
+	background: white;
+    border-radius: 5px 0 0 5px;
+    width: 70%;
+    margin-left: 5%;
+    padding-top: 10px;
+    height: 35px;
+	border: 1px solid #669999;
+}
+
+.search-box p{
+	width: 20%;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+	height: 35px;
+    line-height: 38px;
+    background: #669999;
+	border-radius: 0 5px 5px 0;
 }

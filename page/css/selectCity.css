@@ -1,0 +1,72 @@
+@charset "utf-8";
+
+#app{
+	padding-top: 10px;
+}
+.hot-city{
+	font-size: 14px;
+	color: black;
+	text-align: left;
+	width: 90%;
+	margin-left: 5%;
+	margin-top: 10px;
+	padding-bottom: 8px;
+	padding-left: 5px;
+	border-bottom: 1px solid #669999;
+}
+.hot-city-box{
+	flex-wrap: wrap;
+}
+.hot-city-item{
+	width: 20%;
+	margin-left: 5%;
+	margin-right: 8%;
+	margin-bottom: 10px;
+}
+.city-title{
+	width: 80%;
+	margin-left: 5%;
+	margin-bottom: 5px;
+	text-align: left;
+	height: 20px;
+	/* line-height: 30px; */
+}
+.city-name{
+	font-size: 14px;
+}
+.search-city{
+	font-size: 16px;
+	color: black;
+	text-align: left;
+	width: 90%;
+	margin-left: 5%;
+	padding-bottom: 8px;
+	padding-left: 5px;
+	border-bottom: 1px solid #669999;
+	margin-bottom: 0;
+}
+
+.location-now{
+	font-size: 14px;
+	color: black;
+	text-align: left;
+	width: 50%;
+	padding-left: 5px;
+}
+
+.reload-location{
+	font-size: 14px;
+	text-align: right;
+	width: 45%;
+	margin-right: 5%;
+}
+.reload-location i{
+	font-size: 20px;
+}
+.reload-btn{
+	border: none;
+	background: none;
+	padding: 0;
+	line-height: 20px;
+}
+

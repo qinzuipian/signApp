@@ -13,21 +13,24 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-icon  mui-pull-left iconfont" style="font-size: 22px;color: grey; margin-left: -4px;">&#xe606;</a>
-			<h1 class="mui-title mui-text-left fontcolor">西安市</h1>
+		<header class="mui-bar mui-bar-nav header-relative">
+			<div id="toCity">
+				<span class="mui-text-left choosecity" id="city-name">西安市</span>
+				<i class="mui-icon mui-icon-arrowdown" style="font-size: 18px;margin-left: -13px;"></i>
+			</div>
+			<p class="header-title">首页</p>
 		</header>
 		<div id="app">
 			<div class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
-						<img class="bannerimg" src="../img/banner1.jpg" />
+						<img class="bannerimg" src="../img/lunbotu1.jpg" />
 					</div>
 					<div class="swiper-slide">
-						<img class="bannerimg" src="../img/banner2.jpg" />
+						<img class="bannerimg" src="../img/lunbotu2.jpg" />
 					</div>
 					<div class="swiper-slide">
-						<img class="bannerimg" src="../img/banner3.jpg" />
+						<img class="bannerimg" src="../img/lunbotu3.jpg" />
 					</div>
 				</div>
 				<!-- 如果需要分页器 -->
@@ -49,13 +52,16 @@
 		<script src="../js/swiper.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init()
+			var sign = document.getElementById("sign"); // 免费签约
+			var toCity = document.getElementById("toCity"); // 选择城市
+			var cityName = document.getElementById("city-name"); //城市名字 
+
 			mui.plusReady(function() {
-				var sign = document.getElementById("sign"); //免费签约
-				var tuijian = document.getElementById("tuijian"); //推荐APP
-				//轮播图的定时器
+				// 				var tuijian = document.getElementById("tuijian"); // 推荐APP
+				// 轮播图的定时器
 				sblider();
 			})
-			//轮播图
+			// 轮播图
 			function sblider() {
 				setTimeout(function() {
 					// 初始化swiper
@@ -73,13 +79,28 @@
 					})
 				}, 100)
 			}
-			//免费签约
+
+			// 免费签约
 			sign.addEventListener("tap", function() {
 				var chooseteam = plus.webview.create("./index1/chooseteam.html");
 				plus.webview.show(chooseteam, "slide-in-right", 300);
 			}, {
 				passive: false
 			})
+
+			// 选择城市
+			toCity.addEventListener("tap", function() {
+				var city = plus.webview.create("./index1/selectCity.html", "city");
+				plus.webview.show(city,"slide-in-right", 200);
+			}, {
+				passive: false
+			})
+			
+			document.addEventListener("selectCity",  function(e){
+				// console.log(JSON.stringify(e.detail.name));
+				cityName.innerHTML = e.detail.name
+			},{passive: false})
+			
 		</script>
 	</body>
 

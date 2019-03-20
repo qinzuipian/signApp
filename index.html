@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -14,21 +13,21 @@
 		<div id="app">
 			<!-- 底部nav-->
 			<nav class="mui-bar mui-bar-tab" id="nav">
-				<a id="index" class="mui-tab-item mui-active">
+				<a id="index_" class="mui-tab-item mui-active">
 					<span style="font-size: 24px;" class="mui-icon iconfont">&#xe605;</span>
 					<span class="mui-tab-label">首页</span>
 				</a>
 				<a id="msg" class="mui-tab-item">
 					<span style="font-size: 22px;" class="mui-icon iconfont">&#xe603;</span>
-					<span class="mui-tab-label">消息</span>
+					<span class="mui-tab-label">通知</span>
 				</a>
 				<a id="heathy" class="mui-tab-item">
 					<span style="font-size: 22px;" class="mui-icon iconfont">&#xe64f;</span>
-					<span class="mui-tab-label">健康</span>
+					<span class="mui-tab-label">服务</span>
 				</a>
 				<a id="own" class="mui-tab-item">
 					<span style="font-size: 26px;" class="mui-icon iconfont">&#xe602;</span>
-					<span class="mui-tab-label">我的</span>
+					<span class="mui-tab-label">账户</span>
 				</a>
 			</nav>
 		</div>
@@ -41,7 +40,7 @@
 				subpages: [ //首先加载首页  
 					{
 						url: 'page/index1.html',
-						id: 'index',
+						id: 'index_',
 						styles: {
 							top: '0px',
 							bottom: '60px'
@@ -78,63 +77,65 @@
 
 			mui.plusReady(function() {
 				var index, msg, heathy, own;
-				//首页
-				mui("#nav").on("tap", "#index", function() { //点击触发   
-					index = plus.webview.getWebviewById("index");
-					index.show();
-					if(msg) {
-						msg.hide()
-					}
-					if(heathy) {
-						heathy.hide()
-					} 
-					if(own) {
-						own.hide()
-					}
-				})
-				//消息
-				mui("#nav").on("tap", "#msg", function() { //点击触发  
-					msg = plus.webview.getWebviewById("msg");
-					msg.show();
-					if(index) {
-						index.hide()
-					}
-					if(heathy) {
-						heathy.hide()
-					}
-					if(own) {
-						own.hide()
-					}
-				})
-				//健康
-				mui("#nav").on("tap", "#heathy", function() { //点击触发  
-					heathy = plus.webview.getWebviewById("heathy");
-					heathy.show();
-					if(index) {
-						index.hide()
-					}
-					if(msg) {
-						msg.hide()
-					}
-					if(own) {
-						own.hide()
-					}
-				})
-				//我的
-				mui("#nav").on("tap", "#own", function() { //点击触发  
-					own = plus.webview.getWebviewById("own");
-					own.show();
-					if(index) {
-						index.hide()
-					}
-					if(msg) {
-						msg.hide()
-					}
-					if(heathy) {
-						heathy.hide()
-					}
-				})
+			});
+			
+			// 首页
+			mui("#nav").on("tap", "#index_", function() { //点击触发   
+				index = plus.webview.getWebviewById("index_");
+				index.show();
+				if(msg) {
+					msg.hide()
+				}
+				if(heathy) {
+					heathy.hide()
+				} 
+				if(own) {
+					own.hide()
+				}
 			})
+			//消息
+			mui("#nav").on("tap", "#msg", function() { //点击触发  
+				msg = plus.webview.getWebviewById("msg");
+				msg.show();
+				if(index) {
+					index.hide()
+				}
+				if(heathy) {
+					heathy.hide()
+				}
+				if(own) {
+					own.hide()
+				}
+			})
+			//健康
+			mui("#nav").on("tap", "#heathy", function() { //点击触发  
+				heathy = plus.webview.getWebviewById("heathy");
+				heathy.show();
+				if(index) {
+					index.hide()
+				}
+				if(msg) {
+					msg.hide()
+				}
+				if(own) {
+					own.hide()
+				}
+			})
+			//我的
+			mui("#nav").on("tap", "#own", function() { //点击触发  
+				own = plus.webview.getWebviewById("own");
+				own.show();
+				if(index) {
+					index.hide()
+				}
+				if(msg) {
+					msg.hide()
+				}
+				if(heathy) {
+					heathy.hide()
+				}
+			})
+			
 		</script>
 	</body>
 

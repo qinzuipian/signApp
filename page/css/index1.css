@@ -1,4 +1,29 @@
 @charset "utf-8";
+
+.header-relative{
+	position: relative;
+}
+.header-title{
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	text-align: center;
+    font-size: 18px;
+    color: black;
+    line-height: 44px;
+	width: calc(100% - 180px);
+    margin-left: 90px;
+}
+#toCity{
+	width: 90px;
+}
+.choosecity{
+	line-height: 35px;
+	margin-left: 5px;
+	line-height: 45px;
+	color: black;
+}
 .sign{
 	width: 100%;
 	height: 140px;

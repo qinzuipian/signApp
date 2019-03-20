@@ -1,0 +1,2681 @@
+{
+	"allData": {
+		"hotCity": ["北京市", "上海市", "广州市", "深圳市", "西安市", "武汉市"],
+		"city": [{
+				"citysName": "石家庄市",
+				"type": "s"
+			},
+			{
+				"citysName": "邯郸市",
+				"type": "h"
+			},
+			{
+				"citysName": "唐山市",
+				"type": "t"
+			},
+			{
+				"citysName": "保定市",
+				"type": "b"
+			},
+			{
+				"citysName": "秦皇岛市",
+				"type": "q"
+			},
+			{
+				"citysName": "邢台市",
+				"type": "x"
+			},
+			{
+				"citysName": "张家口市",
+				"type": "z"
+			},
+			{
+				"citysName": "承德市",
+				"type": "c"
+			},
+			{
+				"citysName": "沧州市",
+				"type": "c"
+			},
+			{
+				"citysName": "廊坊市",
+				"type": "l"
+			},
+			{
+				"citysName": "衡水市",
+				"type": "h"
+			},
+			{
+				"citysName": "辛集市",
+				"type": "x"
+			},
+			{
+				"citysName": "晋州市",
+				"type": "j"
+			},
+			{
+				"citysName": "新乐市",
+				"type": "x"
+			},
+			{
+				"citysName": "遵化市",
+				"type": "z"
+			},
+			{
+				"citysName": "迁安市",
+				"type": "q"
+			},
+			{
+				"citysName": "霸州市",
+				"type": "b"
+			},
+			{
+				"citysName": "三河市",
+				"type": "s"
+			},
+			{
+				"citysName": "定州市",
+				"type": "d"
+			},
+			{
+				"citysName": "涿州市",
+				"type": "z"
+			},
+			{
+				"citysName": "安国市",
+				"type": "a"
+			},
+			{
+				"citysName": "高碑店市",
+				"type": "g"
+			},
+			{
+				"citysName": "泊头市",
+				"type": "b"
+			},
+			{
+				"citysName": "任丘市",
+				"type": "r"
+			},
+			{
+				"citysName": "黄骅市",
+				"type": "h"
+			},
+			{
+				"citysName": "河间市",
+				"type": "h"
+			},
+			{
+				"citysName": "冀州市",
+				"type": "j"
+			},
+			{
+				"citysName": "深州市",
+				"type": "s"
+			},
+			{
+				"citysName": "南宫市",
+				"type": "n"
+			},
+			{
+				"citysName": "沙河市",
+				"type": "s"
+			},
+			{
+				"citysName": "武安市",
+				"type": "w"
+			},
+			{
+				"citysName": "太原市",
+				"type": "t"
+			},
+			{
+				"citysName": "大同市",
+				"type": "d"
+			},
+			{
+				"citysName": "朔州市",
+				"type": "s"
+			},
+			{
+				"citysName": "阳泉市",
+				"type": "y"
+			},
+			{
+				"citysName": "长治市",
+				"type": "c"
+			},
+			{
+				"citysName": "晋城市",
+				"type": "s"
+			},
+			{
+				"citysName": "忻州市",
+				"type": "x"
+			},
+			{
+				"citysName": "吕梁市",
+				"type": "l"
+			},
+			{
+				"citysName": "晋中市",
+				"type": "s"
+			},
+			{
+				"citysName": "临汾市",
+				"type": "l"
+			},
+			{
+				"citysName": "运城市",
+				"type": "y"
+			},
+			{
+				"citysName": "古交市",
+				"type": "g"
+			},
+			{
+				"citysName": "潞城市",
+				"type": "l"
+			},
+			{
+				"citysName": "高平市",
+				"type": "g"
+			},
+			{
+				"citysName": "原平市",
+				"type": "y"
+			},
+			{
+				"citysName": "孝义市",
+				"type": "x"
+			},
+			{
+				"citysName": "汾阳市",
+				"type": "f"
+			},
+			{
+				"citysName": "介休市",
+				"type": "j"
+			},
+			{
+				"citysName": "侯马市",
+				"type": "h"
+			},
+			{
+				"citysName": "霍州市",
+				"type": "h"
+			},
+			{
+				"citysName": "永济市",
+				"type": "y"
+			},
+			{
+				"citysName": "河津市",
+				"type": "h"
+			},
+			{
+				"citysName": "呼和浩特市",
+				"type": "h"
+			},
+			{
+				"citysName": "包头市",
+				"type": "b"
+			},
+			{
+				"citysName": "乌海市",
+				"type": "w"
+			},
+			{
+				"citysName": "赤峰市",
+				"type": "c"
+			},
+			{
+				"citysName": "呼伦贝尔市",
+				"type": "h"
+			},
+			{
+				"citysName": "通辽市",
+				"type": "t"
+			},
+			{
+				"citysName": "乌兰察布市",
+				"type": "w"
+			},
+			{
+				"citysName": "鄂尔多斯市",
+				"type": "e"
+			},
+			{
+				"citysName": "巴彦淖尔市",
+				"type": "b"
+			},
+			{
+				"citysName": "满洲里市",
+				"type": "m"
+			},
+			{
+				"citysName": "扎兰屯市",
+				"type": "z"
+			},
+			{
+				"citysName": "牙克石市",
+				"type": "y"
+			},
+			{
+				"citysName": "根河市",
+				"type": "g"
+			},
+			{
+				"citysName": "额尔古纳市",
+				"type": "e"
+			},
+			{
+				"citysName": "乌兰浩特市",
+				"type": "w"
+			},
+			{
+				"citysName": "阿尔山市",
+				"type": "a"
+			},
+			{
+				"citysName": "霍林郭勒市",
+				"type": "h"
+			},
+			{
+				"citysName": "锡林浩特市",
+				"type": "x"
+			},
+			{
+				"citysName": "二连浩特市",
+				"type": "e"
+			},
+			{
+				"citysName": "丰镇市",
+				"type": "f"
+			},
+			{
+				"citysName": "沈阳市",
+				"type": "s"
+			},
+			{
+				"citysName": "大连市",
+				"type": "d"
+			},
+			{
+				"citysName": "朝阳市",
+				"type": "c"
+			},
+			{
+				"citysName": "阜新市",
+				"type": "f"
+			},
+			{
+				"citysName": "铁岭市",
+				"type": "t"
+			},
+			{
+				"citysName": "抚顺市",
+				"type": "f"
+			},
+			{
+				"citysName": "本溪市",
+				"type": "b"
+			},
+			{
+				"citysName": "辽阳市",
+				"type": "l"
+			},
+			{
+				"citysName": "鞍山市",
+				"type": "a"
+			},
+			{
+				"citysName": "丹东市",
+				"type": "d"
+			},
+			{
+				"citysName": "营口市",
+				"type": "y"
+			},
+			{
+				"citysName": "盘锦市",
+				"type": "p"
+			},
+			{
+				"citysName": "锦州市",
+				"type": "j"
+			},
+			{
+				"citysName": "葫芦岛市",
+				"type": "h"
+			},
+			{
+				"citysName": "新民市",
+				"type": "x"
+			},
+			{
+				"citysName": "瓦房店市",
+				"type": "w"
+			},
+			{
+				"citysName": "庄河市",
+				"type": "z"
+			},
+			{
+				"citysName": "北票市",
+				"type": "b"
+			},
+			{
+				"citysName": "凌源市",
+				"type": "l"
+			},
+			{
+				"citysName": "调兵山市",
+				"type": "d"
+			},
+			{
+				"citysName": "开原市",
+				"type": "k"
+			},
+			{
+				"citysName": "灯塔市",
+				"type": "d"
+			},
+			{
+				"citysName": "海城市",
+				"type": "h"
+			},
+			{
+				"citysName": "凤城市",
+				"type": "f"
+			},
+			{
+				"citysName": "东港市",
+				"type": "d"
+			},
+			{
+				"citysName": "大石桥市",
+				"type": "d"
+			},
+			{
+				"citysName": "盖州市",
+				"type": "g"
+			},
+			{
+				"citysName": "凌海市",
+				"type": "l"
+			},
+			{
+				"citysName": "北镇市",
+				"type": "b"
+			},
+			{
+				"citysName": "兴城市",
+				"type": "x"
+			},
+			{
+				"citysName": "长春市",
+				"type": "c"
+			},
+			{
+				"citysName": "吉林市",
+				"type": "j"
+			},
+			{
+				"citysName": "白城市",
+				"type": "b"
+			},
+			{
+				"citysName": "松原市",
+				"type": "s"
+			},
+			{
+				"citysName": "四平市",
+				"type": "s"
+			},
+			{
+				"citysName": "辽源市",
+				"type": "l"
+			},
+			{
+				"citysName": "通化市",
+				"type": "t"
+			},
+			{
+				"citysName": "白山市",
+				"type": "b"
+			},
+			{
+				"citysName": "德惠市",
+				"type": "d"
+			},
+			{
+				"citysName": "榆树市",
+				"type": "y"
+			},
+			{
+				"citysName": "磐石市",
+				"type": "p"
+			},
+			{
+				"citysName": "蛟河市",
+				"type": "j"
+			},
+			{
+				"citysName": "桦甸市",
+				"type": "h"
+			},
+			{
+				"citysName": "舒兰市",
+				"type": "s"
+			},
+			{
+				"citysName": "洮南市",
+				"type": "t"
+			},
+			{
+				"citysName": "大安市",
+				"type": "d"
+			},
+			{
+				"citysName": "双辽市",
+				"type": "s"
+			},
+			{
+				"citysName": "公主岭市",
+				"type": "g"
+			},
+			{
+				"citysName": "梅河口市",
+				"type": "m"
+			},
+			{
+				"citysName": "集安市",
+				"type": "j"
+			},
+			{
+				"citysName": "临江市",
+				"type": "l"
+			},
+			{
+				"citysName": "延吉市",
+				"type": "y"
+			},
+			{
+				"citysName": "图们市",
+				"type": "t"
+			},
+			{
+				"citysName": "敦化市",
+				"type": "d"
+			},
+			{
+				"citysName": "珲春市",
+				"type": "h"
+			},
+			{
+				"citysName": "龙井市",
+				"type": "l"
+			},
+			{
+				"citysName": "和龙市",
+				"type": "h"
+			},
+			{
+				"citysName": "扶余市",
+				"type": "f"
+			},
+			{
+				"citysName": "哈尔滨市",
+				"type": "h"
+			},
+			{
+				"citysName": "齐齐哈尔市",
+				"type": "q"
+			},
+			{
+				"citysName": "黑河市",
+				"type": "h"
+			},
+			{
+				"citysName": "大庆市",
+				"type": "d"
+			},
+			{
+				"citysName": "伊春市",
+				"type": "y"
+			},
+			{
+				"citysName": "鹤岗市",
+				"type": "h"
+			},
+			{
+				"citysName": "佳木斯市",
+				"type": "j"
+			},
+			{
+				"citysName": "双鸭山市",
+				"type": "s"
+			},
+			{
+				"citysName": "七台河市",
+				"type": "1"
+			},
+			{
+				"citysName": "鸡西市",
+				"type": "j"
+			},
+			{
+				"citysName": "牡丹江市",
+				"type": "m"
+			},
+			{
+				"citysName": "绥化市",
+				"type": "s"
+			},
+			{
+				"citysName": "尚志市",
+				"type": "s"
+			},
+			{
+				"citysName": "五常市",
+				"type": "w"
+			},
+			{
+				"citysName": "讷河市",
+				"type": "n"
+			},
+			{
+				"citysName": "北安市",
+				"type": "b"
+			},
+			{
+				"citysName": "五大连池市",
+				"type": "w"
+			},
+			{
+				"citysName": "铁力市",
+				"type": "t"
+			},
+			{
+				"citysName": "同江市",
+				"type": "t"
+			},
+			{
+				"citysName": "富锦市",
+				"type": "f"
+			},
+			{
+				"citysName": "虎林市",
+				"type": "h"
+			},
+			{
+				"citysName": "密山市",
+				"type": "m"
+			},
+			{
+				"citysName": "绥芬河市",
+				"type": "s"
+			},
+			{
+				"citysName": "海林市",
+				"type": "h"
+			},
+			{
+				"citysName": "宁安市",
+				"type": "n"
+			},
+			{
+				"citysName": "安达市",
+				"type": "a"
+			},
+			{
+				"citysName": "肇东市",
+				"type": "z"
+			},
+			{
+				"citysName": "海伦市",
+				"type": "h"
+			},
+			{
+				"citysName": "穆棱市",
+				"type": "m"
+			},
+			{
+				"citysName": "东宁市",
+				"type": "d"
+			},
+			{
+				"citysName": "抚远市",
+				"type": "f"
+			},
+			{
+				"citysName": "南京市",
+				"type": "n"
+			},
+			{
+				"citysName": "徐州市",
+				"type": "x"
+			},
+			{
+				"citysName": "连云港市",
+				"type": "l"
+			},
+			{
+				"citysName": "宿迁市",
+				"type": "s"
+			},
+			{
+				"citysName": "淮安市",
+				"type": "h"
+			},
+			{
+				"citysName": "盐城市",
+				"type": "y"
+
+			},
+			{
+				"citysName": "扬州市",
+				"type": "y"
+			},
+			{
+				"citysName": "泰州市",
+				"type": "t"
+			},
+			{
+				"citysName": "南通市",
+				"type": "n"
+			},
+			{
+				"citysName": "镇江市",
+				"type": "z"
+			},
+			{
+				"citysName": "常州市",
+				"type": "c"
+			},
+			{
+				"citysName": "无锡市",
+				"type": "w"
+			},
+			{
+				"citysName": "苏州市",
+				"type": "s"
+			},
+			{
+				"citysName": "常熟市",
+				"type": "c"
+			},
+			{
+				"citysName": "张家港市",
+				"type": "z"
+			},
+			{
+				"citysName": "太仓市",
+				"type": "t"
+			},
+			{
+				"citysName": "昆山市",
+				"type": "k"
+
+			},
+			{
+				"citysName": "江阴市",
+				"type": "j"
+			},
+			{
+				"citysName": "宜兴市",
+				"type": "y"
+			},
+			{
+				"citysName": "溧阳市",
+				"type": "l"
+			},
+			{
+				"citysName": "扬中市",
+				"type": "y"
+			},
+			{
+				"citysName": "句容市",
+				"type": "j"
+			},
+			{
+				"citysName": "丹阳市",
+				"type": "d"
+			},
+			{
+				"citysName": "如皋市",
+				"type": "r"
+			},
+			{
+				"citysName": "海门市",
+				"type": "h"
+			},
+			{
+				"citysName": "启东市",
+				"type": "q"
+			},
+			{
+				"citysName": "高邮市",
+				"type": "g"
+			},
+			{
+				"citysName": "仪征市",
+				"type": "y"
+			},
+			{
+				"citysName": "兴化市",
+				"type": "x"
+			},
+			{
+				"citysName": "泰兴市",
+				"type": "t"
+			},
+			{
+				"citysName": "靖江市",
+				"type": "j"
+			},
+			{
+				"citysName": "东台市",
+				"type": "d"
+			},
+			{
+				"citysName": "邳州市",
+				"type": "p"
+			},
+			{
+				"citysName": "新沂市",
+				"type": "x"
+			},
+			{
+				"citysName": "杭州市",
+				"type": "h"
+			},
+			{
+				"citysName": "宁波市",
+				"type": "n"
+			},
+			{
+				"citysName": "湖州市",
+				"type": "h"
+			},
+			{
+				"citysName": "嘉兴市",
+				"type": "j"
+			},
+			{
+				"citysName": "舟山市",
+				"type": "z"
+			},
+			{
+				"citysName": "绍兴市",
+				"type": "s"
+			},
+			{
+				"citysName": "衢州市",
+				"type": "q"
+			},
+			{
+				"citysName": "金华市",
+				"type": "j"
+			},
+			{
+				"citysName": "台州市",
+				"type": "t"
+			},
+			{
+				"citysName": "温州市",
+				"type": "w"
+			},
+			{
+				"citysName": "丽水市",
+				"type": "l"
+			},
+			{
+				"citysName": "临安市",
+				"type": "l"
+			},
+			{
+				"citysName": "建德市",
+				"type": "j"
+			},
+			{
+				"citysName": "慈溪市",
+				"type": "c"
+			},
+			{
+				"citysName": "余姚市",
+				"type": "y"
+			},
+			{
+				"citysName": "平湖市",
+				"type": "p"
+			},
+			{
+				"citysName": "海宁市",
+				"type": "h"
+			},
+			{
+				"citysName": "桐乡市",
+				"type": "t"
+			},
+			{
+				"citysName": "诸暨市",
+				"type": "z"
+			},
+			{
+				"citysName": "嵊州市",
+				"type": "s"
+			},
+			{
+				"citysName": "江山市",
+				"type": "j"
+			},
+			{
+				"citysName": "兰溪市",
+				"type": "l"
+			},
+			{
+				"citysName": "永康市",
+				"type": "y"
+			},
+			{
+				"citysName": "义乌市",
+				"type": "y"
+			},
+			{
+				"citysName": "东阳市",
+				"type": "d"
+			},
+			{
+				"citysName": "临海市",
+				"type": "l"
+			},
+			{
+				"citysName": "温岭市",
+				"type": "w"
+			},
+			{
+				"citysName": "瑞安市",
+				"type": "r"
+			},
+			{
+				"citysName": "乐清市",
+				"type": "l"
+			},
+			{
+				"citysName": "龙泉市",
+				"type": "l"
+			},
+			{
+				"citysName": "合肥市",
+				"type": "h"
+			},
+			{
+				"citysName": "芜湖市",
+				"type": "w"
+			},
+			{
+				"citysName": "蚌埠市",
+				"type": "b"
+			},
+			{
+				"citysName": "淮南市",
+				"type": "h"
+			},
+			{
+				"citysName": "马鞍山市",
+				"type": "m"
+			},
+			{
+				"citysName": "淮北市",
+				"type": "h"
+			},
+			{
+				"citysName": "铜陵市",
+				"type": "t"
+			},
+			{
+				"citysName": "安庆市",
+				"type": "a"
+			},
+			{
+				"citysName": "黄山市",
+				"type": "h"
+			},
+			{
+				"citysName": "滁州市",
+				"type": "c"
+			},
+			{
+				"citysName": "阜阳市",
+				"type": "f"
+			},
+			{
+				"citysName": "宿州市",
+				"type": "s"
+
+			},
+			{
+				"citysName": "六安市",
+				"type": "l"
+			},
+			{
+				"citysName": "亳州市",
+				"type": "b"
+			},
+			{
+				"citysName": "池州市",
+				"type": "c"
+			},
+			{
+				"citysName": "宣城市",
+				"type": "x"
+			},
+			{
+				"citysName": "巢湖市",
+				"type": "c"
+			},
+			{
+				"citysName": "桐城市",
+				"type": "t"
+			},
+			{
+				"citysName": "天长市",
+				"type": "t"
+			},
+			{
+				"citysName": "明光市",
+				"type": "m"
+			},
+			{
+				"citysName": "界首市",
+				"type": "j"
+			},
+			{
+				"citysName": "宁国市",
+				"type": "n"
+			},
+			{
+				"citysName": "厦门市",
+				"type": "x"
+			},
+			{
+				"citysName": "福州市",
+				"type": "f"
+			},
+			{
+				"citysName": "南平市",
+				"type": "n"
+			},
+			{
+				"citysName": "三明市",
+				"type": "s"
+			},
+			{
+				"citysName": "莆田市",
+				"type": "p"
+			},
+			{
+				"citysName": "泉州市",
+				"type": "q"
+			},
+			{
+				"citysName": "漳州市",
+				"type": "z"
+			},
+			{
+				"citysName": "龙岩市",
+				"type": "l"
+			},
+			{
+				"citysName": "宁德市",
+				"type": "n"
+			},
+			{
+				"citysName": "福清市",
+				"type": "f"
+			},
+			{
+				"citysName": "长乐市",
+				"type": "c"
+			},
+			{
+				"citysName": "邵武市",
+				"type": "s"
+			},
+			{
+				"citysName": "武夷山市",
+				"type": "w"
+			},
+			{
+				"citysName": "建瓯市",
+				"type": "j"
+			},
+			{
+				"citysName": "永安市",
+				"type": "y"
+			},
+			{
+				"citysName": "石狮市",
+				"type": "s"
+			},
+			{
+				"citysName": "晋江市",
+				"type": "j"
+			},
+			{
+				"citysName": "南安市",
+				"type": "n"
+			},
+			{
+				"citysName": "龙海市",
+				"type": "l"
+			},
+			{
+				"citysName": "漳平市",
+				"type": "z"
+			},
+			{
+				"citysName": "福安市",
+				"type": "f"
+			},
+			{
+				"citysName": "福鼎市",
+				"type": "f"
+			},
+			{
+				"citysName": "南昌市",
+				"type": "n"
+			},
+			{
+				"citysName": "九江市",
+				"type": "j"
+			},
+			{
+				"citysName": "景德镇市",
+				"type": "j"
+			},
+			{
+				"citysName": "鹰潭市",
+				"type": "y"
+			},
+			{
+				"citysName": "新余市",
+				"type": "x"
+			},
+			{
+				"citysName": "萍乡市",
+				"type": "p"
+			},
+			{
+				"citysName": "赣州市",
+				"type": "g"
+			},
+			{
+				"citysName": "上饶市",
+				"type": "s"
+			},
+			{
+				"citysName": "抚州市",
+				"type": "f"
+			},
+			{
+				"citysName": "宜春市",
+				"type": "y"
+			},
+			{
+				"citysName": "吉安市",
+				"type": "j"
+			},
+			{
+				"citysName": "瑞昌市",
+				"type": "r"
+			},
+			{
+				"citysName": "共青城市",
+				"type": "g"
+			},
+			{
+				"citysName": "乐平市",
+				"type": "l"
+			},
+			{
+				"citysName": "瑞金市",
+				"type": "r"
+			},
+			{
+				"citysName": "德兴市",
+				"type": "d"
+			},
+			{
+				"citysName": "丰城市",
+				"type": "f"
+			},
+			{
+				"citysName": "樟树市",
+				"type": "z"
+			},
+			{
+				"citysName": "高安市",
+				"type": "g"
+			},
+			{
+				"citysName": "井冈山市",
+				"type": "j"
+			},
+			{
+				"citysName": "贵溪市",
+				"type": "g"
+			},
+			{
+				"citysName": "济南市",
+				"type": "j"
+			},
+			{
+				"citysName": "青岛市",
+				"type": "q"
+			},
+			{
+				"citysName": "聊城市",
+				"type": "l"
+			},
+			{
+				"citysName": "德州市",
+				"type": "d"
+			},
+			{
+				"citysName": "东营市",
+				"type": "d"
+			},
+			{
+				"citysName": "淄博市",
+				"type": "z"
+			},
+			{
+				"citysName": "潍坊市",
+				"type": "w"
+			},
+			{
+				"citysName": "烟台市",
+				"type": "y"
+			},
+			{
+				"citysName": "威海市",
+				"type": "w"
+			},
+			{
+				"citysName": "日照市",
+				"type": "r"
+			},
+			{
+				"citysName": "临沂市",
+				"type": "l"
+			},
+			{
+				"citysName": "枣庄市",
+				"type": "z"
+			},
+			{
+				"citysName": "济宁市",
+				"type": "j"
+			},
+			{
+				"citysName": "泰安市",
+				"type": "t"
+			},
+			{
+				"citysName": "莱芜市",
+				"type": "l"
+			},
+			{
+				"citysName": "滨州市",
+				"type": "b"
+			},
+			{
+				"citysName": "菏泽市",
+				"type": "h"
+			},
+			{
+				"citysName": "胶州市",
+				"type": "j"
+			},
+			{
+				"citysName": "即墨市",
+				"type": "j"
+			},
+			{
+				"citysName": "平度市",
+				"type": "p"
+			},
+			{
+				"citysName": "莱西市",
+				"type": "l"
+			},
+			{
+				"citysName": "临清市",
+				"type": "l"
+			},
+			{
+				"citysName": "乐陵市",
+				"type": "l"
+			},
+			{
+				"citysName": "禹城市",
+				"type": "y"
+			},
+			{
+				"citysName": "安丘市",
+				"type": "a"
+			},
+			{
+				"citysName": "昌邑市",
+				"type": "c"
+			},
+			{
+				"citysName": "高密市",
+				"type": "g"
+			},
+			{
+				"citysName": "青州市",
+				"type": "q"
+			},
+			{
+				"citysName": "诸城市",
+				"type": "z"
+			},
+			{
+				"citysName": "寿光市",
+				"type": "s"
+			},
+			{
+				"citysName": "栖霞市",
+				"type": "x"
+			},
+			{
+				"citysName": "海阳市",
+				"type": "h"
+			},
+			{
+				"citysName": "龙口市",
+				"type": "l"
+			},
+			{
+				"citysName": "莱阳市",
+				"type": "l"
+			},
+			{
+				"citysName": "莱州市",
+				"type": "l"
+			},
+			{
+				"citysName": "蓬莱市",
+				"type": "p"
+			},
+			{
+				"citysName": "招远市",
+				"type": "z"
+			},
+			{
+				"citysName": "荣成市",
+				"type": "r"
+			},
+			{
+				"citysName": "乳山市",
+				"type": "r"
+			},
+			{
+				"citysName": "滕州市",
+				"type": "t"
+			},
+			{
+				"citysName": "曲阜市",
+				"type": "q"
+			},
+			{
+				"citysName": "邹城市",
+				"type": "z"
+			},
+			{
+				"citysName": "新泰市",
+				"type": "x"
+			},
+			{
+				"citysName": "肥城市",
+				"type": "f"
+			},
+			{
+				"citysName": "郑州市",
+				"type": "z"
+			},
+			{
+				"citysName": "开封市",
+				"type": "k"
+			},
+			{
+				"citysName": "洛阳市",
+				"type": "l"
+			},
+			{
+				"citysName": "平顶山市",
+				"type": "p"
+			},
+			{
+				"citysName": "安阳市",
+				"type": "a"
+			},
+			{
+				"citysName": "鹤壁市",
+				"type": "h"
+			},
+			{
+				"citysName": "新乡市",
+				"type": "x"
+			},
+			{
+				"citysName": "焦作市",
+				"type": "j"
+			},
+			{
+				"citysName": "濮阳市",
+				"type": "p"
+			},
+			{
+				"citysName": "许昌市",
+				"type": "x"
+			},
+			{
+				"citysName": "漯河市",
+				"type": "l"
+			},
+			{
+				"citysName": "三门峡市",
+				"type": "s"
+			},
+			{
+				"citysName": "南阳市",
+				"type": "n"
+			},
+			{
+				"citysName": "商丘市",
+				"type": "s"
+			},
+			{
+				"citysName": "周口市",
+				"type": "z"
+			},
+			{
+				"citysName": "驻马店市",
+				"type": "z"
+			},
+			{
+				"citysName": "信阳市",
+				"type": "x"
+			},
+			{
+				"citysName": "荥阳市",
+				"type": "x"
+			},
+			{
+				"citysName": "新郑市",
+				"type": "x"
+			},
+			{
+				"citysName": "登封市",
+				"type": "d"
+			},
+			{
+				"citysName": "新密市",
+				"type": "x"
+			},
+			{
+				"citysName": "偃师市",
+				"type": "y"
+			},
+			{
+				"citysName": "孟州市",
+				"type": "m"
+			},
+			{
+				"citysName": "沁阳市",
+				"type": "q"
+			},
+			{
+				"citysName": "卫辉市",
+				"type": "w"
+			},
+			{
+				"citysName": "辉县市",
+				"type": "h"
+			},
+			{
+				"citysName": "林州市",
+				"type": "l"
+			},
+			{
+				"citysName": "禹州市",
+				"type": "y"
+			},
+			{
+				"citysName": "长葛市",
+				"type": "c"
+			},
+			{
+				"citysName": "舞钢市",
+				"type": "w"
+			},
+			{
+				"citysName": "义马市",
+				"type": "y"
+			},
+			{
+				"citysName": "灵宝市",
+				"type": "l"
+			},
+			{
+				"citysName": "项城市",
+				"type": "x"
+			},
+			{
+				"citysName": "巩义市",
+				"type": "g"
+			},
+			{
+				"citysName": "邓州市",
+				"type": "d"
+			},
+			{
+				"citysName": "永城市",
+				"type": "y"
+			},
+			{
+				"citysName": "汝州市",
+				"type": "r"
+			},
+			{
+				"citysName": "济源市",
+				"type": "j"
+			},
+			{
+				"citysName": "武汉市",
+				"type": "w"
+			},
+			{
+				"citysName": "十堰市",
+				"type": "s"
+			},
+			{
+				"citysName": "襄阳市",
+				"type": "x"
+			},
+			{
+				"citysName": "荆门市",
+				"type": "j"
+			},
+			{
+				"citysName": "孝感市",
+				"type": "x"
+			},
+			{
+				"citysName": "黄冈市",
+				"type": "h"
+			},
+			{
+				"citysName": "鄂州市",
+				"type": "e"
+			},
+			{
+				"citysName": "黄石市",
+				"type": "h"
+			},
+			{
+				"citysName": "咸宁市",
+				"type": "x"
+			},
+			{
+				"citysName": "荆州市",
+				"type": "j"
+			},
+			{
+				"citysName": "宜昌市",
+				"type": "y"
+			},
+			{
+				"citysName": "随州市",
+				"type": "s"
+			},
+			{
+				"citysName": "丹江口市",
+				"type": "d"
+			},
+			{
+				"citysName": "老河口市",
+				"type": "l"
+			},
+			{
+				"citysName": "枣阳市",
+				"type": "z"
+			},
+			{
+				"citysName": "宜城市",
+				"type": "y"
+			},
+			{
+				"citysName": "钟祥市",
+				"type": "z"
+			},
+			{
+				"citysName": "汉川市",
+				"type": "h"
+			},
+			{
+				"citysName": "应城市",
+				"type": "y"
+			},
+			{
+				"citysName": "安陆市",
+				"type": "a"
+			},
+			{
+				"citysName": "广水市",
+				"type": "g"
+			},
+			{
+				"citysName": "麻城市",
+				"type": "m"
+			},
+			{
+				"citysName": "武穴市",
+				"type": "w"
+			},
+			{
+				"citysName": "大冶市",
+				"type": "d"
+			},
+			{
+				"citysName": "赤壁市",
+				"type": "c"
+			},
+			{
+				"citysName": "石首市",
+				"type": "s"
+			},
+			{
+				"citysName": "洪湖市",
+				"type": "h"
+			},
+			{
+				"citysName": "松滋市",
+				"type": "s"
+			},
+			{
+				"citysName": "宜都市",
+				"type": "y"
+			},
+			{
+				"citysName": "枝江市",
+				"type": "z"
+			},
+			{
+				"citysName": "当阳市",
+				"type": "d"
+			},
+			{
+				"citysName": "恩施市",
+				"type": "e"
+			},
+			{
+				"citysName": "利川市",
+				"type": "l"
+			},
+			{
+				"citysName": "仙桃市",
+				"type": "x"
+			},
+			{
+				"citysName": "天门市",
+				"type": "t"
+			},
+			{
+				"citysName": "潜江市",
+				"type": "q"
+			},
+			{
+				"citysName": "长沙市",
+				"type": "c"
+			},
+			{
+				"citysName": "衡阳市",
+				"type": "h"
+			},
+			{
+				"citysName": "张家界市",
+				"type": "z"
+			},
+			{
+				"citysName": "常德市",
+				"type": "c"
+			},
+			{
+				"citysName": "益阳市",
+				"type": "y"
+			},
+			{
+				"citysName": "岳阳市",
+				"type": "y"
+			},
+			{
+				"citysName": "株洲市",
+				"type": "z"
+			},
+			{
+				"citysName": "湘潭市",
+				"type": "x"
+			},
+			{
+				"citysName": "郴州市",
+				"type": "c"
+			},
+			{
+				"citysName": "永州市",
+				"type": "y"
+			},
+			{
+				"citysName": "邵阳市",
+				"type": "s"
+			},
+			{
+				"citysName": "怀化市",
+				"type": "h"
+			},
+			{
+				"citysName": "娄底市",
+				"type": "l"
+			},
+			{
+				"citysName": "耒阳市",
+				"type": "l"
+			},
+			{
+				"citysName": "常宁市",
+				"type": "c"
+			},
+			{
+				"citysName": "浏阳市",
+				"type": "l"
+			},
+			{
+				"citysName": "津市市",
+				"type": "j"
+			},
+			{
+				"citysName": "沅江市",
+				"type": "y"
+			},
+			{
+				"citysName": "汨罗市",
+				"type": "m"
+			},
+			{
+				"citysName": "临湘市",
+				"type": "l"
+			},
+			{
+				"citysName": "醴陵市",
+				"type": "l"
+			},
+			{
+				"citysName": "湘乡市",
+				"type": "x"
+			},
+			{
+				"citysName": "韶山市",
+				"type": "s"
+			},
+			{
+				"citysName": "资兴市",
+				"type": "z"
+			},
+			{
+				"citysName": "武冈市",
+				"type": "w"
+			},
+			{
+				"citysName": "洪江市",
+				"type": "h"
+			},
+			{
+				"citysName": "冷水江市",
+				"type": "l"
+			},
+			{
+				"citysName": "涟源市",
+				"type": "l"
+			},
+			{
+				"citysName": "吉首市",
+				"type": "j"
+			},
+			{
+				"citysName": "广州市",
+				"type": "g"
+			},
+			{
+				"citysName": "深圳市",
+				"type": "s"
+			},
+			{
+				"citysName": "清远市",
+				"type": "q"
+			},
+			{
+				"citysName": "韶关市",
+				"type": "s"
+			},
+			{
+				"citysName": "河源市",
+				"type": "h"
+			},
+			{
+				"citysName": "梅州市",
+				"type": "m"
+			},
+			{
+				"citysName": "潮州市",
+				"type": "c"
+			},
+			{
+				"citysName": "汕头市",
+				"type": "s"
+			},
+			{
+				"citysName": "揭阳市",
+				"type": "j"
+			},
+			{
+				"citysName": "汕尾市",
+				"type": "s"
+			},
+			{
+				"citysName": "惠州市",
+				"type": "h"
+			},
+			{
+				"citysName": "东莞市",
+				"type": "d"
+			},
+			{
+				"citysName": "珠海市",
+				"type": "z"
+			},
+			{
+				"citysName": "中山市",
+				"type": "z"
+			},
+			{
+				"citysName": "江门市",
+				"type": "j"
+			},
+			{
+				"citysName": "佛山市",
+				"type": "f"
+			},
+			{
+				"citysName": "肇庆市",
+				"type": "z"
+			},
+			{
+				"citysName": "云浮市",
+				"type": "y"
+			},
+			{
+				"citysName": "阳江市",
+				"type": "y"
+			},
+			{
+				"citysName": "茂名市",
+				"type": "m"
+			},
+			{
+				"citysName": "湛江市",
+				"type": "z"
+			},
+			{
+				"citysName": "英德市",
+				"type": "y"
+			},
+			{
+				"citysName": "连州市",
+				"type": "l"
+			},
+			{
+				"citysName": "乐昌市",
+				"type": "l"
+			},
+			{
+				"citysName": "南雄市",
+				"type": "n"
+			},
+			{
+				"citysName": "兴宁市",
+				"type": "x"
+			},
+			{
+				"citysName": "普宁市",
+				"type": "p"
+			},
+			{
+				"citysName": "陆丰市",
+				"type": "l"
+			},
+			{
+				"citysName": "恩平市",
+				"type": "e"
+			},
+			{
+				"citysName": "台山市",
+				"type": "t"
+			},
+			{
+				"citysName": "开平市",
+				"type": "k"
+			},
+			{
+				"citysName": "鹤山市",
+				"type": "h"
+			},
+			{
+				"citysName": "四会市",
+				"type": "s"
+			},
+			{
+				"citysName": "罗定市",
+				"type": "l"
+			},
+			{
+				"citysName": "阳春市",
+				"type": "y"
+			},
+			{
+				"citysName": "化州市",
+				"type": "h"
+			},
+			{
+				"citysName": "信宜市",
+				"type": "x"
+			},
+			{
+				"citysName": "高州市",
+				"type": "g"
+			},
+			{
+				"citysName": "吴川市",
+				"type": "w"
+			},
+			{
+				"citysName": "廉江市",
+				"type": "l"
+			},
+			{
+				"citysName": "雷州市",
+				"type": "l"
+			},
+			{
+				"citysName": "南宁市",
+				"type": "n"
+			},
+			{
+				"citysName": "桂林市",
+				"type": "g"
+			},
+			{
+				"citysName": "柳州市",
+				"type": "l"
+			},
+			{
+				"citysName": "梧州市",
+				"type": "w"
+			},
+			{
+				"citysName": "贵港市",
+				"type": "x"
+			},
+			{
+				"citysName": "玉林市",
+				"type": "y"
+			},
+			{
+				"citysName": "钦州市",
+				"type": "q"
+			},
+			{
+				"citysName": "北海市",
+				"type": "b"
+			},
+			{
+				"citysName": "防城港市",
+				"type": "f"
+			},
+			{
+				"citysName": "崇左市",
+				"type": "c"
+			},
+			{
+				"citysName": "百色市",
+				"type": "b"
+			},
+			{
+				"citysName": "河池市",
+				"type": "c"
+			},
+			{
+				"citysName": "来宾市",
+				"type": "l"
+			},
+			{
+				"citysName": "贺州市",
+				"type": "h"
+			},
+			{
+				"citysName": "岑溪市",
+				"type": "c"
+			},
+			{
+				"citysName": "桂平市",
+				"type": "g"
+			},
+			{
+				"citysName": "北流市",
+				"type": "b"
+			},
+			{
+				"citysName": "东兴市",
+				"type": "d"
+			},
+			{
+				"citysName": "凭祥市",
+				"type": "p"
+			},
+			{
+				"citysName": "宜州市",
+				"type": "y"
+			},
+			{
+				"citysName": "合山市",
+				"type": "h"
+			},
+			{
+				"citysName": "靖西市",
+				"type": "j"
+			},
+			{
+				"citysName": "海口市",
+				"type": "h"
+			},
+			{
+				"citysName": "三亚市",
+				"type": "s"
+			},
+			{
+				"citysName": "三沙市",
+				"type": "s"
+			},
+			{
+				"citysName": "儋州市",
+				"type": "d"
+			},
+			{
+				"citysName": "文昌市",
+				"type": "w"
+			},
+			{
+				"citysName": "琼海市",
+				"type": "q"
+			},
+			{
+				"citysName": "万宁市",
+				"type": "w"
+			},
+			{
+				"citysName": "东方市",
+				"type": "d"
+			},
+			{
+				"citysName": "五指山市",
+				"type": "w"
+			},
+			{
+				"citysName": "成都市",
+				"type": "c"
+			},
+			{
+				"citysName": "广元市",
+				"type": "g"
+			},
+			{
+				"citysName": "绵阳市",
+				"type": "m"
+			},
+			{
+				"citysName": "德阳市",
+				"type": "d"
+			},
+			{
+				"citysName": "南充市",
+				"type": "n"
+			},
+			{
+				"citysName": "广安市",
+				"type": "g"
+			},
+			{
+				"citysName": "遂宁市",
+				"type": "s"
+			},
+			{
+				"citysName": "内江市",
+				"type": "n"
+			},
+			{
+				"citysName": "乐山市",
+				"type": "l"
+			},
+			{
+				"citysName": "自贡市",
+				"type": "z"
+			},
+			{
+				"citysName": "泸州市",
+				"type": "l"
+			},
+			{
+				"citysName": "宜宾市",
+				"type": "y"
+			},
+			{
+				"citysName": "攀枝花市",
+				"type": "p"
+			},
+			{
+				"citysName": "巴中市",
+				"type": "b"
+			},
+			{
+				"citysName": "达州市",
+				"type": "d"
+			},
+			{
+				"citysName": "资阳市",
+				"type": "z"
+			},
+			{
+				"citysName": "眉山市",
+				"type": "m"
+			},
+			{
+				"citysName": "雅安市",
+				"type": "y"
+			},
+			{
+				"citysName": "崇州市",
+				"type": "c"
+			},
+			{
+				"citysName": "邛崃市",
+				"type": "q"
+			},
+			{
+				"citysName": "都江堰市",
+				"type": "d"
+			},
+			{
+				"citysName": "彭州市",
+				"type": "p"
+			},
+			{
+				"citysName": "江油市",
+				"type": "j"
+			},
+			{
+				"citysName": "什邡市",
+				"type": "s"
+			},
+			{
+				"citysName": "广汉市",
+				"type": "g"
+			},
+			{
+				"citysName": "绵竹市",
+				"type": "m"
+			},
+			{
+				"citysName": "阆中市",
+				"type": "l"
+			},
+			{
+				"citysName": "华蓥市",
+				"type": "h"
+			},
+			{
+				"citysName": "峨眉山市",
+				"type": "e"
+			},
+			{
+				"citysName": "万源市",
+				"type": "w"
+			},
+			{
+				"citysName": "简阳市",
+				"type": "j"
+			},
+			{
+				"citysName": "西昌市",
+				"type": "x"
+			},
+			{
+				"citysName": "康定市",
+				"type": "k"
+			},
+			{
+				"citysName": "马尔康市",
+				"type": "m"
+			},
+			{
+				"citysName": "贵阳市",
+				"type": "g"
+			},
+			{
+				"citysName": "六盘水市",
+				"type": "l"
+			},
+			{
+				"citysName": "遵义市",
+				"type": "z"
+			},
+			{
+				"citysName": "安顺市",
+				"type": "a"
+			},
+			{
+				"citysName": "毕节市",
+				"type": "b"
+			},
+			{
+				"citysName": "铜仁市",
+				"type": "t"
+			},
+			{
+				"citysName": "清镇市",
+				"type": "q"
+			},
+			{
+				"citysName": "赤水市",
+				"type": "c"
+			},
+			{
+				"citysName": "仁怀市",
+				"type": "r"
+			},
+			{
+				"citysName": "凯里市",
+				"type": "k"
+			},
+			{
+				"citysName": "都匀市",
+				"type": "d"
+			},
+			{
+				"citysName": "兴义市",
+				"type": "x"
+			},
+			{
+				"citysName": "福泉市",
+				"type": "f"
+			},
+			{
+				"citysName": "昆明市",
+				"type": "k"
+			},
+			{
+				"citysName": "曲靖市",
+				"type": "q"
+			},
+			{
+				"citysName": "玉溪市",
+				"type": "y"
+			},
+			{
+				"citysName": "丽江市",
+				"type": "l"
+			},
+			{
+				"citysName": "昭通市",
+				"type": "z"
+			},
+			{
+				"citysName": "普洱市",
+				"type": "p"
+			},
+			{
+				"citysName": "临沧市",
+				"type": "l"
+			},
+			{
+				"citysName": "保山市",
+				"type": "b"
+			},
+			{
+				"citysName": "安宁市",
+				"type": "a"
+			},
+			{
+				"citysName": "宣威市",
+				"type": "x"
+			},
+			{
+				"citysName": "芒市",
+				"type": "m"
+			},
+			{
+				"citysName": "瑞丽市",
+				"type": "r"
+			},
+			{
+				"citysName": "大理市",
+				"type": "d"
+			},
+			{
+				"citysName": "楚雄市",
+				"type": "c"
+			},
+			{
+				"citysName": "个旧市",
+				"type": "g"
+			},
+			{
+				"citysName": "开远市",
+				"type": "k"
+			},
+			{
+				"citysName": "蒙自市",
+				"type": "m"
+			},
+			{
+				"citysName": "弥勒市",
+				"type": "m"
+			},
+			{
+				"citysName": "景洪市",
+				"type": "j"
+			},
+			{
+				"citysName": "文山市",
+				"type": "w"
+			},
+			{
+				"citysName": "香格里拉市",
+				"type": "x"
+			},
+			{
+				"citysName": "腾冲市",
+				"type": "t"
+			},
+			{
+				"citysName": "西安市",
+				"type": "x"
+			},
+			{
+				"citysName": "延安市",
+				"type": "y"
+			},
+			{
+				"citysName": "铜川市",
+				"type": "t"
+			},
+			{
+				"citysName": "渭南市",
+				"type": "w"
+			},
+			{
+				"citysName": "咸阳市",
+				"type": "x"
+			},
+			{
+				"citysName": "宝鸡市",
+				"type": "b"
+			},
+			{
+				"citysName": "汉中市",
+				"type": "h"
+			},
+			{
+				"citysName": "榆林市",
+				"type": "y"
+			},
+			{
+				"citysName": "商洛市",
+				"type": "s"
+			},
+			{
+				"citysName": "安康市",
+				"type": "a"
+			},
+			{
+				"citysName": "韩城",
+				"type": "h"
+			},
+			{
+				"citysName": "华阴",
+				"type": "h"
+			},
+			{
+				"citysName": "兴平",
+				"type": "x"
+			},
+			{
+				"citysName": "兰州市",
+				"type": "l"
+			},
+			{
+				"citysName": "嘉峪关市",
+				"type": "j"
+			},
+			{
+				"citysName": "金昌市",
+				"type": "j"
+			},
+			{
+				"citysName": "白银市",
+				"type": "b"
+			},
+			{
+				"citysName": "天水市",
+				"type": "t"
+			},
+			{
+				"citysName": "酒泉市",
+				"type": "j"
+			},
+			{
+				"citysName": "张掖市",
+				"type": "z"
+			},
+			{
+				"citysName": "武威市",
+				"type": "w"
+			},
+			{
+				"citysName": "庆阳市",
+				"type": "q"
+			},
+			{
+				"citysName": "平凉市",
+				"type": "p"
+			},
+			{
+				"citysName": "定西市",
+				"type": "d"
+			},
+			{
+				"citysName": "陇南市",
+				"type": "l"
+			},
+			{
+				"citysName": "玉门市",
+				"type": "y"
+			},
+			{
+				"citysName": "敦煌市",
+				"type": "d"
+			},
+			{
+				"citysName": "临夏市",
+				"type": "l"
+			},
+			{
+				"citysName": "合作市",
+				"type": "h"
+			},
+			{
+				"citysName": "西宁市",
+				"type": "x"
+			},
+			{
+				"citysName": "海东市",
+				"type": "h"
+			},
+			{
+				"citysName": "格尔木市",
+				"type": "g"
+			},
+			{
+				"citysName": "德令哈市",
+				"type": "d"
+			},
+			{
+				"citysName": "玉树市",
+				"type": "y"
+			},
+			{
+				"citysName": "拉萨市",
+				"type": "l"
+			},
+			{
+				"citysName": "日喀则市",
+				"type": "r"
+			},
+			{
+				"citysName": "昌都市",
+				"type": "c"
+			},
+			{
+				"citysName": "林芝市",
+				"type": "l"
+			},
+			{
+				"citysName": "山南市",
+				"type": "s"
+			},
+			{
+				"citysName": "银川市",
+				"type": "y"
+			},
+			{
+				"citysName": "石嘴山市",
+				"type": "s"
+			},
+			{
+				"citysName": "吴忠市",
+				"type": "w"
+			},
+			{
+				"citysName": "中卫市",
+				"type": "z"
+			},
+			{
+				"citysName": "固原市",
+				"type": "g"
+			},
+			{
+				"citysName": "灵武市",
+				"type": "l"
+			},
+			{
+				"citysName": "青铜峡市",
+				"type": "q"
+			},
+			{
+				"citysName": "台北市",
+				"type": "t"
+			},
+			{
+				"citysName": "新北市",
+				"type": "x"
+			},
+			{
+				"citysName": "桃园市",
+				"type": "t"
+			},
+			{
+				"citysName": "台中市",
+				"type": "t"
+			},
+			{
+				"citysName": "台南市",
+				"type": "t"
+			},
+			{
+				"citysName": "高雄市",
+				"type": "g"
+			},
+			{
+				"citysName": "基隆市",
+				"type": "j"
+			},
+			{
+				"citysName": "新竹市",
+				"type": "x"
+			},
+			{
+				"citysName": "嘉义市",
+				"type": "j"
+			},
+			{
+				"citysName": "北京市",
+				"type": "b"
+			},
+			{
+				"citysName": "天津市",
+				"type": "t"
+			},
+			{
+				"citysName": "上海市",
+				"type": "s"
+			},
+			{
+				"citysName": "重庆市",
+				"type": "c"
+			},
+			{
+				"citysName": "香港特别行政区",
+				"type": "x"
+			},
+			{
+				"citysName": "澳门特别行政区",
+				"type": "a"
+			},
+			{
+				"citysName": "乌鲁木齐市",
+				"type": "w"
+			},
+			{
+				"citysName": "克拉玛依市",
+				"type": "k"
+			},
+			{
+				"citysName": "吐鲁番市",
+				"type": "t"
+			},
+			{
+				"citysName": "哈密市",
+				"type": "h"
+			},
+			{
+				"citysName": "喀什市",
+				"type": "k"
+			},
+			{
+				"citysName": "阿克苏市",
+				"type": "a"
+			},
+			{
+				"citysName": "和田市",
+				"type": "h"
+			},
+			{
+				"citysName": "阿图什市",
+				"type": "a"
+			},
+			{
+				"citysName": "阿拉山口市",
+				"type": "a"
+			},
+			{
+				"citysName": "博乐市",
+				"type": "b"
+			},
+			{
+				"citysName": "昌吉市",
+				"type": "c"
+			},
+			{
+				"citysName": "阜康市",
+				"type": "f"
+			},
+			{
+				"citysName": "库尔勒市",
+				"type": "k"
+			},
+			{
+				"citysName": "伊宁市",
+				"type": "y"
+			},
+			{
+				"citysName": "奎屯市",
+				"type": "k"
+			},
+			{
+				"citysName": "塔城市",
+				"type": "t"
+			},
+			{
+				"citysName": "乌苏市",
+				"type": "w"
+			},
+			{
+				"citysName": "阿勒泰市",
+				"type": "a"
+			},
+			{
+				"citysName": "霍尔果斯市",
+				"type": "h"
+			},
+			{
+				"citysName": "石河子市",
+				"type": "s"
+			},
+			{
+				"citysName": "阿拉尔市",
+				"type": "a"
+			},
+			{
+				"citysName": "图木舒克市",
+				"type": "t"
+			},
+			{
+				"citysName": "五家渠市",
+				"type": "w"
+			},
+			{
+				"citysName": "北屯市",
+				"type": "b"
+			},
+			{
+				"citysName": "铁门关市",
+				"type": "t"
+			},
+			{
+				"citysName": "双河市",
+				"type": "s"
+			},
+			{
+				"citysName": "可克达拉市",
+				"type": "k"
+			},
+			{
+				"citysName": "昆玉市",
+				"type": "k"
+			}
+		]
+	}
+}
