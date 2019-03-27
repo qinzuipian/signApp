@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+.register-form{
+	margin-top: 150px;
+}
+.phone-box{
+	width: 80%;
+	margin-left: 10%;
+	height: 70px;
+}
+.phone-box p{
+	width: 40%;
+	text-align: center;
+	font-size: 15px;
+	line-height: 50px;
+	height: 49px;
+	border-radius: 10px 0 0 10px;
+	background: rgb(44, 154,255);
+	color: white;
+}
+.phone-box input{
+	width: 80%;
+	height: 50px;
+	border-radius: 0 10px 10px 0;
+	border: none;
+	padding-left: 15px;
+}
+
+.verification-box{
+	width: 80%;
+	margin-left: 10%;
+	height: 70px;
+}
+
+.verification-box p{
+	width: 40%;
+	text-align: center;
+	font-size: 15px;
+	line-height: 50px;
+	height: 49px;
+	border-radius: 0 10px 10px 0;
+	background: rgb(44, 154,255);
+	color: white;
+}
+
+.verification-box input{
+	width: 60%;
+	height: 50px;
+	border-radius: 10px 0 0 10px;
+	border: none;
+}
+
+.register button{
+	width: 90%;
+	margin-left: 5%;
+	height: 50px;
+	border-radius: 10px;
+	margin-top: 200px;
+}

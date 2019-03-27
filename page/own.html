@@ -14,7 +14,7 @@
 	<body>
 		<div id="app" style="margin-top: 0;">
 			<div class="header-owner">
-				<p class="iconfont mui-text-right set">&#xe64d;</p>
+				<p class="iconfont mui-text-right set" id="system">&#xe64d;</p>
 				<div class="title">
 					<p class="photo">
 						<img class="photo-pic" src="../img/owner/hashiqi.jpg">
@@ -85,7 +85,19 @@
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			mui.plusReady(function () {
+			    
+			});
+			
+			var system = document.getElementById("system");
+			
+			system.addEventListener("tap", function(){
+				plus.webview.create("login/login.html","login");
+				plus.webview.show("login", "slide-in-right",300)
+			},{passive: false})
+			
+			
 		</script>
 	</body>
 

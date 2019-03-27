@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/login.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">登录</h1>
+		</header>
+
+		<div class="login-form">
+			<div class="account-box flex">
+				<p>手机号码</p>
+				<input type="number" name="account" id="account" value="" placeholder="请输入手机号码" />
+			</div>
+			<div class="password-box flex">
+				<p>密码</p>
+				<input type="password" name="password" id="password" value="" placeholder="请输入密码" />
+			</div>
+		</div>
+
+		<div class="other flex">
+			<p id="forget">忘记密码</p>
+			<p id="register">免费注册</p>
+		</div>
+
+		<div class="otherLoginWay flex">
+			<i class="mui-icon mui-icon-weixin wechat-login" id="wechatLogin"></i>
+		</div>
+
+		<div class="loginto">
+			<button type="button" class="mui-btn mui-btn-primary mui-disabled" data-loading-text="提交中" onclick="login()" id="loginto">登录</button>
+		</div>
+
+
+
+
+
+
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			
+			var aweixin;
+			mui.plusReady(function() {
+				// 查询当前可供第三方登录的服务列表
+				plus.oauth.getServices(function(services) {
+					// console.log(JSON.stringify(services));
+					for(let i = 0; i < services.length; i++){
+						if(services[i].id == "weixin"){
+							aweixin = services[i];
+						}
+					}
+				}, function(e) {
+					// alert("获取分享服务列表失败：" + e.message + " - " + e.code);
+				});
+			});
+
+			var account = document.getElementById("account"), // 账户
+				password = document.getElementById("password"), // 密码
+				loginto = document.getElementById("loginto"), // 登录
+				register = document.getElementById("register"), // 注册
+				wechatLogin = document.getElementById("wechatLogin"), // 微信登录
+				forget = document.getElementById("forget"); // 忘记密码
+
+			// 登录按钮的 禁止 状态
+			account.addEventListener("input", function() {
+				if (account.value != "" && password.value != "") {
+					loginto.classList.remove("mui-disabled")
+				} else {
+					loginto.classList.add("mui-disabled")
+				}
+			}, {
+				passive: false
+			});
+			password.addEventListener("input", function() {
+				if (account.value != "" && password.value != "") {
+					loginto.classList.remove("mui-disabled")
+				} else {
+					loginto.classList.add("mui-disabled")
+				}
+			}, {
+				passive: false
+			})
+
+			// 登录
+			function login() {
+				if (hasClass(loginto, "mui-disabled")) {
+					console.log("禁止状态");
+				} else {
+					account.blur();
+					password.blur();
+					mui("#loginto").button('loading');
+					console.log("开启状态");
+				}
+			}
+
+			// 注册
+			register.addEventListener("tap", function() {
+				var register = plus.webview.create("./register.html", "register")
+				plus.webview.show(register, "slide-in-right", 300)
+			}, {
+				passive: false
+			})
+
+			// 微信登录
+			wechatLogin.addEventListener("tap", function() {
+				// 授权操作
+
+				if (!aweixin) {
+					alert("当前环境不支持微信登录");
+					return;
+				}
+				aweixin.authorize(function(e) {
+					alert("授权成功：" + JSON.stringify(e));
+				}, function(e) {
+					alert("授权失败：" + JSON.stringify(e));
+				}, {
+					scope: 'snsapi_userinfo',
+					state: 'authorize test',
+					appid: 'WX**********'
+				});
+
+			}, {
+				passive: false
+			})
+		
+			// 忘记密码
+			forget.addEventListener("tap", function(){
+				var forgetPassword = plus.webview.create("./forgetPassword.html", "forgetPassword");
+				plus.webview.show(forgetPassword, "slide-in-right", 300)
+			},{passive:false})
+		
+		</script>
+	</body>
+
+</html>

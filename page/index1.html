@@ -14,10 +14,10 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav header-relative header-blue">
-			<div id="toCity">
+			<!-- <div id="toCity">
 				<span class="mui-text-left choosecity" id="city-name">西安市</span>
 				<i class="mui-icon mui-icon-arrowdown" style="font-size: 18px;margin-left: -13px;"></i>
-			</div>
+			</div> -->
 			<p class="header-title">首页</p>
 		</header>
 		<div id="app" style="margin-top: 0;">
@@ -152,7 +152,7 @@
 		<script type="text/javascript">
 			mui.init()
 			var sign = document.getElementById("sign"); // 免费签约
-			var toCity = document.getElementById("toCity"); // 选择城市
+			// var toCity = document.getElementById("toCity"); // 选择城市
 			var cityName = document.getElementById("city-name"); //城市名字 
 
 			mui.plusReady(function() {
@@ -206,12 +206,12 @@
 			},{passive: false});
 			
 			// 选择城市
-			toCity.addEventListener("tap", function() {
-				var city = plus.webview.create("./index1/selectCity.html", "city");
-				plus.webview.show(city,"slide-in-right", 200);
-			}, {
-				passive: false
-			})
+// 			toCity.addEventListener("tap", function() {
+// 				var city = plus.webview.create("./index1/selectCity.html", "city");
+// 				plus.webview.show(city,"slide-in-right", 200);
+// 			}, {
+// 				passive: false
+// 			})
 			
 			// 监听从选择城市页面传来的值
 			document.addEventListener("selectCity",  function(e){
