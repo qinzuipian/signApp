@@ -5,6 +5,9 @@
 /* 
 	#669999 为边框色  选择城市中的搜索框内的查询按钮的背景色
 	
+	
+	#e4e4e4 浅一点的灰色
+	rgb(44, 154,255); 蓝色的边框色
  */
 
 
@@ -20,6 +23,7 @@ li{
 
 .header-blue{
 	background: rgb(44, 154,255);
+	z-index: 999;
 }
 .header-blue p{
 	color: white;
@@ -32,6 +36,7 @@ li{
 }
 .header-blue h1{
 	color: white;
+	line-height: 50px;
 }
 .header-blue a{
 	color: white;
@@ -46,7 +51,7 @@ li{
 	color: blue;
 }
 .flex{
-	display: flex;
+	display: flex!important;
 }
 
 

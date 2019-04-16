@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>医生详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/memberDetails.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">医生详情</h1>
+		</header>
+		
+		<div id="app">
+			<div class="flex doctor-msg">
+				<div class="doctor-pic">
+					<img src="../../img/index/chengyuan.png" alt="">
+				</div>
+				<p id="doctorName" class="doctor-name"></p>
+			</div>
+			
+			<div class="doctor-intr">
+				<p>医生简介</p>
+				<p id="doctorDescription"></p>
+			</div>
+			
+			<div class="doctor-offices">
+				<p>所属科室</p>
+				<p id="doctorOffices"></p>
+			</div>
+		</div>
+		
+		
+		
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function () {
+			    getStorageDate();
+				memberDetailsInit();
+			});
+			
+			var doctorName = document.getElementById("doctorName");
+			var doctorDescription = document.getElementById("doctorDescription");
+			var doctorOffices = document.getElementById("doctorOffices");
+			
+			function memberDetailsInit(){
+				var memberDetails = plus.webview.getWebviewById("memberDetails");
+				
+				mui.ajax(JTURL + 'jkda/basdoctor/list',{
+					data:{
+						doctorNo: memberDetails.doctorCode,
+						token: token
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(res){
+						console.log(JSON.stringify(res));
+						if(res.code == 0){
+							doctorName.innerHTML = res.page.list[0].doctorName;
+							doctorDescription.innerHTML = res.page.list[0].description;
+							doctorOffices.innerHTML = res.page.list[0].professional;
+						}else if(res.code == 401){
+							ajaxTokenInvalid();
+						}else{
+							otherErr();
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						ajaxError();
+					}
+				});
+				
+				
+			}
+			
+			
+			
+		</script>
+	</body>
+
+</html>

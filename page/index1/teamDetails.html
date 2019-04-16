@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>团队详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/teamDetails.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">团队详情</h1>
+		</header>
+
+		<div id="app">
+			<div class="team-msg-box">
+				<div class="team-icon-box">
+					<img src="../../img/index/tuandui.png">
+				</div>
+				<p class="team-name" id="teamName"></p>
+				<p class="team-lead" id="teamLead"></p>
+				<!-- <p class="team-hospital" id="teamHospital">eqweqweqweqweqw</p> -->
+			</div>
+
+			<div class="team-introduce">
+				<p class="team-introduce-title">团队介绍</p>
+				<p class="team-description" id="teamDescription"></p>
+			</div>
+
+			<div class="team-member">
+				<p class="team-member-title">团队成员</p>
+			</div>
+			
+			<div class="swiper-container">
+				<div class="swiper-wrapper flex">
+					<div class="swiper-slide team-item" v-for="(it, index) in memberList" @click="memberDetails(it)">
+						<img class="" src="../../img/index/chengyuan.png" />
+						<p v-text="it.doctorName"></p>
+						<p v-text="it.description"></p>
+					</div>
+				</div>
+			</div>
+			
+			<div class="footer-btn">
+				<button type="button" class="mui-btn mui-btn-primary" onclick="signingTo()">发起签约</button>
+			</div>
+		</div>
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/swiper.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			
+			var app = new Vue({
+				el: "#app",
+				data: {
+					memberList: []
+				},
+				methods:{
+					memberDetails: function(it){
+						var memberDetails = plus.webview.create("./memberDetails.html","memberDetails",{},{
+							doctorCode: it.doctorCode
+						});
+						plus.webview.show(memberDetails, "slide-in-right", 300)
+					}
+				}
+			})
+			var teamDetails;
+			var teamName = document.getElementById("teamName");
+			var teamLead = document.getElementById("teamLead");
+			// var teamHospital = document.getElementById("teamHospital");
+			var teamDescription = document.getElementById("teamDescription");
+
+			mui.plusReady(function() {
+				getStorageDate();
+				teamDetailsInit();
+			});
+
+
+			function swiperInit() {
+				setTimeout(function() {
+					// 初始化swiper
+					var mySwiper = new Swiper('.swiper-container', {
+						direction: 'horizontal', // 垂直切换选项
+						slidesPerView: 3,
+						spaceBetween: 10,
+						centerInsufficientSlides: false
+					})
+				}, 10);
+			}
+
+			function teamDetailsInit() {
+				teamDetails = plus.webview.getWebviewById("teamDetails").teamMsg;
+				teamName.innerHTML = teamDetails.teamName;
+				teamLead.innerHTML = "团队长： " + teamDetails.leadDoctor;
+				teamDescription.innerHTML = teamDetails.description;
+				
+				mui.ajax(JTURL + 'jkda/basmember/list', {
+					data: {
+						token: token,
+						teamCode: teamDetails.teamCode
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						// 初始化swiper
+						swiperInit();
+						if (res.code == 0) {
+							app.memberList = res.page.list
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError();
+					}
+				});
+			}
+			
+			// 发起签约
+			function signingTo(){
+				// 创建一个确认签约的页面   确认信息
+			}
+			
+			
+			
+		</script>
+	</body>
+
+</html>

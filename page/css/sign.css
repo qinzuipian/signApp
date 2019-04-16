@@ -1,0 +1,62 @@
+@charset "utf-8";
+
+.bar{
+	width: 100%;
+	height: 40px;
+	color: black;
+	line-height: 40px;
+	font-size: 16px;
+	background: white;
+	padding-left: 16px;
+}
+.mui-input-row label{
+	width: 27%;
+	line-height: 0.6;
+	padding: 10px 0px;
+	font-size: 14px;
+}
+.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+	width: 73%;
+	line-height: 30px;
+	height: 30px;
+	font-size: 14px;
+}
+.free{
+	background: gainsboro;
+	margin: 10px 0 0 16px;
+	line-height: 1.6;
+}
+#applyed{
+	width: 90%;
+	margin-left: 5%;
+	height: 45px;
+	margin-top: 30px;
+	font-size: 16px;
+	border-radius: 10px;
+}
+.chooseitem{
+	color: black;
+	line-height: 30px;
+	font-size: 14px;
+	margin-right: 12px;
+}
+.agreebox{
+	width: 16px;
+	margin: 10px 6px 0 10px;
+	line-height: 1.8;
+	height: 16px;
+}
+.agreeword{
+	font-size: 12px;
+	margin-top: 8px;
+}
+.agreement{
+	color: red;
+	font-size: 12px;
+	margin-top: 8px;
+}
+.tip{
+	margin-top: 10px;
+	font-size: 12px;
+}
+

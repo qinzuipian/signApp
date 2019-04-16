@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+.confirm {
+	line-height: 44px;
+	width: 70px;
+	text-align: right;
+}
+
+.mui-bar .mui-title {
+	width: calc(100% - 140px);
+	margin-left: 26px;
+	text-align: center;
+}
+
+.confirm-item p:nth-child(1) {
+	width: 30%;
+	text-align: center;
+	line-height: 30px;
+}
+
+.confirm-item p:nth-child(2) {
+	width: 70%;
+	text-align: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 30px;
+}

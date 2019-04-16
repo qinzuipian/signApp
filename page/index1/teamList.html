@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>家庭团队列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/teamList.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">家庭团队列表</h1>
+		</header>
+
+		<div id="app">
+			<div class="choose-hospital-box" style="z-index: 999;">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse" id="chooseHospital" style="background: white;">
+						<a class="mui-navigate-right" v-text="hospitalName" href="#"></a>
+						<div class="mui-collapse-content" style="padding-top: 0;">
+							<ul class="mui-table-view" style="margin-top: 0;">
+								<li class="mui-table-view-cell" v-for="(it, index) in hospitalList" @click="chooseHospital(it)">
+									<p v-text="it.hospitalName"></p>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="bgZzc" style="display: none;"></div>
+			<ul class="mui-table-view" id="hasTeam">
+				<li class="mui-table-view-cell" v-for="(it, index) in teamList">
+					<p v-text="it.teamName" class="team-name"></p>
+					<div class="flex team-details">
+						<p>团队长 {{it.leadDoctor}}</p>
+						<p>团队成员 {{it.num}}</p>
+					</div>
+					<p class="hospital-name">所属医疗机构 <span v-text="it.hospitalName"></span></p>
+					<div class="flex team-menu" style="text-align: center;">
+						<div class="btn-box">
+							<button type="button" @click="teamDetails(it)">团队详情</button>
+						</div>
+						<div class="btn-box">
+							<button type="button" @click="apply(it)">申请签约</button>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+
+			<p id="noTeam" class="no-team" style="display: none;">暂无团队</p>
+
+		</div>
+
+
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+					refreshIndexPage();
+				}
+			});
+
+			var app = new Vue({
+				el: "#app",
+				data: {
+					hospitalName: "",
+					teamList: [],
+					hospitalList: []
+				},
+				methods: {
+					teamDetails: function(it) {
+						var teamDetails = plus.webview.create("./teamDetails.html", "teamDetails", {}, {
+							teamMsg: it
+						});
+						plus.webview.show(teamDetails, "slide-in-right", 300)
+					},
+					chooseHospital: function(it) {
+						this.hospitalName = it.hospitalName;
+						getBashospitalList(it);
+					},
+					apply: function(it){
+						var sign = plus.webview.create("./sign.html", "sign", {}, {
+							informationHospital: it
+						});
+						plus.webview.show(sign, "slide-in-right", 300)
+					}
+				}
+			});
+
+			mui.plusReady(function() {
+				getStorageDate();
+				teamListInit();
+			});
+			
+			var chooseHospital = document.getElementById("chooseHospital");  // 医院选择
+			var bgZzc = document.getElementById("bgZzc");   // 遮罩层
+			
+			// 初始化请求接口
+			function teamListInit() {
+				mui.ajax(JTURL + 'jkda/bashospital/list', {
+					data: {
+						token: token,
+						areaCode: areaCode
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						// console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							getBashospitalList(res.page.list[0]);
+							app.hospitalName = res.page.list[0].hospitalName;
+							app.hospitalList = res.page.list;
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError();
+					}
+				});
+			}
+
+			// 根据医院code展示团队列表
+			function getBashospitalList(hospitalObj) {
+// 				console.log(hospitalCode);
+// 				console.log(areaCode);
+// 				console.log(token);
+				bgZzc.style.display == "none";
+				chooseHospital.classList.remove("mui-active");
+				
+				console.log(token);
+				console.log(areaCode);
+				console.log(hospitalObj.hospitalCode);
+				mui.ajax(JTURL + 'jkda/basteam/queryList', {
+					data: {
+						areaCode: areaCode,
+						token: token,
+						hospitalCode: hospitalObj.hospitalCode
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							app.hospitalName = hospitalObj.hospitalName;
+							
+							if (res.page.list.length == 0) {
+								document.getElementById("noTeam").style.display = "block";
+								document.getElementById("hasTeam").style.display = "none";
+							} else {
+								document.getElementById("hasTeam").style.display = "block";
+								document.getElementById("noTeam").style.display = "none";
+								app.teamList = res.page.list;
+							}
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError();
+					}
+				});
+			}
+		
+			// 选择医院时视图变化函数
+			chooseHospital.addEventListener("tap", function(){
+				if(hasClass(chooseHospital, "mui-active")){
+					console.log("展开状态，要去关闭");
+					bgZzc.style.display = "none"
+				}else{
+					console.log("关闭状态，要去打开");
+					bgZzc.style.display = "block"
+				}
+			},{passive: false})
+			
+			// 点击遮罩层的时候
+			bgZzc.addEventListener("tap", function(){
+				bgZzc.style.display = "none"
+				chooseHospital.classList.remove("mui-active");
+			},{passive:false})
+		
+			
+		
+		</script>
+	</body>
+
+</html>

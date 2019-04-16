@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>登录</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
@@ -38,6 +38,8 @@
 		<div class="loginto">
 			<button type="button" class="mui-btn mui-btn-primary mui-disabled" data-loading-text="提交中" onclick="login()" id="loginto">登录</button>
 		</div>
+		
+		<p style="text-align: center; color: gray;line-height: 60px;">开发者团队：西安卫康数据系统有限公司</p>
 
 
 
@@ -52,16 +54,23 @@
 				swipeBack: false, //启用右滑关闭功能
 				beforeback: function() {
 					closeActivePage();
+					refreshIndexPage();
 				}
 			});
-			
+
 			var aweixin;
 			mui.plusReady(function() {
+
+				// 获取应用首页窗口对象
+				var h = plus.webview.getTopWebview();
+				console.log('应用显示栈顶的Webview窗口：' + h.getURL());
+
+
 				// 查询当前可供第三方登录的服务列表
 				plus.oauth.getServices(function(services) {
 					// console.log(JSON.stringify(services));
-					for(let i = 0; i < services.length; i++){
-						if(services[i].id == "weixin"){
+					for (let i = 0; i < services.length; i++) {
+						if (services[i].id == "weixin") {
 							aweixin = services[i];
 						}
 					}
@@ -106,6 +115,31 @@
 					password.blur();
 					mui("#loginto").button('loading');
 					console.log("开启状态");
+
+					mui.ajax(JTURL + 'jkda/ehrpiruser/login', {
+						data: {
+							mobile: account.value,
+							password: password.value
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(res) {
+							console.log(JSON.stringify(res));
+							mui("#loginto").button('reset');
+							if (res.code == 0) {
+								plus.storage.setItem("token", res.token);
+								plus.storage.setItem("phone", account.value);
+								mui.back();
+							} else {
+								otherErr();
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							mui("#loginto").button('reset');
+							ajaxError();
+						}
+					});
 				}
 			}
 
@@ -138,13 +172,14 @@
 			}, {
 				passive: false
 			})
-		
+
 			// 忘记密码
-			forget.addEventListener("tap", function(){
+			forget.addEventListener("tap", function() {
 				var forgetPassword = plus.webview.create("./forgetPassword.html", "forgetPassword");
 				plus.webview.show(forgetPassword, "slide-in-right", 300)
-			},{passive:false})
-		
+			}, {
+				passive: false
+			})
 		</script>
 	</body>
 

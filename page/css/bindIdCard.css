@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+
+
+.mui-input-group .mui-input-row{
+	height: 50px;
+	line-height: 50px;
+}
+.mui-input-group .mui-input-row label{
+	line-height: 30px;
+}
+.mui-input-group .mui-input-row input{
+	height: 50px;
+}
+/* 右边一键删除的按钮 */
+.mui-input-row .mui-input-clear ~ .mui-icon-clear, .mui-input-row .mui-input-speech ~ .mui-icon-speech, .mui-input-row .mui-input-password ~ .mui-icon-eye{
+	top: 15px;
+}
+
+.next{
+	line-height: 44px;
+	width: 70px;
+	text-align: right;
+}
+
+.mui-bar .mui-title{
+	width: calc(100% - 140px);
+    margin-left: 26px;
+    text-align: center;
+}

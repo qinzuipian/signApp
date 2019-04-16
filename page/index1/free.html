@@ -3,22 +3,20 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>免费包</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../../css/swiper.css" />
-		<link rel="stylesheet" type="text/css" href="../css/free.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/free.css" />
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav header-blue">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title mui-text-center">免费包</h1>
 		</header>
-		<div id="app"> 
-			<p class="title">家庭医生签约免费包</p> 
+		<div id="app">
+			<p class="title">家庭医生签约免费包</p>
 			<div class="price">
 				<p class="price_title">标准价格</p>
 				<p class="price_content mui-text-right">￥ 0.00</p>
@@ -28,95 +26,100 @@
 			</div>
 			<div class="item">
 				<div class="offer_item">
-					<p class="item_shebao mui-text-center">社保优惠</p> 
+					<p class="item_shebao mui-text-center">社保优惠</p>
 					<p class="colored">￥0.00</p>
 				</div>
 				<div class="offer_item">
-					<p class="item_nonghe">农合优惠</p> 
+					<p class="item_nonghe">农合优惠</p>
 					<p class="colored">￥0.00</p>
 				</div>
 				<div class="offer_item">
-					<p class="item_qita">其他优惠</p> 
+					<p class="item_qita">其他优惠</p>
 					<p class="colored">￥0.00</p>
 				</div>
 			</div>
 			<div class="period">
 				<p class="offer_title">有效期(天)</p>
 			</div>
-			<p class="day">365天</p>
+			<p class="day" v-text="data"></p>
 			<div class="offer">
 				<p class="offer_title">签约服务对象</p>
 			</div>
-			<p class="person">本市常住居民</p>
+			<p class="person" v-text="objectname"></p>
 			<div class="sever_item">
 				<p class="offer_title">服务项目</p>
 			</div>
-			<div class="detail_item" style="background: white;">
+			<div class="detail_item" style="background: white;padding: 2px 0 0px 0;" v-for="(it,index) in severitem">
 				<div class="detail" id="detail">
-					<p class="detail_title">基本公共卫生服务项目</p>
+					<p class="detail_title" v-text="it.name"></p>
 					<div class="data">
-						<p class="data_long">有效期 ：365天</p>
-						<p class="ser_times mui-text-right">服务次数 ：1次</p>
+						<div class="datas">
+							<p class="data_long">有效期 :</p>
+							<p class="long" v-text="data"></p>
+						</div>
+						<div class="ser_times">
+							<p class="tiems mui-text-right">服务次数 ：</p>
+							<p class="tiems" v-text="it.quantity"></p>
+						</div>
 					</div>
-					<div id="content"> 
-						<p style="color: black;padding: 0px 0 0 10px; margin-bottom: 0px;"> 1)建立健康档案，为签约居民建立健康档案。</p>
-						<p style="color: black;padding: 0px 0 0 10px;margin-bottom: 0px;"> 已建档签约居民，对档案内容进行修改完善。</p>
-						<p style="color: black;padding: 0px 0 0 10px;margin-bottom: 0px;"> 2)管理健康档案，调取居民的健康档案，根据</p>
-						<p class="content_items">复诊情况，及时更新，补充相应的记录</p> 
+					<div id="content">
+						<p class="content_items" v-text="it.description"></p>
 					</div>
-				</div> 
-				<p id="all" class="all">查看全部</p>
-				<p id="close" class="close">收回</p>
-				<div style="background: white;width: 85%;margin-left: 7%;height: 150px;margin-top: 10px;border-radius: 4px;">
-					
-				</div> 
-				<div style="background: white;width: 85%;margin-left: 7%;height: 150px;margin-top: 10px;border-radius: 4px;">
-					
-				</div> 
+				</div>
 			</div>
-
+			<div style="background: white;height: 40px;width: 100%;"></div>
 		</div>
-
-		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-
-		
 		<script type="text/javascript">
-			mui.init()
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+				keyEventBind: {
+					backbutton: true //关闭back按键监听
+				}
+			});
+			mui.plusReady(function() {
+				getbag();
+
+			})
 			var app = new Vue({
-				el:"#app",
-				data:{
-					onOff:true
+				el: "#app",
+				data: {
+					name: '', //服务包的item的名字
+					data: '', //有效期
+					objectname: '', //签约对象名称
+					severitem: [], //服务项目
+					severtiems: '', //服务次数	
+					description: '' //服务的描述
 				}
 			})
-			mui.plusReady(function() {
-				//一进来显示部分信息
-				var detail = document.getElementById("detail");
-				var str=document.getElementById("content").innerHTML; 
-				var max_height = document.getElementById("detail").style.height = "130px";
-				detail.addEventListener("tap",function(){
-					if(app.onOff){
-						//显示全部
-						document.getElementById("all").style.display = "block";
-						document.getElementById("close").style.display="none";
-						document.getElementById("detail").style.height = "160px";
-						
-					}else{
-						//收起
-						content.innerHTML = str; 
-						document.getElementById("all").style.display = "none";
-						document.getElementById("close").style.display="block"
-						document.getElementById("detail").style.height = max_height;
-						document.getElementById("detail").style.overflow = "hidden";
-						
-						
-						
-					}
-					app.onOff=!app.onOff; //每点击一次，改变一次展开、收缩状态  
-          			return false;
-				})
-			})
+			//获取服务包的详细信息
+			function getbag() {
+				mui.ajax(JTURL + 'jkda/basservicepack/queryItemList', {
+					data: {
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						// console.log(JSON.stringify(res));
+						if(res.code == 0) {
+							app.objectname = res.data[0].serviceObject;
+							app.data = res.data[0].validateDay + "天";
+							app.severitem = res.data[0].basServiceItem;
+							for(var i = 0; i < app.severitem.length; i++) {
+								app.severitem[i].quantity = app.severitem[i].quantity + "次";
+							}
+						}
 
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type);
+					}
+				});
+			}
 		</script>
 	</body>
 

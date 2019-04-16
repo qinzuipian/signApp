@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>绑定卡号</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/bindIdCard.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">绑定身份证</h1>
+			<span class="mui-pull-right next" id="next">下一步</span>
+		</header>
+
+		<div id="app">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>证件类型</label>
+					<input type="text" class="mui-input-clear" value="身份证" disabled="disabled">
+				</div>
+				<div class="mui-input-row">
+					<label>号码</label>
+					<input type="number" class="mui-input-clear" id="idCard" placeholder="请输入证件号码">
+				</div>
+			</form>
+
+		</div>
+
+
+
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function() {
+
+			});
+			
+			
+			var next = document.getElementById("next"); // 下一步
+			var idCard = document.getElementById("idCard"); // 身份证号码
+			
+			
+			// 下一步
+			next.addEventListener("tap", function(){
+				if(idCard.value.length != 18){
+					plus.nativeUI.toast("请输入正确的证件号码");
+				}else{
+					// 查询个人信息接口
+					mui.ajax( JTURL + "jkda/ehrpir/list",{
+						data:{
+							idNo: idCard.value
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(res){
+							// console.log(JSON.stringify(res));
+							if(res.code == 0){
+								if(res.page.list.length == 0){ // 如果列表为空,则数据库没有这个用户
+									plus.nativeUI.toast("此用户不存在")
+								}else{
+									var userMsg = res.page.list[0];
+									if(userMsg.genderCd == 1){
+										userMsg.genderCd = "男"
+									}else{
+										userMsg.genderCd = "女"
+									}
+									var confirm = plus.webview.create("./confirm.html", "confirm",{},{
+										userMsg: userMsg
+									});
+									plus.webview.show(confirm, "slide-in-right", 300)
+								}
+							}else if(res.code == 401){ // token失效
+								ajaxTokenInvalid();
+							}else{
+								otherErr();
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							ajaxError();
+						}
+					});
+				}
+			},{passive: false})
+			
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

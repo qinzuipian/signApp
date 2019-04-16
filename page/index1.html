@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>首页</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/common.css" />
@@ -39,11 +39,11 @@
 			<div class="service flex">
 				<li class="service-item" id="appointment">
 					<img src="../img/index/icon-test.png" >
-					<p>预约挂号</p>
+					<p>服务预约</p>
 				</li>
 				<li class="service-item" id="hospital">
 					<img src="../img/index/yiyuan.png" >
-					<p>互联网医院</p>
+					<p>接种预约</p>
 				</li>
 				<li class="service-item" id="bodycheck">
 					<img src="../img/index/tijian.png" >
@@ -55,15 +55,17 @@
 				</li>
 			</div>
 			
-			<div class="sign flex">
-				<div class="sign-logo">
-					<img src="../img/index/yisheng.jpg" >
-				</div>
-				<div class="sign-box">
-					<p>我的家庭医生</p>
-					<!-- 已开启免费查询服务 -->
-					<p>为家庭健康保驾护航</p>
-					<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined">免费签约</button>
+			<div id="signMain" style="display: none;">
+				<div class="sign flex">
+					<div class="sign-logo">
+						<img src="../img/index/yisheng.jpg" >
+					</div>
+					<div class="sign-box">
+						<p>我的家庭医生</p>
+						<p>为家庭健康保驾护航</p>
+						<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" onclick="signing()">立即签约</button>
+						<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" onclick="sweepCode()">扫码签约</button>
+					</div>
 				</div>
 			</div>
 			
@@ -148,6 +150,7 @@
 			
 		</div>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
 		<script src="../js/swiper.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init()
@@ -158,6 +161,10 @@
 			mui.plusReady(function() {
 				// 轮播图的定时器
 				sblider();
+				
+				// common.js 获取本地数据
+				getStorageDate();
+				indexPageInit();
 			})
 			// 轮播图
 			function sblider() {
@@ -178,19 +185,12 @@
 				}, 100)
 			}
 
-			// 免费签约
-// 			sign.addEventListener("tap", function() {
-// 				var chooseteam = plus.webview.create("./index1/chooseteam.html");
-// 				plus.webview.show(chooseteam, "slide-in-right", 300);
-// 			}, {
-// 				passive: false
-// 			})
-// 	
 			// 四大功能 appointment   hospital   insurance    bodycheck
 			var appointment = document.getElementById("appointment"),
 				hospital = document.getElementById("appointment"),
 				insurance = document.getElementById("insurance"),
-				bodycheck = document.getElementById("insurance");
+				bodycheck = document.getElementById("insurance"),
+				signMain = document.getElementById("signMain");
 			
 			appointment.addEventListener("tap", function(){
 				plus.nativeUI.toast("暂未开放此功能")
@@ -218,6 +218,51 @@
 				// console.log(JSON.stringify(e.detail.name));
 				cityName.innerHTML = e.detail.name
 			},{passive: false})
+			
+			// 签约
+			function signing(){
+				var userStatus = plus.storage.getItem("userStatus");
+				if(userStatus == "0"){
+					var login = plus.webview.create("./login/login.html", "login");
+					plus.webview.show(login, "slide-in-right", 300);
+				}else if(userStatus == "1"){
+					var bindIdCard = plus.webview.create("./login/bindIdCard.html", "bindIdCard");
+					plus.webview.show(bindIdCard, "slide-in-right", 300);
+				}else{
+					var teamList = plus.webview.create("./index1/teamList.html","teamList");
+					plus.webview.show(teamList, "slide-in-right", 300);
+				}
+			}
+			
+			window.addEventListener("refresh", function(){
+				console.log("index_刷新了一下");
+				indexPageInit();
+			},{passive:false})
+			
+			function indexPageInit (){
+				var isContrct = plus.storage.getItem("isContrct");
+				console.log(isContrct);
+				if(isContrct == 0){
+					signMain.style.display = "block"
+				}else{
+					signMain.style.display = "none"
+				}
+			};
+			
+			function sweepCode(){
+				var sweepCode = plus.webview.create("./index1/sweepCode.html", "sweepCode");
+				plus.webview.show(sweepCode, "slide-in-right", 300);
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 		</script>
 	</body>

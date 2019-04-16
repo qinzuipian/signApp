@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>证件签约</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/sign.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title mui-text-center">证件签约</h1>
+		</header>
+		<div id="app">
+			<div>
+				<p class="bar">居民签约</p>
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label style="width: 35%;">身份证号</label>
+						<p class="mui-text-right chooseitem" id="idCardDom"></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label style="width: 35%;">姓名</label>
+						<p class="mui-text-right chooseitem" id="name"></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label style="width: 35%;">性别</label>
+						<p class="mui-text-right chooseitem" id="sex"></p>
+
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label style="width: 35%;">出生日期</label>
+						<p class="mui-text-right chooseitem" id="birthday"></p>
+					</div>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 10px;">
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>居住地址</label>
+						<p class="mui-text-right chooseitem" id="address"></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>家庭医生</label>
+						<p class="mui-text-right chooseitem" id="doctoryName"></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>服务包</label>
+						<p class="mui-text-right chooseitem">以选一</p>
+						<button class="free" id="free" onclick="toFreePage()">免费包</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>签约机构</label>
+						<p class="mui-text-right chooseitem" id="hospital"></p>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>签约周期</label>
+						<p class="mui-text-right chooseitem">1年</p>
+					</div>
+				</li>
+				<!-- <li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>紧急联系人</label>
+						<input type="text" class="mui-text-right" placeholder="请输入姓名 选填" />
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label style="width: 35%;">紧急联系人电话</label>
+						<input type="text" style="width: 65%;" class="mui-text-right" placeholder="请输入电话  选填" />
+					</div>
+				</li> -->
+			</ul>
+			<div id="choose" style="display: flex;">
+				<input type="checkbox" class="agreebox" id="agreebox" checked="checked" />
+				<p class="agreeword">我已阅读并同意</p>
+				<p class="agreement">《签约协议》</p>
+			</div>
+			<div id="footer">
+				<button type="button" class="mui-btn mui-btn-primary" data-loading-text="正在提交" id="applyed" onclick="signIt()">立即签约</button>
+			</div>
+			<p class="mui-text-center tip">实名制签约，请确保所有资料的真实有效</p>
+		</div>
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+			});
+			var idCardValue, genderCdValue, birthDateValue, userNameValue, address,userId;
+			var teamCode;
+
+
+			mui.plusReady(function() {
+				getStorageDate();
+				// 页面初始化
+				signInit();
+			});
+
+			var apply = document.getElementById("applyed"); //立即签约按钮
+			//签约事件
+			function signIt() {
+				mui(apply).button('loading');
+				var data = JSON.stringify({
+					token: token,
+					personId: userId,
+					teamCode: teamCode,
+					status: 1
+				});
+				mui.ajax(JTURL + 'jkda/bascontract/save', {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						mui(apply).button('reset');
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							plus.nativeUI.alert("已提交签约申请", function() {
+								var index = plus.webview.getWebviewById(plus.runtime.appid);
+								mui.fire(index,'refresh')
+								plus.webview.show(index, "slide-in-left", 300);
+								var teamList = plus.webview.getWebviewById("teamList");
+								plus.webview.close(teamList);
+								closeActivePage();
+							}, "nativeUI", "确定");
+						}else if(res.code == 401){
+							ajaxTokenInvalid();
+						}else{
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						mui(apply).button('reset');
+						ajaxError();
+					}
+				});
+
+
+			}
+			//服务包
+			function toFreePage() {
+				var freePage = plus.webview.create("./free.html", "freePage");
+				plus.webview.show(freePage, "slide-in-right", 300);
+			}
+
+			function signInit() {
+				var idCardDom = document.getElementById("idCardDom"); //身份证号
+				var names = document.getElementById("name"); //姓名
+				var sexs = document.getElementById("sex"); //性别
+				var birth = document.getElementById("birthday"); //出生日期
+				var addr = document.getElementById("address"); //居住地址
+				var serverbags = document.getElementById("free"); //服务包
+				var agreebox = document.getElementById("agreebox"); //复选框
+				var doctoryName = document.getElementById("doctoryName"); // 家庭医生团队名字
+				var hospital = document.getElementById("hospital"); // 签约机构名字
+
+				idCardValue = plus.storage.getItem("idCard");
+				genderCdValue = plus.storage.getItem("genderCd");
+				birthDateValue = plus.storage.getItem("birthDate");
+				userNameValue = plus.storage.getItem("userName");
+				addressValue = plus.storage.getItem("address");
+				userId = plus.storage.getItem("userId");
+
+				currentPage = plus.webview.currentWebview();
+				console.log(JSON.stringify(currentPage.informationHospital));
+
+				idCardDom.innerHTML = idCardValue;
+				names.innerHTML = userNameValue;
+				sexs.innerHTML = genderCdValue;
+				birth.innerHTML = birthDateValue;
+				addr.innerHTML = addressValue;
+
+				doctoryName.innerHTML = currentPage.informationHospital.teamName;
+				hospital.innerHTML = currentPage.informationHospital.hospitalName;
+				teamCode = currentPage.informationHospital.teamCode;
+			}
+		</script>
+	</body>
+
+</html>

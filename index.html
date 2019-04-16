@@ -4,14 +4,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
-		<script src="js/mui.min.js"></script>
-		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/mui.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
-		<style type="text/css">
-			.mui-tab-item{
-				/* height: 60px!important; */
-			}
-		</style>
+		
 	</head>
 
 	<body>
@@ -36,6 +31,10 @@
 				</a>
 			</nav>
 		</div>
+		
+		
+		<script src="js/mui.js"></script>
+		<script src="js/common.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能,
@@ -81,7 +80,8 @@
 			});
 
 			mui.plusReady(function() {
-				
+				getStorageDate();
+				indexInit();
 			});
 			
 			var index, msg, heathy, own;
@@ -141,6 +141,80 @@
 					heathy.hide()
 				}
 			})
+			
+			
+			window.addEventListener("refresh", function(){
+				getStorageDate();
+				indexInit();
+			},{passive:false});
+			
+			
+			function indexInit(){
+				plus.nativeUI.showWaiting("正在验证用户信息");
+				mui.ajax(JTURL + 'jkda/ehrpiruser/getUser', {
+					data: {
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						plus.nativeUI.closeWaiting();
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							// userStatus = 2; // 正常
+							plus.storage.setItem("userStatus", "2");
+							plus.storage.setItem("userName", res.UserInfo.name);
+							plus.storage.setItem("areaCode", res.UserInfo.communityCode);
+							
+							plus.storage.setItem("idCard", res.UserInfo.idNo);   // 身份证
+							plus.storage.setItem("userId", res.UserInfo.id);   // 个人ID
+							
+							plus.storage.setItem("isContrct", res.UserInfo.isContrct)
+							
+							if(res.UserInfo.genderCd == 1){
+								plus.storage.setItem("genderCd", "男");
+							}else{
+								plus.storage.setItem("genderCd", "女");
+							}
+							plus.storage.setItem("birthDate", res.UserInfo.birthDate.split(" ")[0]); // 出生日期
+							plus.storage.setItem("address", res.UserInfo.addr); // 出生日期
+
+							var ownPage = plus.webview.getWebviewById("own");
+							mui.fire(ownPage, "refresh");
+							var indexPage = plus.webview.getWebviewById("index_");
+							mui.fire(indexPage, "refresh");
+							
+							
+						} else if (res.code == 401) {
+							// userStatus = 2; // 未登录
+							plus.storage.setItem("userStatus", "0")
+						} else if (res.code == 501 && res.msg == "未找到绑定用户信息！") {
+							// userStatus = 1; // 未绑定
+							plus.storage.setItem("userStatus", "1")
+							plus.nativeUI.confirm(" ", function(e) {
+								if(e.index == 0){ // 去绑定
+									var bindIdCard = plus.webview.create("./page/login/bindIdCard.html", "bindIdCard");
+									plus.webview.show(bindIdCard, "slide-in-right", 300);
+								}
+							}, {
+								"title": "尚未绑定身份信息",
+								"buttons": ["去绑定", "暂时不用"],
+								"verticalAlign": "center"
+							});
+				
+				
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						ajaxError();
+					}
+				});
+				
+			}
 			
 		</script>
 	</body>

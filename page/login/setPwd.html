@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/setPwd.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">设置密码</h1>
+		</header>
+		
+		
+		<div class="register-form">
+			<div class="phone-box flex">
+				<p>密码</p>
+				<input type="password" name="password" id="phone" value="" placeholder="请输入密码" />
+			</div>
+			<div class="phone-box flex">
+				<p>重复密码</p>
+				<input type="password" name="passwordRepeat" id="phoneR" value="" placeholder="请再次输入密码" />
+			</div>
+		</div>
+		
+		<div class="register">
+			<button type="button" class="mui-btn mui-btn-primary mui-disabled" data-loading-text="提交中" onclick="registerFun()" id="registerBtn" >提交</button>
+		</div>
+		
+		
+		
+		
+		
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			var phone; // 上个页面传过来的值  -- 手机号
+			mui.plusReady(function () {
+			    var current = plus.webview.currentWebview();
+				phone = current.phone;
+				console.log(phone);
+			});
+			
+			var phoneDom = document.getElementById("phone");
+			var phoneRDom = document.getElementById("phoneR");
+			
+			
+			function registerFun(){
+				if(phoneDom.value == "" || phoneDom.value == " "){
+					plus.nativeUI.toast("密码不能为空")
+				}else if(phoneRDom.value == "" || phoneRDom.value == " "){
+					plus.nativeUI.toast("重复密码不能为空")
+				}else if(phoneDom.value.indexOf(" ") != -1 || phoneRDom.value.indexOf(" ") != -1){
+					plus.nativeUI.toast("密码中不能包含空格")
+				}else if(phoneDom.value != phoneRDom.value){
+					plus.nativeUI.toast("两次输入密码不一致")
+				}else{
+					mui("#registerBtn").button('loading');
+					mui.ajax(JTURL + "jkda/ehrpiruser/saveUser",{
+						data:{
+							mobile: phone,
+							password: phoneDom.value
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						success:function(res){
+							console.log(JSON.stringify(res));
+							mui("#registerBtn").button('reset');
+							if(res.code == 0){
+								var register = plus.webview.getWebviewById("register");
+								register.close();
+								mui.back();
+							}else if(res.code == 401){
+								plus.nativeUI.toast("用户已注册")
+							}else{
+								otherErr();
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							ajaxError();
+							mui("#registerBtn").button('reset');
+						}
+					});
+				}
+			}
+		</script>
+	</body>
+
+</html>

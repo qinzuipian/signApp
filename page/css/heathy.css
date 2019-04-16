@@ -94,7 +94,7 @@
 	text-align: center;
 	padding-top: 15px;
 	border: none;
-	border-radius: 50%;
+	border-radius: 10px;
 }
 .assess-item p:nth-child(1){
 	font-size: 18px;

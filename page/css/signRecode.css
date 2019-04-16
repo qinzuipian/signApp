@@ -1,0 +1,97 @@
+@charset "utf-8";
+.submit_time{
+	display: flex;
+}
+.time{
+	font-size: 12px;
+	margin: 10px 0 0 10px;
+}
+.recode{
+	width: 100%;
+	height: 120px;
+	margin-top: 10px;
+	background: white;
+	display: flex;
+}
+.des{
+	width: 80%;
+	height: 120px;
+}
+.status1{
+	width: 20%;
+	height: 120px;
+	margin-top: calc(60px - 38px)
+}
+.status2{
+	width: 20%;
+	height: 120px;
+}
+.teamname{
+	display: flex;
+	margin: 10px 0 0 20px;
+}
+.name{ 
+	font-size: 16px;
+	color: black;
+}
+.team{
+	margin-left: 10px;
+	
+}
+.loc{
+	display: flex;
+	margin: 4px 0 0 20px;
+}
+.dot{
+	width: 10px;
+	height: 10px;
+	border-radius: 50px;
+	margin-top: 4px;
+	background: cornflowerblue;
+}
+.loc_{
+	font-size: 14px;
+	color: black;
+	margin-left: 10px;
+}
+.sign_object{
+	display: flex;
+	margin: 4px 0 0 20px;
+}
+.locdot{
+	width: 10px;
+	height: 10px;
+	border-radius: 50px;
+	margin-top: 4px;
+	background: orangered;
+}
+.sign_name{
+	margin-left: 10px;
+	color: black;
+}
+.cancel{
+	margin-bottom: 10px;
+}
+.refuse{
+	line-height: 120px;
+}
+.agreed{
+	color: blue;
+	line-height: 120px;
+}
+.sign-status{
+	text-align: center;
+	line-height: 120px;
+}
+.font-blue{
+	color: blue;
+}
+
+.font-gray{
+	color: gray;
+}
+
+.font-green{
+	color: #00CC66;
+}
+

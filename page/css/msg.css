@@ -23,3 +23,14 @@
 	line-height: 40px;
 	font-size: 14px;
 }
+
+.chat-item{
+	height: 60px;
+}
+.chat-item p{
+	line-height: 40px;
+	padding: 0;
+	margin: 0;
+	font-size: 16px;
+	padding-left: 20px;
+}

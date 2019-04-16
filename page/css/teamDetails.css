@@ -1,0 +1,123 @@
+@charset "utf-8";
+
+#app {
+	padding-bottom: 50px;
+}
+
+
+.team-msg-box {
+	background: white;
+	padding-bottom: 10px;
+}
+
+.team-icon-box {
+	width: 100%;
+	padding-top: 30px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.team-icon-box img {
+	width: 80px;
+	border-radius: 50%;
+	border: 1px solid rgb(44, 154, 255);
+}
+
+.team-name {
+	text-align: center;
+	font-size: 17px;
+}
+
+.team-lead {
+	text-align: center;
+	font-size: 15px;
+	line-height: 40px;
+}
+
+.team-hospital {
+	text-align: center;
+	font-size: 15px;
+	color: gray;
+}
+
+
+.team-introduce {
+	margin-top: 10px;
+	background: white;
+	padding-bottom: 10px;
+}
+
+.team-introduce-title {
+	font-size: 15px;
+	padding-left: 15px;
+	line-height: 50px;
+	border-bottom: 1px solid #e4e4e4;
+}
+
+.team-description {
+	padding-left: 15px;
+	font-size: 14px;
+	color: gray;
+	line-height: 20px;
+}
+
+.swiper-container {
+	background: white;
+	padding-bottom: 20px;
+}
+
+.team-member {
+	margin-top: 10px;
+	background: white;
+	padding-bottom: 10px;
+}
+
+.team-member-title {
+	font-size: 15px;
+	padding-left: 15px;
+	line-height: 50px;
+	border-bottom: 1px solid #e4e4e4;
+}
+
+.team-item {
+	height: 150px;
+	border: 1px solid #e4e4e4;
+	background: #e9e9e9;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 10px;
+}
+
+.team-item img {
+	width: 40px;
+	border-radius: 50%;
+	border: 1px solid rgb(44, 154, 255);
+}
+
+.team-item p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 14px;
+}
+
+.footer-btn {
+	width: 100%;
+	height: 60px;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #fafafa;
+	z-index: 999;
+}
+
+.footer-btn button {
+	width: 80%;
+	line-height: 30px;
+	margin-top: 10px;
+	margin-left: 10%;
+	border-radius: 10px;
+	font-size: 16px;
+}

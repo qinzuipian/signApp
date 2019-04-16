@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>签约记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/signRecode.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title mui-text-center colors">签约记录</h1>
+		</header>
+		<div id="app">
+			<div v-for="(it,index) in recordlist">
+				<div class="submit_time">
+					<p class="time">提交时间</p>
+					<p class="time" id="time" v-text="it.applyDate"></p>
+				</div>
+				<div class="recode">
+					<div class="des">
+						<div class="teamname">
+							<p class="name" id="leader_name" v-text="it.leadDoctor"></p>
+							<p class="team" id="team_no" v-text="it.teamName"></p>
+						</div>
+						<div class="loc">
+							<p class="dot"></p>
+							<p class="loc_" id="loc_" v-text="it.hospitalName"></p>
+						</div>
+						<div class="sign_object">
+							<p class="locdot"></p>
+							<p class="loc_">签约对象</p>
+							<p class="sign_name" id="sign_name" v-text="it.name"></p>
+						</div>
+					</div>
+					<p class="sign-status" :class="{'font-blue': it.status=='已同意', 'font-gray': it.status=='已拒绝', 'font-green': it.status=='待审核'}" v-text="it.status"></p>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+			})
+			mui.plusReady(function() {
+				getStorageDate();
+				signRecodeInit();
+			})
+
+			var app = new Vue({
+				el: "#app",
+				data: {
+					recordlist: [] //数据
+				}
+			})
+			//签约记录
+			function signRecodeInit() {
+				var userId = plus.storage.getItem("userId");
+				console.log(userId);
+				mui.ajax(JTURL + 'jkda/bascontract/list', {
+					data: {
+						token: token,
+						personId: userId
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							app.recordlist = res.page.list;
+							for(var i = 0; i < app.recordlist.length; i++){
+								if(app.recordlist[i].status == 1){
+									app.recordlist[i].status = "待审核"
+								}else if(app.recordlist[i].status == 2){
+									app.recordlist[i].status = "已同意"
+								}else{
+									app.recordlist[i].status = "已拒绝"
+								}
+							}
+						}else if(res.code == 401){
+							ajaxTokenInvalid();
+						}else{
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type)
+					}
+				});
+			}
+			
+		</script>
+	</body>
+
+</html>

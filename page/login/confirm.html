@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>确认信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/confirm.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">确认信息</h1>
+			<span class="mui-pull-right confirm" id="confirm">确认</span>
+		</header>
+
+		<div id="app">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell flex confirm-item">
+					<p>姓名</p>
+					<p id="nameU"></p>
+				</li>
+				<li class="mui-table-view-cell flex confirm-item">
+					<p>身份证号码</p>
+					<p id="idCard"></p>
+				</li>
+				<li class="mui-table-view-cell flex confirm-item">
+					<p>性别</p>
+					<p id="sex"></p>
+				</li>
+				<li class="mui-table-view-cell flex confirm-item">
+					<p>出生日期</p>
+					<p id="birthDate"></p>
+				</li>
+				<li class="mui-table-view-cell flex confirm-item">
+					<p>住址</p>
+					<p id="address"></p>
+				</li>
+				
+			</ul>
+		</div>
+
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+
+			var userMsg; // 用户信息
+			var nameU = document.getElementById("nameU"); // 名字
+			var idCard = document.getElementById("idCard"); // 身份证号码
+			var sex = document.getElementById("sex"); // 性别
+			var birthDate = document.getElementById("birthDate"); // 出生日期
+			var address = document.getElementById("address"); // 住址
+
+			mui.plusReady(function() {
+				getUserMsg(); // 获取上个页面传过来的用户信息
+				getStorageDate(); // common.js获取本地存储信息
+			});
+			
+			// 获取上个页面传过来的用户信息
+			function getUserMsg(){
+				var currentPage = plus.webview.currentWebview();
+				userMsg = currentPage.userMsg;
+				nameU.innerHTML = userMsg.name;
+				idCard.innerHTML = userMsg.idNo;
+				sex.innerHTML = userMsg.genderCd;
+				birthDate.innerHTML = userMsg.birthDate.split(" ")[0];
+				address.innerHTML = userMsg.addr
+			}
+			
+			// 确认
+			document.getElementById("confirm").addEventListener("tap", function(){
+				token = plus.storage.getItem("token");
+				phone = plus.storage.getItem("phone");
+				plus.nativeUI.showWaiting( "等待中..."); 
+				mui.ajax(JTURL + 'jkda/ehrpiruser/bindIdNo',{
+					data:{
+						idNo: idCard.innerHTML,
+						mobile: phone,
+						token: token
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(res){
+						plus.nativeUI.closeWaiting();
+						if(res.code == 0){
+							plus.nativeUI.toast("绑定成功");
+							var index = plus.webview.getWebviewById(plus.runtime.appid);
+							plus.webview.show(index, "slide-in-right", 300);
+							refreshIndexPage();
+							closeActivePage();
+						}else if(res.code == 401){
+							ajaxTokenInvalid();
+						}else{
+							otherErr();
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						ajaxError();
+					}
+				});
+				
+			},{passive: false})
+			
+		</script>
+	</body>
+
+</html>

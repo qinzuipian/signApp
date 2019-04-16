@@ -3,29 +3,26 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>账户</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/common.css" />
 		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
-		<link rel="stylesheet" type="text/css" href="css/own.css" />
+		<link rel="stylesheet" type="text/css" href="./css/own.css" />
 	</head>
 
 	<body>
 		<div id="app" style="margin-top: 0;">
 			<div class="header-owner">
-				<p class="iconfont mui-text-right set" id="system">&#xe64d;</p>
+				<p class="iconfont mui-text-right set mui-pull-right" id="system">&#xe64d;</p>
 				<div class="title">
 					<p class="photo">
 						<img class="photo-pic" src="../img/owner/hashiqi.jpg">
 					</p>
-					<p class="name">XXX</p>
+					<p class="name" id="namePerson">登录/注册</p>
 				</div>
 			</div>
 
-			<!-- <div class=" myserver">
-				<p style="margin: 0px;line-height: 40px;" class="mui-text-center iconfont">我的服务</p>
-			</div> -->
 			<div class="motion">
 				<div class="motion-box">
 					<div class="motion-title flex">
@@ -37,7 +34,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right">
@@ -47,7 +44,7 @@
 						</div>
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="signRecode">
 					<a class="mui-navigate-right">
 						<div style="display: flex;line-height: 34px;">
 							<p class="iconfont" style="font-size: 20px;color: goldenrod;">&#xe693;</p>
@@ -63,7 +60,7 @@
 						</div>
 					</a>
 				</li>
-				
+
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right">
 						<div style="display: flex;line-height: 34px;">
@@ -84,18 +81,78 @@
 			</ul>
 		</div>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/common.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			mui.plusReady(function () {
-			    
+			mui.plusReady(function() {
+				getStorageDate();
+				pageInit();
+			});
+
+			var namePerson = document.getElementById("namePerson");
+			var system = document.getElementById("system");
+
+			// 请求信息
+			function pageInit() {
+				mui.ajax(JTURL + 'jkda/ehrpiruser/getUser', {
+					data: {
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							plus.storage.setItem("userName", res.UserInfo.name);
+							var userName = plus.storage.getItem("userName");
+							if (userName == null || userName == "") {
+								namePerson.innerHTML = "登录/注册";
+							} else {
+								namePerson.innerHTML = userName;
+							}
+							console.log(userName);
+						}else if(res.code == 401){
+							namePerson.innerHTML = "登录/注册";
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						namePerson.innerHTML = "登录/注册";
+					}
+				});
+			};
+
+			// 设置
+			system.addEventListener("tap", function() {
+				var set = plus.webview.create("set/set.html", "set");
+				plus.webview.show("set", "slide-in-right", 300)
+			}, {
+				passive: false
 			});
 			
-			var system = document.getElementById("system");
+			// 登录
+			namePerson.addEventListener("tap", function() {
+				if (namePerson.innerHTML == "登录/注册") {
+					var login = plus.webview.create("./login/login.html");
+					plus.webview.show(login, "slide-in-right", 300);
+				}
+			}, {
+				passive: false
+			})
+
+			// 刷新
+			window.addEventListener("refresh", function() {
+				getStorageDate();
+				pageInit();
+			}, {
+				passive: false
+			});
 			
-			system.addEventListener("tap", function(){
-				plus.webview.create("login/login.html","login");
-				plus.webview.show("login", "slide-in-right",300)
+			document.getElementById("signRecode").addEventListener("tap", function(){
+				var signRecode = plus.webview.create("./index1/signRecode.html");
+				plus.webview.show(signRecode, "slide-in-right", 300)
 			},{passive: false})
+			
 			
 			
 		</script>

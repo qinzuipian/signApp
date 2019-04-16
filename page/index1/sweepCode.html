@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>扫描二维码</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">扫描二维码</h1>
+		</header>
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function() {
+				getStorageDate();
+				var barcode = null;
+				// 扫码成功回调
+				function onmarked(type, res) {
+					plus.nativeUI.showWaiting("正在解析二维码")
+					mui.ajax(JTURL + 'jkda/basteam/queryList', {
+						data: {
+							token: token,
+							teamCode: res
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(res) {
+							plus.nativeUI.closeWaiting();
+							console.log(JSON.stringify(res.page.list[0]));
+							if (res.code == 0) {
+								var sign = plus.webview.create("./sign.html", "sign", {}, {
+									informationHospital: res.page.list[0]
+								});
+								plus.webview.show(sign, "slide-in-right", 300)
+							} else if (res.code == 401) {
+								ajaxTokenInvalid();
+							} else {
+								otherErr();
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.closeWaiting();
+							ajaxError();
+						}
+					});
+				}
+
+				barcode = plus.barcode.create('barcode', [plus.barcode.QR], {
+					top: '44px',
+					left: '0px',
+					width: '100%',
+					height: '100%',
+					position: 'static'
+				});
+				barcode.onmarked = onmarked;
+				plus.webview.currentWebview().append(barcode);
+				barcode.start();
+
+
+			});
+		</script>
+	</body>
+
+</html>
