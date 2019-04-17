@@ -131,6 +131,8 @@
 								plus.storage.setItem("token", res.token);
 								plus.storage.setItem("phone", account.value);
 								mui.back();
+							} else if(res.code == 401){
+								plus.nativeUI.toast(res.msg);
 							} else {
 								otherErr();
 							}

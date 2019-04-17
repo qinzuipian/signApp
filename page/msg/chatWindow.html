@@ -252,9 +252,12 @@
 				var obj = {
 					senderId: app.chatUserId,
 					senderName: app.chatUserName,
-					content: messageCon.value
+					content: messageCon.value,
+					msgType: "text"
 				};
 				app.chatList.push(obj);
+				console.log(JSON.stringify(app.chatList));
+
 				messageCon.value = "";
 				messageCon.blur();
 				moreIcon.style.display = "inline-block";
@@ -329,7 +332,7 @@
 			})
 
 			// 长按 "按住说话" 按钮
-			
+
 			holdToSpeak.addEventListener("hold", function() {
 				isHoldEven = true;
 				console.log(isHoldEven);
@@ -389,6 +392,9 @@
 								msgType: "voice"
 							};
 							app.chatList.push(obj);
+							window.setTimeout(function() {
+								chatContentBox.scrollTop = chatContentBox.scrollHeight;
+							}, 100)
 						};
 					}, 500)
 				} else {
@@ -399,13 +405,6 @@
 				}
 
 			});
-			
-			
-			
-			
-			
-			
-			
 		</script>
 	</body>
 
