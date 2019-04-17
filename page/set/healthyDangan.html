@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>居民端健康档案</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/healthDangan.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left jcolor"></a>
+			<h1 class="mui-title mui-text-center mui-action-back colors">健康档案</h1>
+		</header>
+		<div id="app">
+			 <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		        <a class="mui-control-item mui-active" href="#item1">个人信息</a>
+		        <a class="mui-control-item" href="#item2">生活习惯</a>
+		   </div>
+			<div id="item1" class=" mui-control-content mui-active">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" v-for="(it,index) in personlist">
+						<div class="flex">
+							<p class="left" v-text="it.title"></p>
+							<p class="right" v-text="it.content"></p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div id="item2" class=" mui-control-content">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" v-for="(it,index) in hosbbylist" @click="getclick(it)">
+						<a class="mui-navigate-right">
+							<div class="flex">
+								<p class="left" v-text="it.title"></p>
+								<p class="right" style="margin-right: 10px;" v-text="it.content"></p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div> 
+		</div>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function () {
+			    getStorageDate();
+			    getdetailmsg();
+			})
+			var app =new Vue({
+				el:"#app",
+				data:{
+					hosbbylist: [
+						{
+							title:"运动情况",
+							id:'183',
+							content:'',
+							canshu1	:	"motionConditionCode",
+							canshu2	:	'motionConditionName'
+
+						},
+						{
+							title:"饮酒情况",
+							id:'184',
+							content:'',
+							canshu1	:	"drinkingSituationCode",
+							canshu2	:	'drinkingSituationName'
+						},
+						{
+							title:"吸烟情况",
+							id:'186',
+							content:'',
+							canshu1	:	"smokingSituationCode",
+							canshu2	:	'smokingSituationName'
+						},
+						{
+							title:"高脂饮食",
+							id:'182',
+							content:'',
+							canshu1	:	"highFatDietCode",
+							canshu2	:	'highFatDietName'
+						},
+						{
+							title:"药物过敏史",
+							id:'143',
+							content:'',
+							canshu1	:	"allergyDrug",
+							canshu2	:	'allergyDrugName'
+						}
+					],
+					personlist: [
+						{
+							title:"姓名",
+							content:""
+						},
+						{
+							title:"证件号码",
+							content:""
+						},
+						{
+							title:"性别",
+							content:""
+						},
+						{
+							title:"出生日期",
+							content:""
+						},
+						{
+							title:"本人电话",
+							content:""
+						},
+						{
+							title:"居住地址",
+							content:""
+						},
+						{
+							title:"民族",
+							content:""
+						},
+						{
+							title:"文化程度",
+							content:""
+						},
+						{
+							title:"婚姻状况",
+							content:""
+						},
+						{
+							title:"血型",
+							content:""
+						},
+						{
+							title:"RH血型",
+							content:""
+						},
+						{
+							title:"职业",
+							content:""
+						},
+						{
+							title:"药物过敏史",
+							content:""
+						}
+					]
+				},
+				methods:{
+					getclick:function(it){
+						getHobby(it);
+					}
+				}
+			})
+					
+				
+			function getHobby(it){
+				var hobby = plus.webview.create("./hobbylist.html","hobbylist",{},{
+					hobbys : it
+				});
+				plus.webview.show(hobby,'slide-in-right',300);
+			}
+			
+			window.addEventListener("refresh",function(e){
+				getdetailmsg();
+			},{passive:false})
+		
+			
+			function getdetailmsg(){
+//				console.log(userId);
+				mui.ajax(JTURL +'jkda/ehrpir/info/' + userId,{
+					data:{
+						token:token
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(res){
+//						console.log(JSON.stringify(res));
+							app.personlist[0].content= res.ehrPir.name;
+							app.personlist[1].content = res.ehrPir.idNo
+							app.personlist[2].content =res.ehrPir.genderCd//性别1男，2女
+							app.personlist[3].content = res.ehrPir.birthDate;
+							app.personlist[4].content = res.ehrPir.tel;
+							app.personlist[5].content = res.ehrPir.addr;
+							app.personlist[6].content = res.ehrPir.nation;//民族
+							app.personlist[7].content = res.ehrPir.edBgName;//文化
+							app.personlist[8].content = res.ehrPir.maritalStName//婚姻状态
+							app.personlist[9].content = res.ehrPir.aboName//血型
+							app.personlist[10].content = res.ehrPir.rhName//RH血型
+							app.personlist[11].content = res.ehrPir.occuTypeName;//职业
+							app.personlist[12].content = res.ehrPir.allergyDrugName//过敏史
+							app.hosbbylist[0].content = res.ehrPir.motionConditionName;//运动情况
+							app.hosbbylist[1].content = res.ehrPir.drinkingSituationName//饮酒情况
+							app.hosbbylist[2].content =res.ehrPir.smokingSituationName//吸烟
+							app.hosbbylist[3].content = res.ehrPir.highFatDietName;//高脂
+							app.hosbbylist[4].content = res.ehrPir.allergyDrugName;//药物不良反应
+					},
+					error:function(xhr,type,errorThrown){
+						ajaxError(type);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

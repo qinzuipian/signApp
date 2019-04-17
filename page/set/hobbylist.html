@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>生活习惯</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/healthDangan.css"/>
+		<style type="text/css">
+			.displynone {
+				display: none;
+			}
+			
+			.isChoose {
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 class="mui-title mui-text-center mui-action-back">生活习惯</h1>
+		</header>
+		<div id="app">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" v-for="(it,index) in list" :key="index" @click="checkItem(it,index)">
+					<div class="flex">
+						<p class="left" v-text="it.name"></p>
+						<p class="right check mui-icon displynone" :class="{isChoose: it.isStatus == 1}">√</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+				var health = plus.webview.getWebviewById('healthyDangan');
+				mui.fire(health,"refresh");
+				closeActivePage();
+				}
+			});
+			var canshu1, canshu2,hobby;
+			mui.plusReady(function() {
+				getStorageDate();
+				var ids = plus.webview.getWebviewById("hobbylist");
+				var id = ids.hobbys.id;
+				getHobby(id);
+			 	hobby = ids.hobbys.content;
+				canshu1 = ids.hobbys.canshu1;
+				canshu2 = ids.hobbys.canshu2;
+			})
+			var app = new Vue({
+				el: "#app",
+				data: {
+					list: [],
+				},
+				methods: {
+					checkItem: function(it, index) {
+						it.isStatus = 1;
+						save(it);
+						for(var i = 0; i < this.list.length; i++) {
+							if(i != index) {
+								this.list[i].isStatus = 0;
+							}
+						}
+						app.$forceUpdate(); //重新渲染dom元素
+					}
+				}
+			})
+
+			function getHobby(id) {
+				mui.ajax(JTURL + 'jkda/ehrpir/queryDataDictionary', {
+					data: {
+						codeInfoId: id
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						if(res.code== 0){
+//							console.log(JSON.stringify(res.data));
+							app.list = res.data;
+							for(var i = 0; i < app.list.length; i++) {
+//								console.log(hobby);
+//								console.log(app.list[i].name);
+								if(hobby == app.list[i].name){
+									app.list[i].isStatus = 1;
+								}else{
+									app.list[i].isStatus = 0;
+									
+								}
+
+							}
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type)
+					}
+				});
+			}
+				//修改
+			function save(it) {
+//				console.log(userId);
+				console.log(JSON.stringify(it));
+				var data = {};
+				data[canshu1] = it.id;
+				data[canshu2] = it.name;
+				data.id = userId; 
+				data = JSON.stringify(data);
+				console.log(data);
+				mui.ajax(JTURL + 'jkda/ehrpir/updateJkdaInfo', {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						if(res.code ==0){
+							mui.back();
+						}
+//						console.log(JSON.stringify(res));
+
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type)
+
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

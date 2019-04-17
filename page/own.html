@@ -36,7 +36,7 @@
 			</div>
 
 			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="healthy">
 					<a class="mui-navigate-right">
 						<div style="display: flex;line-height: 34px;">
 							<p class="iconfont" style="font-size: 18px;color: blue;">&#xe60a;</p>
@@ -91,6 +91,12 @@
 
 			var namePerson = document.getElementById("namePerson");
 			var system = document.getElementById("system");
+			//健康档案
+			var healthy = document.getElementById("healthy");
+			healthy.addEventListener("tap",function(){
+				var dangan = plus.webview.create("./set/healthyDangan.html","healthyDangan");
+				plus.webview.show(dangan,"slide-in-right",300);
+			},{passive:false})
 
 			// 请求信息
 			function pageInit() {

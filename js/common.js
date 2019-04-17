@@ -13,6 +13,7 @@
 	// birthDate   出生日期
 	// address     地址
 	// isContrct   是否可以进行签约
+	//userId       个人Id
 
 const JTURL = "http://192.168.1.188:8089/jkda/"
 // const JTURL = "http://192.168.1.4:8089/jkda/"
@@ -25,6 +26,7 @@ function getStorageDate(){
 	phone = plus.storage.getItem("phone");
 	areaCode = plus.storage.getItem("areaCode");
 	idCard = plus.storage.getItem("idCard");
+	userId = plus.storage.getItem("userId")
 }
 
 // 清楚本地所有缓存
