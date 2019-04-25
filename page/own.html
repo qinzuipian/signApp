@@ -94,8 +94,15 @@
 			//健康档案
 			var healthy = document.getElementById("healthy");
 			healthy.addEventListener("tap", function() {
-				var dangan = plus.webview.create("./set/healthyDangan.html", "healthyDangan");
-				plus.webview.show(dangan, "slide-in-right", 300);
+				var userStatus = plus.storage.getItem("userStatus");
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {
+					var dangan = plus.webview.create("./set/healthyDangan.html", "healthyDangan");
+					plus.webview.show(dangan, "slide-in-right", 300);
+				}
 			}, {
 				passive: false
 			})
@@ -107,9 +114,9 @@
 				if (userStatus == 2) { // 正常状态
 					var userName = plus.storage.getItem("userName");
 					namePerson.innerHTML = userName;
-				} else if(userStatus == 1) { // 未绑定
+				} else if (userStatus == 1) { // 未绑定
 					namePerson.innerHTML = "暂未绑定";
-				}else{ // 未登录
+				} else { // 未登录
 					namePerson.innerHTML = "登录/注册";
 				}
 			};
@@ -127,7 +134,7 @@
 				if (namePerson.innerHTML == "登录/注册") {
 					var login = plus.webview.create("./login/login.html");
 					plus.webview.show(login, "slide-in-right", 300);
-				}else if(namePerson.innerHTML == "暂未绑定"){
+				} else if (namePerson.innerHTML == "暂未绑定") {
 					var bindIdCard = plus.webview.create("./login/bindIdCard.html", "bindIdCard");
 					plus.webview.show(bindIdCard, "slide-in-right", 300);
 				}

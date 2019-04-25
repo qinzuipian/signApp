@@ -170,15 +170,17 @@
 
 
 			function getdetailmsg() {
-				//				console.log(userId);
-				mui.ajax(JTURL + 'jkda/ehrpir/info/' + userId, {
+								console.log(personId);
+				mui.ajax(JTURL + 'jkda/ehrpir/info/' + personId, {
 					data: {
 						token: token
+						
 					},
 					dataType: 'json', //服务器返回json格式数据
 					type: 'post', //HTTP请求类型
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(res) {
+						console.log(JSON.stringify(res));
 						if (res.code == 0) {
 							if(res.ehrPir.genderCd == 1){
 								app.personlist[2].content = "男"
