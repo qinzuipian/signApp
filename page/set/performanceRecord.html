@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>履约记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/performanceRecord.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">履约记录</h1>
+		</header>
+
+		<div id="app">
+			<p class="recordTitle">履约项目</p>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell flex" v-for="(it, index) in recordList">
+					<div class="record-msg">
+						<p class="record-name shengluohao">服务内容: <span v-text="it.taskName"></span></p>
+						<p class="record-num shengluohao">剩余服务次数: <span v-text="it.num"></span></p>
+						<p class="record-starttime shengluohao">开始时间: <span v-text="it.startDate"></span></p>
+						<p class="record-endtime shengluohao">结束时间: <span v-text="it.endDate"></span></p>
+					</div>
+					<div class="record-btn">
+						<button type="button" data-loading-text="正在加载" class="mui-btn mui-btn-primary" @click="performance(it, index)">履约</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			
+			var app = new Vue({
+				el: "#app",
+				data: {
+					recordList: []
+				},
+				methods:{
+					performance: function(it, index){
+						var toPerformance = plus.webview.create("./toPerformance.html", toPerformance,{},{
+							performanceItem: it
+						});
+						plus.webview.show(toPerformance, "slide-in-right", 300)
+					}
+				}
+			})
+			
+			mui.plusReady(function() {
+				getStorageDate();
+				performanceRecordInit();
+			});
+
+			function performanceRecordInit() {
+				mui.ajax(JTURL + 'jkda/basservicetask/queryTaskList', {
+					data: {
+						personId: personId,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							app.recordList = res.data;
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

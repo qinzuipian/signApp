@@ -13,49 +13,56 @@
 
 
 /* 通用 */
-p{
+p {
 	color: black;
 	font-size: 15px;
 }
-li{
+
+li {
 	list-style: none;
 }
 
-.header-blue{
-	background: rgb(44, 154,255);
+.header-blue {
+	background: rgb(44, 154, 255);
 	z-index: 999;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 }
-.header-blue p{
+
+.header-blue p {
 	color: white;
 }
-.header-blue span{
+
+.header-blue span {
 	color: white;
 }
-.header-blue i{
+
+.header-blue i {
 	color: white;
 }
-.header-blue h1{
+
+.header-blue h1 {
 	color: white;
 	line-height: 50px;
 }
-.header-blue a{
+
+.header-blue a {
 	color: white;
 }
 
 /*  距离顶部45px */
-#app{
+#app {
 	margin-top: 45px;
 }
 
-.fontcolor{
+.fontcolor {
 	color: blue;
 }
-.flex{
-	display: flex!important;
+
+.flex {
+	display: flex !important;
 }
 
 
@@ -68,33 +75,40 @@ li{
  	</div>
  </div>
  */
-.search-box input{
+.search-box input {
 	background: white;
-    border-radius: 5px 0 0 5px;
-    width: 70%;
-    margin-left: 5%;
-    padding-top: 10px;
-    height: 35px;
+	border-radius: 5px 0 0 5px;
+	width: 70%;
+	margin-left: 5%;
+	padding-top: 10px;
+	height: 35px;
 	border: 1px solid #669999;
 }
 
-.search-box p{
+.search-box p {
 	width: 20%;
-    text-align: center;
-    font-size: 14px;
-    color: white;
+	text-align: center;
+	font-size: 14px;
+	color: white;
 	height: 35px;
-    line-height: 38px;
-    background: #669999;
+	line-height: 38px;
+	background: #669999;
 	border-radius: 0 5px 5px 0;
 }
 
 
 /* 没有内容的时候显示 暂无数据  */
-#noContent p{
+#noContent p {
 	width: 100%;
 	text-align: center;
 	line-height: 100px;
 	font-size: 28px;
 	color: gray;
+}
+
+/* 超出显示省略号 */
+.shengluohao {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }

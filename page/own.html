@@ -52,11 +52,11 @@
 						</div>
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="performanceRecord">
 					<a class="mui-navigate-right">
 						<div style="display: flex;line-height: 34px;">
 							<p class="iconfont" style="font-size: 18px;color: red;">&#xe626;</p>
-							<p style="color: black;font-size: 14px;margin-left: 8px;">服务记录</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">履约记录</p>
 						</div>
 					</a>
 				</li>
@@ -84,8 +84,10 @@
 		<script src="../js/common.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			var userStatus;
 			mui.plusReady(function() {
 				getStorageDate();
+				userStatus = plus.storage.getItem("userStatus");
 				pageInit();
 			});
 
@@ -94,7 +96,6 @@
 			//健康档案
 			var healthy = document.getElementById("healthy");
 			healthy.addEventListener("tap", function() {
-				var userStatus = plus.storage.getItem("userStatus");
 				if (userStatus == 0) {
 					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
 				} else if (userStatus == 1) {
@@ -150,9 +151,24 @@
 				passive: false
 			});
 
+			// 签约记录
 			document.getElementById("signRecode").addEventListener("tap", function() {
 				var signRecode = plus.webview.create("./index1/signRecode.html");
 				plus.webview.show(signRecode, "slide-in-right", 300)
+			}, {
+				passive: false
+			});
+
+			// 履约记录
+			document.getElementById("performanceRecord").addEventListener("tap", function() {
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {
+					var performanceRecord = plus.webview.create("./set/performanceRecord.html", performanceRecord);
+					plus.webview.show(performanceRecord, "slide-in-right", 300);
+				}
 			}, {
 				passive: false
 			})

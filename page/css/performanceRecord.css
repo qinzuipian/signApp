@@ -1,0 +1,39 @@
+@charset "utf-8";
+body{
+	background: white;
+}
+
+.recordTitle{
+	padding: 0 15px;
+	width: 100%;
+	line-height: 50px;
+	font-size: 17px;
+	background: rgb(236, 235, 241);
+	margin-bottom: 0;
+}
+.record-msg{
+	width: 70%;
+}
+.record-msg p{
+	line-height: 30px;
+}
+
+.record-name{
+	font-size: 16px;
+}
+.record-num{
+	font-size: 16px;
+}
+.record-starttime,.record-endtime{
+	font-size: 13px;
+	color: gray;
+}
+
+.record-btn{
+	width: 30%;
+}
+
+.record-btn button{
+	margin-top: 40px;
+	width: 100px;
+}
