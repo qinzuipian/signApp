@@ -168,9 +168,11 @@
 							plus.storage.setItem("areaCode", res.UserInfo.communityCode);
 							
 							plus.storage.setItem("idCard", res.UserInfo.idNo);   // 身份证
-							plus.storage.setItem("userId", res.UserInfo.id);   // 个人ID
 							
-							plus.storage.setItem("isContrct", res.UserInfo.isContrct)
+							plus.storage.setItem("isContrct", res.UserInfo.isContrct) // 是否可以进行签约
+							plus.storage.setItem("personId", res.UserInfo.id) // 保存personId;
+							
+							plus.storage.setItem("teamCode", res.UserInfo.teamCode) // 签约的团队code
 							
 							if(res.UserInfo.genderCd == 1){
 								plus.storage.setItem("genderCd", "男");
@@ -184,10 +186,12 @@
 							mui.fire(ownPage, "refresh");
 							var indexPage = plus.webview.getWebviewById("index_");
 							mui.fire(indexPage, "refresh");
+							var msgPage = plus.webview.getWebviewById("msg");
+							mui.fire(msgPage, "refresh");
 							
 							
 						} else if (res.code == 401) {
-							// userStatus = 2; // 未登录
+							// userStatus = 0; // 未登录
 							plus.storage.setItem("userStatus", "0")
 						} else if (res.code == 501 && res.msg == "未找到绑定用户信息！") {
 							// userStatus = 1; // 未绑定
@@ -216,6 +220,23 @@
 				
 			}
 			
+			window.addEventListener("reloadIndex", function() {
+				index = plus.webview.getWebviewById("index_");
+					index.show();
+					if(msg) {
+						msg.hide()
+					}
+					if(own) {
+						own.hide()
+					}
+				document.getElementById("index_").className = "mui-active mui-tab-item";
+				document.getElementById("msg").className = "mui-tab-item";
+				document.getElementById("own").className = "mui-tab-item";
+
+			}, {
+				passive: false
+			})
+		
 		</script>
 	</body>
 

@@ -136,6 +136,10 @@
 			// 发起签约
 			function signingTo(){
 				// 创建一个确认签约的页面   确认信息
+				var sign = plus.webview.create("./sign.html", "sign", {}, {
+					informationHospital: teamDetails
+				});
+				plus.webview.show(sign, "slide-in-right", 300)
 			}
 			
 			

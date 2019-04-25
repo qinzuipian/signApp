@@ -60,6 +60,8 @@
 			var sex = document.getElementById("sex"); // 性别
 			var birthDate = document.getElementById("birthDate"); // 出生日期
 			var address = document.getElementById("address"); // 住址
+			
+			var idNo;
 
 			mui.plusReady(function() {
 				getUserMsg(); // 获取上个页面传过来的用户信息
@@ -71,20 +73,26 @@
 				var currentPage = plus.webview.currentWebview();
 				userMsg = currentPage.userMsg;
 				nameU.innerHTML = userMsg.name;
-				idCard.innerHTML = userMsg.idNo;
+				idCard.innerHTML = userMsg.idNo;				
+				idNo = userMsg.idNo;
 				sex.innerHTML = userMsg.genderCd;
 				birthDate.innerHTML = userMsg.birthDate.split(" ")[0];
 				address.innerHTML = userMsg.addr
 			}
 			
+			// var idCardInner = idCard.innerHTML;
+			
+			
 			// 确认
 			document.getElementById("confirm").addEventListener("tap", function(){
 				token = plus.storage.getItem("token");
 				phone = plus.storage.getItem("phone");
+				console.log(idNo);
+
 				plus.nativeUI.showWaiting( "等待中..."); 
 				mui.ajax(JTURL + 'jkda/ehrpiruser/bindIdNo',{
 					data:{
-						idNo: idCard.innerHTML,
+						idNo: idNo,
 						mobile: phone,
 						token: token
 					},
@@ -93,6 +101,7 @@
 					timeout:10000,//超时时间设置为10秒；
 					success:function(res){
 						plus.nativeUI.closeWaiting();
+						console.log(JSON.stringify(res));
 						if(res.code == 0){
 							plus.nativeUI.toast("绑定成功");
 							var index = plus.webview.getWebviewById(plus.runtime.appid);

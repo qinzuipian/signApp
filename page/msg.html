@@ -19,7 +19,7 @@
 				<a class="mui-control-item mui-active" href="#item1">通知</a>
 				<a class="mui-control-item" href="#item2">互动</a>
 			</div> -->
-			<div class="mui-slider-group">
+			<div class="mui-slider-group" id="msgContent" style="display: none;">
 				<!-- <div id="item1" class="mui-slider-item mui-control-content mui-active">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell flex inform">
@@ -34,17 +34,23 @@
 				<div id="item2" class="mui-slider-item mui-control-content mui-active chat-item-box">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell chat-item" v-for="(it, index) in chatList" @click="toChatWindow(it)">
-							<p v-text="it.name"></p>
-							<span class="mui-badge mui-badge-primary">12</span>
+							<p v-text="it.doctorName + '(' + it.professional + ')'"></p>
+							<span class="mui-badge mui-badge-primary" v-if="it.isRead" v-text="it.readNum"></span>
 						</li>
 					</ul>
 				</div>
-				
+
+			</div>
+
+			<div id="noContent" style="display: block;">
+				<p>暂无数据</p>
 			</div>
 		</div>
 
 		<script src="../js/mui.min.js"></script>
+		<script src="https://cdn.ronghub.com/RongIMLib-2.4.0.min.js"></script>
 		<script src="../js/vue.min.js"></script>
+		<script src="../js/common.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能,
@@ -55,30 +61,299 @@
 			var app = new Vue({
 				el: "#app",
 				data: {
-					chatList: [
-						{
-							name: "团队1",
-							id: 0
-						},
-						{
-							name: "团队2",
-							id: 1
-						}
-					]
+					chatList: [],
+					activeDoc: 0
 				},
-				methods:{
-					toChatWindow: function(it){
-						var chatWindow = plus.webview.create("./msg/chatWindow.html", "chatWindow", {}, {
-							chatId: it
+				methods: {
+					toChatWindow: function(it) {
+						this.activeDoc = it.doctorNo + "";
+						it.isRead = false;
+						it.readNum = 0;
+						app.$forceUpdate(); //重新渲染dom元素
+						// 获取历史记录
+						var conversationTypeHistory = RongIMLib.ConversationType.PRIVATE; //单聊, 其他会话选择相应的消息类型即可
+						var timestrap = null; // 默认传 null，若从头开始获取历史消息，请赋值为 0, timestrap = 0;
+						var count = 20; // 每次获取的历史消息条数，范围 0-20 条，可以多次获取
+						targetId = it.doctorNo;
+						RongIMLib.RongIMClient.getInstance().getHistoryMessages(conversationTypeHistory, targetId, timestrap, count, {
+							onSuccess: function(list, hasMsg) {
+								console.log(JSON.stringify(list));
+								console.log(hasMsg);
+								// list => Message 数组。
+								// hasMsg => 是否还有历史消息可以获取。
+								chatWindow = plus.webview.create("./msg/chatWindow.html", "chatWindow", {}, {
+									chatObj: it,
+									chatHistoryList: list
+								});
+								plus.webview.show(chatWindow, "slide-in-right", 300);
+								
+							},
+							onError: function(error) {
+								console.log('GetHistoryMessages, errorcode:' + error);
+								chatWindow = plus.webview.create("./msg/chatWindow.html", "chatWindow", {}, {
+									chatObj: it,
+									chatHistoryList: []
+								});
+								plus.webview.show(chatWindow, "slide-in-right", 300);
+							}
 						});
-						plus.webview.show(chatWindow, "slide-in-right", 300)
 					}
 				}
-			})
-			mui.plusReady(function () {
-			    
 			});
-		
+			var userStatus, teamCode;
+
+			var chatWindow; // 聊天界面
+
+			mui.plusReady(function() {
+				userStatus = plus.storage.getItem("userStatus");
+				teamCode = plus.storage.getItem("teamCode");
+
+				getStorageDate();
+				// 初始化
+				msgInit();
+				// 开始融云
+				if (userStatus == 2) { // 正常状态
+					var ryAppKey = plus.storage.getItem("ryAppKey");
+					var ryToken = plus.storage.getItem("ryToken");
+
+					// 融云初始化
+					RongIMLib.RongIMClient.init(ryAppKey);
+
+					// 连接状态监听器
+					RongIMClient.setConnectionStatusListener({
+						onChanged: function(status) {
+							// status 标识当前连接状态
+							switch (status) {
+								case RongIMLib.ConnectionStatus.CONNECTED:
+									console.log('链接成功');
+									break;
+								case RongIMLib.ConnectionStatus.CONNECTING:
+									console.log('正在链接');
+									break;
+								case RongIMLib.ConnectionStatus.DISCONNECTED:
+									console.log('断开连接');
+									break;
+								case RongIMLib.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT:
+									console.log('其他设备登录');
+									break;
+								case RongIMLib.ConnectionStatus.DOMAIN_INCORRECT:
+									console.log('域名不正确');
+									break;
+								case RongIMLib.ConnectionStatus.NETWORK_UNAVAILABLE:
+									console.log('网络不可用');
+									break;
+							}
+						}
+					});
+
+					// 消息监听器
+					RongIMClient.setOnReceiveMessageListener({
+						// 接收到的消息
+						onReceived: function(message) {
+							console.log(JSON.stringify(message));
+							console.log(app.activeDoc);
+							console.log(message.senderUserId);
+							// 判断消息类型
+							switch (message.messageType) {
+								case RongIMClient.MessageType.TextMessage:
+									// message.content.content => 文字内容
+									if (app.activeDoc == 0) { // 没有在聊天窗口页
+										console.log("没有在聊天页");
+										for (var i = 0; i < app.chatList.length; i++) {
+											if (app.chatList[i].doctorNo == message.senderUserId) {
+												app.chatList[i].isRead = true;
+												app.chatList[i].readNum = app.chatList[i].readNum + 1;
+												app.$forceUpdate(); //重新渲染dom元素
+												console.log(JSON.stringify(app.chatList[i]));
+											}
+										}
+									} else if (app.activeDoc == message.senderUserId) { // 正在聊天的对象发送来的消息
+										console.log("当前聊天对象的消息");
+										mui.fire(chatWindow, 'receiveMsg', {
+											content: message.content.content,
+											msgType: "text"
+										})
+									} else { // 不是正在聊天的对象发送来的消息
+										console.log("不是当前聊天对象的消息");
+
+									}
+									break;
+								case RongIMClient.MessageType.VoiceMessage:
+									// message.content.content => 格式为 AMR 的音频 base64
+									break;
+								case RongIMClient.MessageType.ImageMessage:
+									// message.content.content => 图片缩略图 base64
+									// message.content.imageUri => 原图 URL
+									break;
+								case RongIMClient.MessageType.LocationMessage:
+									// message.content.latiude => 纬度
+									// message.content.longitude => 经度
+									// message.content.content => 位置图片 base64
+									break;
+								case RongIMClient.MessageType.RichContentMessage:
+									// message.content.content => 文本消息内容
+									// message.content.imageUri => 图片 base64
+									// message.content.url => 原图 URL
+									break;
+								case RongIMClient.MessageType.InformationNotificationMessage:
+									// do something
+									break;
+								case RongIMClient.MessageType.ContactNotificationMessage:
+									// do something
+									break;
+								case RongIMClient.MessageType.ProfileNotificationMessage:
+									// do something
+									break;
+								case RongIMClient.MessageType.CommandNotificationMessage:
+									// do something
+									break;
+								case RongIMClient.MessageType.CommandMessage:
+									// do something
+									break;
+								case RongIMClient.MessageType.UnknownMessage:
+									// do something
+									break;
+								default:
+									// do something
+							}
+						}
+					});
+
+					RongIMClient.connect(ryToken, {
+						onSuccess: function(userId) {
+							console.log('Connect successfully. ' + userId);
+						},
+						onTokenIncorrect: function() {
+							console.log('token 无效');
+						},
+						onError: function(errorCode) {
+							var info = '';
+							switch (errorCode) {
+								case RongIMLib.ErrorCode.TIMEOUT:
+									info = '超时';
+									break;
+								case RongIMLib.ConnectionState.UNACCEPTABLE_PAROTOCOL_VERSION:
+									info = '不可接受的协议版本';
+									break;
+								case RongIMLib.ConnectionState.IDENTIFIER_REJECTED:
+									info = 'appkey不正确';
+									break;
+								case RongIMLib.ConnectionState.SERVER_UNAVAILABLE:
+									info = '服务器不可用';
+									break;
+							}
+							console.log(info);
+						}
+					});
+				}
+
+
+			});
+
+			var msgContent = document.getElementById("msgContent");
+			var noContent = document.getElementById("noContent");
+
+			function msgInit() {
+				if (userStatus == 2) { // 正常状态
+					msgContent.style.display = "block";
+					noContent.style.display = "none";
+					if (teamCode == "暂未签约") {
+						msgContent.style.display = "none";
+						noContent.style.display = "block";
+					} else {
+						// console.log(token);
+						// console.log(teamCode);
+						mui.ajax(JTURL + 'jkda/basteam/list', {
+							data: {
+								token: token,
+								teamCode: teamCode
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(res) {
+								console.log(JSON.stringify(res));
+								// 在这里循环列表  显示出来聊天列表
+								if (res.code == 0) {
+									app.chatList = res.page.list;
+									for (var i = 0; i < app.chatList.length; i++) {
+										app.chatList[i].isRead = false;
+										app.chatList[i].readNum = 0;
+									}
+								} else if (res.code == 401) {
+									ajaxTokenInvalid();
+								} else {
+									otherErr();
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								ajaxError();
+							}
+						});
+					}
+
+
+				} else { // 未登录或者未绑定
+					msgContent.style.display = "none";
+					noContent.style.display = "block";
+				};
+			};
+
+			// 刷新
+			window.addEventListener("refresh", function() {
+				getStorageDate();
+				msgInit();
+			});
+
+			// 发送消息
+			window.addEventListener("sendMsg", function(e) {
+				console.log(JSON.stringify(e.detail));
+
+				var msg = new RongIMLib.TextMessage({
+					content: e.detail.content
+				});
+				var targetId = e.detail.targetId;
+
+				var conversationType = RongIMLib.ConversationType.PRIVATE; // 单聊, 其他会话选择相应的消息类型即可
+				RongIMClient.getInstance().sendMessage(conversationType, targetId, msg, {
+					onSuccess: function(message) {
+						// message 为发送的消息对象并且包含服务器返回的消息唯一 Id 和发送消息时间戳
+						console.log('Send successfully');
+						console.log(JSON.stringify(message));
+					},
+					onError: function(errorCode, message) {
+						var info = '';
+						switch (errorCode) {
+							case RongIMLib.ErrorCode.TIMEOUT:
+								info = '超时';
+								break;
+							case RongIMLib.ErrorCode.UNKNOWN:
+								info = '未知错误';
+								break;
+							case RongIMLib.ErrorCode.REJECTED_BY_BLACKLIST:
+								info = '在黑名单中，无法向对方发送消息';
+								break;
+							case RongIMLib.ErrorCode.NOT_IN_DISCUSSION:
+								info = '不在讨论组中';
+								break;
+							case RongIMLib.ErrorCode.NOT_IN_GROUP:
+								info = '不在群组中';
+								break;
+							case RongIMLib.ErrorCode.NOT_IN_CHATROOM:
+								info = '不在聊天室中';
+								break;
+						}
+						console.log('发送失败: ' + info + errorCode);
+					}
+				});
+
+			});
+
+			// 关闭聊天窗口
+			window.addEventListener("chatWindowClose", function() {
+				chatWindow = null;
+				app.activeDoc = 0;
+			})
 		</script>
 	</body>
 

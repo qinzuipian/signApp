@@ -61,12 +61,10 @@
 			})
 			//签约记录
 			function signRecodeInit() {
-				var userId = plus.storage.getItem("userId");
-				console.log(userId);
 				mui.ajax(JTURL + 'jkda/bascontract/list', {
 					data: {
 						token: token,
-						personId: userId
+						personId: personId
 					},
 					dataType: 'json', //服务器返回json格式数据
 					type: 'post', //HTTP请求类型

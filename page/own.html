@@ -93,39 +93,25 @@
 			var system = document.getElementById("system");
 			//健康档案
 			var healthy = document.getElementById("healthy");
-			healthy.addEventListener("tap",function(){
-				var dangan = plus.webview.create("./set/healthyDangan.html","healthyDangan");
-				plus.webview.show(dangan,"slide-in-right",300);
-			},{passive:false})
+			healthy.addEventListener("tap", function() {
+				var dangan = plus.webview.create("./set/healthyDangan.html", "healthyDangan");
+				plus.webview.show(dangan, "slide-in-right", 300);
+			}, {
+				passive: false
+			})
 
 			// 请求信息
 			function pageInit() {
-				mui.ajax(JTURL + 'jkda/ehrpiruser/getUser', {
-					data: {
-						token: token
-					},
-					dataType: 'json', //服务器返回json格式数据
-					type: 'post', //HTTP请求类型
-					timeout: 10000, //超时时间设置为10秒；
-					success: function(res) {
-						console.log(JSON.stringify(res));
-						if (res.code == 0) {
-							plus.storage.setItem("userName", res.UserInfo.name);
-							var userName = plus.storage.getItem("userName");
-							if (userName == null || userName == "") {
-								namePerson.innerHTML = "登录/注册";
-							} else {
-								namePerson.innerHTML = userName;
-							}
-							console.log(userName);
-						}else if(res.code == 401){
-							namePerson.innerHTML = "登录/注册";
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-						namePerson.innerHTML = "登录/注册";
-					}
-				});
+				var userStatus = plus.storage.getItem("userStatus");
+
+				if (userStatus == 2) { // 正常状态
+					var userName = plus.storage.getItem("userName");
+					namePerson.innerHTML = userName;
+				} else if(userStatus == 1) { // 未绑定
+					namePerson.innerHTML = "暂未绑定";
+				}else{ // 未登录
+					namePerson.innerHTML = "登录/注册";
+				}
 			};
 
 			// 设置
@@ -135,12 +121,15 @@
 			}, {
 				passive: false
 			});
-			
+
 			// 登录
 			namePerson.addEventListener("tap", function() {
 				if (namePerson.innerHTML == "登录/注册") {
 					var login = plus.webview.create("./login/login.html");
 					plus.webview.show(login, "slide-in-right", 300);
+				}else if(namePerson.innerHTML == "暂未绑定"){
+					var bindIdCard = plus.webview.create("./login/bindIdCard.html", "bindIdCard");
+					plus.webview.show(bindIdCard, "slide-in-right", 300);
 				}
 			}, {
 				passive: false
@@ -153,14 +142,13 @@
 			}, {
 				passive: false
 			});
-			
-			document.getElementById("signRecode").addEventListener("tap", function(){
+
+			document.getElementById("signRecode").addEventListener("tap", function() {
 				var signRecode = plus.webview.create("./index1/signRecode.html");
 				plus.webview.show(signRecode, "slide-in-right", 300)
-			},{passive: false})
-			
-			
-			
+			}, {
+				passive: false
+			})
 		</script>
 	</body>
 

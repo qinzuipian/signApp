@@ -16,9 +16,11 @@
 			<h1 class="mui-title bind-title" id="chatNameDom"></h1>
 		</header>
 
-		<div id="app">
+		<div id="app_error" style="display: block;"></div>
+
+		<div id="app" style="display: none;">
 			<div class="chat-content-box" id="chatContentBox">
-				<div v-for="(it, index) in chatList">
+				<div v-for="(it, index) in chatList" class="chatmsgbox">
 					<div v-if="it.msgType == 'text'">
 						<div v-if="it.senderId != chatUserId">
 							<p class="sender-name" v-text="it.senderName"></p>
@@ -48,7 +50,7 @@
 								<div>
 									<img src="../../img/msg/huanzhe.png">
 								</div>
-								<p @click="playThisAudio(it)">点击播放语音</p>
+								<p @click="playThisAudio(it, index)" :style="{width: it.widthLength}" v-text="it.duration"></p>
 							</div>
 						</div>
 
@@ -58,7 +60,8 @@
 								<div>
 									<img src="../../img/msg/yisheng.png">
 								</div>
-								<p @click="playThisAudio(it)">点击播放语音</p>
+								<p @click="playThisAudio(it, index)" :style="{width: it.widthLength}" :class="{activeAudio: it.isPlay == 1}"
+								 v-text="it.duration"></p>
 							</div>
 						</div>
 					</div>
@@ -140,6 +143,7 @@
 
 
 		<script src="../../js/mui.js"></script>
+		<script src="https://cdn.ronghub.com/RongIMLib-2.4.0.min.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script src="../../js/common.js"></script>
 		<script type="text/javascript">
@@ -147,6 +151,7 @@
 				swipeBack: false, //启用右滑关闭功能
 				beforeback: function() {
 					closeActivePage();
+					mui.fire(msgPage, 'chatWindowClose')
 				},
 				gestureConfig: {
 					tap: true, //默认为true
@@ -156,50 +161,68 @@
 				}
 			});
 
+			var audioObj = null; // 录音对象
+			var playThisAudioObj = null; // 播放语音对象
+			var audioPath = null; // 录音路径
+			var voiceTime; // 倒计时 -- 定时器
+			var isHoldEven = false; // 判断是否为长按,   如果没有这一步,点击之后也会执行release函数;
+
 			var app = new Vue({
 				el: "#app",
 				data: {
 					chatUserId: 1,
 					chatUserName: "爸爸",
-					chatList: [{
-							senderName: "亮亮",
-							senderId: 2,
-							content: "爸爸我饿了",
-							msgType: "text"
-						},
-						{
-							senderName: "爸爸",
-							senderId: 1,
-							content: "乖，爸爸带你吃东西爸爸带你吃东西爸爸带你吃东西爸爸带你吃东西爸爸带你吃东西爸爸带你吃东西爸爸带你吃东西爸爸带你吃东西",
-							msgType: "text"
-						}
+					chatList: [
+						// 																		{
+						// 																			senderName: "亮亮",
+						// 																			senderId: 2,
+						// 																			content: "爸爸我饿了",
+						// 																			msgType: "text"
+						// 																		},
+						// 												{
+						// 													senderName: "爸爸",
+						// 													senderId: 1,
+						// 													content: "乖，爸爸带你吃东西",
+						// 													msgType: "text"
+						// 												}
 					]
 				},
 				methods: {
 					// 点击播放语音
-					playThisAudio: function(it) {
-						// 播放录音
-						setTimeout(function() {
+					playThisAudio: function(it, index) {
+						playThisAudioObj = plus.audio.createPlayer(it.voicePath);
+
+						if (it.isPlay == 0) { // 点了一下,需要播放语音
+							it.isPlay = 1;
+							// 							for (var i = 0; i < this.chatList.length; i++) { // 循环查找当前有没有正在播放的语音
+							// 								if (i != index) { // 如果当前循环项不是当前点击项
+							// 									if (this.chatList[i].isPlay == 1) { // 如果当前循环项正在播放
+							// 										this.chatList[i].isPlay = 0; // 关闭当前播放的语音
+							// 									}
+							// 								}
+							// 							}
+							// 播放录音
 							if (plus.audio == undefined) {
 								alert("播放出错,请检查是否支持播放功能");
 							};
-							playAudio = plus.audio.createPlayer(it.voicePath);
-							playAudio.play(function() {
-								console.log("Audio play success!");
+							playThisAudioObj.play(function() {
+								console.log("播放完毕");
+								// 播放完毕
+								it.isPlay = 0;
 							}, function(e) {
 								console.log("Audio play error: " + e.message);
+								it.isPlay = 0;
 							});
-						}, 1000)
+							app.$forceUpdate(); // 重新渲染DOM
+
+						} else if (it.isPlay == 1) { // 点了一下,需要停止播放
+							// it.isPlay = 0;
+							playThisAudioObj.stop();
+							// app.$forceUpdate(); // 重新渲染DOM
+						}
 					}
 				}
 			});
-
-			var audioObj = null; // 录音对象
-			var playAudio = null; // 播放语音对象
-			var audioPath = null; // 录音路径
-			var voiceTime; // 倒计时 -- 定时器
-			var isHoldEven = false; // 判断是否为长按,   如果没有这一步,点击之后也会执行release函数;
-
 
 			var messageCon = document.getElementById("messageCon"); // 输入框
 			var moreIcon = document.getElementById("moreIcon"); // 更多 按钮
@@ -214,24 +237,105 @@
 			var microphoneBoxShort = document.getElementById("microphoneBoxShort"); // 录音时间太短
 			var footerContent = document.getElementById("footerContent"); // 底部输入块
 
+			// var ryAppKey, ryToken, targetId; // 融云的appkey和token
+
+			var targetId; // 聊天对象的ID
+			var msgPage;
 			mui.plusReady(function() {
 				getStorageDate();
 				chatWindowInit();
-			});
-			// 初始化
-			function chatWindowInit() {
+
 				// 显示聊天对象
 				var ws = plus.webview.currentWebview();
-				// console.log(ws.chatId.name);
-				document.getElementById("chatNameDom").innerHTML = ws.chatId.name
+				document.getElementById("chatNameDom").innerHTML = ws.chatObj.doctorName;
+				targetId = ws.chatObj.doctorNo;
+				// app.chatList = ws.chatHistoryList;
+				for (var i = 0; i < ws.chatHistoryList.length; i++) {
+					// 					{
+					// 						senderName: "亮亮",
+					// 						senderId: 2,
+					// 						content: "爸爸我饿了",
+					// 						msgType: "text"
+					// 					},
+					var obj = {};
+					if(ws.chatHistoryList[i].senderUserId == app.chatUserId){
+						obj.senderName = userName;
+						obj.senderId = userId;
+					}else{
+						obj.senderName = ws.chatObj.doctorName;
+						obj.senderId = ws.chatObj.doctorNo;
+					}
+					
+					obj.content = ws.chatHistoryList[i].content.content;
+					
+					if(ws.chatHistoryList[i].messageType = "TextMessage"){
+						obj.msgType = "text"
+					}
+					app.chatList.push(obj);
+				};
+				
+				setTimeout(function(){
+					chatContentBox.scrollTop = chatContentBox.scrollHeight;
+				},10)
 
+
+				// 聊天列表页面
+				msgPage = plus.webview.getWebviewById("msg");
+
+				document.getElementById("app_error").style.display = "none";
+				document.getElementById("app").style.display = "block"
+
+
+			});
+
+
+			// 初始化
+			function chatWindowInit() {
 				// 获取窗口高度并设置聊天内容显示区域的大小
 				chatContentBox.style.maxHeight = plus.screen.resolutionHeight - 45 - 75 + "px";
 				chatContentBox.scrollTop = chatContentBox.scrollHeight;
 
 				// 初始化录音
 				audioObj = plus.audio.getRecorder();
+
+				// 获取当前用户的ID 
+				// console.log(userId);
+				app.chatUserId = userId;
 			};
+			
+			// 监听页面滑动时间
+			chatContentBox.addEventListener("swipedown", function(){
+				console.log(chatContentBox.scrollTop);
+				if(chatContentBox.scrollTop == 0){
+					console.log("到顶部了,加载下一页聊天记录");
+				}
+			})
+			// 监听发送按钮
+			sendBtn.addEventListener("tap", function() {
+				var obj = {
+					senderId: app.chatUserId,
+					senderName: app.chatUserName,
+					content: messageCon.value,
+					msgType: "text"
+				};
+				app.chatList.push(obj);
+			
+				// 讲发送消息的事件发送给列表页
+				mui.fire(msgPage, 'sendMsg', {
+					targetId: targetId,
+					content: messageCon.value
+				})
+			
+				messageCon.blur();
+				messageCon.value = "";
+				moreIcon.style.display = "inline-block";
+				sendBtn.style.display = "none";
+				window.setTimeout(function() {
+					chatContentBox.scrollTop = chatContentBox.scrollHeight;
+				}, 100);
+			}, {
+				passive: false
+			});
 
 			// 监听输入框   改变发送与更多切换
 			messageCon.addEventListener("input", function() {
@@ -243,28 +347,6 @@
 					sendBtn.style.display = "block";
 				}
 
-			}, {
-				passive: false
-			})
-
-			// 监听发送按钮
-			sendBtn.addEventListener("tap", function() {
-				var obj = {
-					senderId: app.chatUserId,
-					senderName: app.chatUserName,
-					content: messageCon.value,
-					msgType: "text"
-				};
-				app.chatList.push(obj);
-				console.log(JSON.stringify(app.chatList));
-
-				messageCon.value = "";
-				messageCon.blur();
-				moreIcon.style.display = "inline-block";
-				sendBtn.style.display = "none";
-				window.setTimeout(function() {
-					chatContentBox.scrollTop = chatContentBox.scrollHeight;
-				}, 100)
 			}, {
 				passive: false
 			})
@@ -383,14 +465,20 @@
 
 							// 录音完毕,保存在本地,并展示在页面
 							var l = 60 - microphoneNum.innerHTML; // 语音长度
+							var widthNum = plus.display.resolutionWidth * 0.9 - 100;
+							var ratio = (widthNum - 50) / 60;
 
+							console.log(ratio);
 							var obj = {
 								senderId: app.chatUserId,
 								senderName: app.chatUserName,
 								voicePath: audioPath,
-								duration: l,
-								msgType: "voice"
+								duration: l + "s",
+								msgType: "voice",
+								widthLength: ratio * l + 50 + "px",
+								isPlay: 0
 							};
+							console.log(JSON.stringify(obj));
 							app.chatList.push(obj);
 							window.setTimeout(function() {
 								chatContentBox.scrollTop = chatContentBox.scrollHeight;
@@ -404,6 +492,18 @@
 					}, 1000);
 				}
 
+			});
+
+			// 监听父页面传来的接收消息
+			window.addEventListener("receiveMsg", function(e) {
+				var obj = {
+					senderName: document.getElementById("chatNameDom").innerHTML,
+					senderId: targetId,
+					content: e.detail.content,
+					msgType: e.detail.msgType
+				};
+				app.chatList.push(obj);
+				console.log(JSON.stringify(obj));
 			});
 		</script>
 	</body>

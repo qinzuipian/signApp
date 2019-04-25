@@ -1,11 +1,13 @@
 // 接口回调参数说明: 200 正常    401 token失效
 
+// app.$forceUpdate(); //重新渲染dom元素 
+
 // 在签约的时候传的参数status    用户端强制为1
 
 // 审核结果    1：待审核    2：同意     3：拒绝
 
 // 本地存储的所有数据: 
-	// userStatus   0: 未登录   1: 已登录但是未绑定身份证号码   2: 用户状态正常
+	// userStatus  0: 未登录   1: 已登录但是未绑定身份证号码   2: 用户状态正常
 	// userName    绑定用户的名字
 	// areaCode    地区编码
 	// idCard      身份证号码
@@ -13,20 +15,26 @@
 	// birthDate   出生日期
 	// address     地址
 	// isContrct   是否可以进行签约
-	//userId       个人Id
-
+	// userId      个人Id
+	// teamCode    签约的团队code    没有签约任何团队时显示 "暂未签约"
+	// personId    用户的ID；
+	
+	// ryAppKey    融云APPKEY
+	// ryToken	   融云token
 const JTURL = "http://192.168.1.188:8089/jkda/"
 // const JTURL = "http://192.168.1.4:8089/jkda/"
 
 
 // 获取本地存储的数据
-var token,phone,areaCode,idCard;
+var token,phone,areaCode,idCard,personId,userName;
 function getStorageDate(){
 	token = plus.storage.getItem("token");
 	phone = plus.storage.getItem("phone");
 	areaCode = plus.storage.getItem("areaCode");
 	idCard = plus.storage.getItem("idCard");
-	userId = plus.storage.getItem("userId")
+	userId = plus.storage.getItem("userId");
+	personId = plus.storage.getItem("personId");
+	userName = plus.storage.getItem("userName");
 }
 
 // 清楚本地所有缓存
@@ -57,8 +65,12 @@ function ajaxError(type) {
 // token失效的时候调用的函数
 function ajaxTokenInvalid (){
 	plus.nativeUI.toast("登录凭证失效 请重新登录");
-	var login = plus.webview.create("/page/login/login.html", "login"); // 
-	plus.webview.show(login, "slide-in-left", 300)
+	plus.storage.removeItem("token");
+	plus.storage.removeItem("userId");
+	plus.storage.removeItem("phone");
+	plus.storage.removeItem("userName");
+	// var login = plus.webview.create("/page/login/login.html", "login"); // 
+	// plus.webview.show(login, "slide-in-left", 300)
 }
 // 其他错误
 function otherErr (){

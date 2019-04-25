@@ -24,6 +24,10 @@ li{
 .header-blue{
 	background: rgb(44, 154,255);
 	z-index: 999;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 }
 .header-blue p{
 	color: white;
@@ -83,4 +87,14 @@ li{
     line-height: 38px;
     background: #669999;
 	border-radius: 0 5px 5px 0;
+}
+
+
+/* 没有内容的时候显示 暂无数据  */
+#noContent p{
+	width: 100%;
+	text-align: center;
+	line-height: 100px;
+	font-size: 28px;
+	color: gray;
 }
