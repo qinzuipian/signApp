@@ -221,7 +221,7 @@
 			
 			// 签约
 			function signing(){
-				var userStatus = plus.storage.getItem("userStatus");
+				// var userStatus = plus.storage.getItem("userStatus");
 				if(userStatus == "0"){
 					var login = plus.webview.create("./login/login.html", "login");
 					plus.webview.show(login, "slide-in-right", 300);
@@ -236,10 +236,12 @@
 			
 			window.addEventListener("refresh", function(){
 				console.log("index_刷新了一下");
+				getStorageDate();
 				indexPageInit();
 			},{passive:false})
 			
 			function indexPageInit (){
+				console.log(userStatus);
 				var isContrct = plus.storage.getItem("isContrct");
 				if(isContrct == 0){
 					signMain.style.display = "block"

@@ -36,20 +36,52 @@
 				swipeBack: false, //启用右滑关闭功能
 				beforeback: function() {
 					closeActivePage();
+					
 				}
 			});
+			var packId,itemId;
 			mui.plusReady(function () {
+				getStorageDate();
 			    toPerformanceInit();
 			});
 			
 			function toPerformanceInit (){
 				var ws = plus.webview.currentWebview();
+				console.log(JSON.stringify(ws.performanceItem));
 				document.getElementById("serverValue").innerHTML = ws.performanceItem.taskName;
 				document.getElementById("serverContent").innerHTML = ws.performanceItem.description;
+				packId = ws.performanceItem.packId;
+				itemId = ws.performanceItem.itemId;
+				// console.log(packId + " " + itemId + " " + personId);
 			}
 			
 			function submitPerformance(){
 				mui(mui("#makesure")).button('loading');//切换为loading状态
+				mui.ajax( JTURL + 'jkda/basservicetask/updateApplyFlag',{
+					data:{
+						packId: packId,
+						itemId: itemId,
+						personId: personId
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(res){
+						console.log(JSON.stringify(res));
+						if(res.code == 0){
+							mui(mui("#makesure")).button('reset');
+							plus.nativeUI.toast("提交成功");
+							mui.back();
+						}else if(res.code == 401){
+							ajaxTokenInvalid();
+						}else{
+							otherErr();
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						ajaxError();
+					}
+				});
 			}
 			
 			

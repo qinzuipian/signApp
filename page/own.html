@@ -153,14 +153,21 @@
 
 			// 签约记录
 			document.getElementById("signRecode").addEventListener("tap", function() {
-				var signRecode = plus.webview.create("./index1/signRecode.html");
-				plus.webview.show(signRecode, "slide-in-right", 300)
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {
+					var signRecode = plus.webview.create("./index1/signRecode.html");
+					plus.webview.show(signRecode, "slide-in-right", 300);
+				}
 			}, {
 				passive: false
 			});
 
 			// 履约记录
 			document.getElementById("performanceRecord").addEventListener("tap", function() {
+				console.log(userStatus);
 				if (userStatus == 0) {
 					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
 				} else if (userStatus == 1) {

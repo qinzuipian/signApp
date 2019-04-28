@@ -14,7 +14,6 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">登录</h1>
 		</header>
-
 		<div class="login-form">
 			<div class="account-box flex">
 				<p>手机号码</p>
@@ -36,9 +35,9 @@
 		</div>
 
 		<div class="loginto">
-			<button type="button" class="mui-btn mui-btn-primary mui-disabled" data-loading-text="提交中" onclick="login()" id="loginto">登录</button>
+			<button type="button" class="mui-btn mui-btn-primary mui-disabled" data-loading-text="正在登陆" onclick="login()" id="loginto">登录</button>
 		</div>
-		
+
 		<p style="text-align: center; color: gray;line-height: 60px;">开发者团队：西安卫康数据系统有限公司</p>
 
 
@@ -86,30 +85,12 @@
 				wechatLogin = document.getElementById("wechatLogin"), // 微信登录
 				forget = document.getElementById("forget"); // 忘记密码
 
-			// 登录按钮的 禁止 状态
-			account.addEventListener("input", function() {
-				if (account.value != "" && password.value != "") {
-					loginto.classList.remove("mui-disabled")
-				} else {
-					loginto.classList.add("mui-disabled")
-				}
-			}, {
-				passive: false
-			});
-			password.addEventListener("input", function() {
-				if (account.value != "" && password.value != "") {
-					loginto.classList.remove("mui-disabled")
-				} else {
-					loginto.classList.add("mui-disabled")
-				}
-			}, {
-				passive: false
-			})
+
 
 			// 登录
 			function login() {
-				if (hasClass(loginto, "mui-disabled")) {
-					console.log("禁止状态");
+				if (account.value == "" || password.value == "") {
+					mui.toast('账号或密码不能为空')
 				} else {
 					account.blur();
 					password.blur();
@@ -127,24 +108,25 @@
 						success: function(res) {
 							console.log(JSON.stringify(res));
 							mui("#loginto").button('reset');
-							if (res.code == 0) {
+							if(res.code == 0){ // 正常登陆
 								plus.storage.setItem("token", res.token); // 用户token
 								plus.storage.setItem("phone", account.value); // 用户手机号
 								plus.storage.setItem("userId", res.userId);   // 个人ID
 								plus.storage.setItem("ryToken", res.ryToken);   // 融云token
 								plus.storage.setItem("ryAppKey", "x4vkb1qpxfelk"); // 写死的融云APPKEY
+								plus.storage.setItem("userStatus", "2"); // 登陆状态
 								// mui.back();
 								var index = plus.webview.getWebviewById(plus.runtime.appid);
-								mui.fire(index,'reloadIndex');
+
+								mui.fire(index,'refresh');
 								plus.webview.show(index, "slide-in-right", 300);
 								closeActivePage();
-								refreshIndexPage();
-								
-							} else if(res.code == 401){
-								plus.nativeUI.toast(res.msg);
-							} else {
+							}else if(res.code == 401){
+								mui.toast(plus.nativeUI.toast(res.msg))
+							}else{
 								otherErr();
 							}
+
 						},
 						error: function(xhr, type, errorThrown) {
 							mui("#loginto").button('reset');

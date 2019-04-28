@@ -148,7 +148,6 @@
 				indexInit();
 			},{passive:false});
 			
-			
 			function indexInit(){
 				plus.nativeUI.showWaiting("正在验证用户信息");
 				mui.ajax(JTURL + 'jkda/ehrpiruser/getUser', {
@@ -164,14 +163,11 @@
 						if (res.code == 0) {
 							// userStatus = 2; // 正常
 							plus.storage.setItem("userStatus", "2");
-							plus.storage.setItem("userName", res.UserInfo.name);
-							plus.storage.setItem("areaCode", res.UserInfo.communityCode);
-							
+							plus.storage.setItem("userName", res.UserInfo.name); // 绑定用户的名字
+							plus.storage.setItem("areaCode", res.UserInfo.communityCode); // 地区编码
 							plus.storage.setItem("idCard", res.UserInfo.idNo);   // 身份证
-							
 							plus.storage.setItem("isContrct", res.UserInfo.isContrct) // 是否可以进行签约
 							plus.storage.setItem("personId", res.UserInfo.id) // 保存personId;
-							
 							plus.storage.setItem("teamCode", res.UserInfo.teamCode) // 签约的团队code
 							
 							if(res.UserInfo.genderCd == 1){
@@ -180,16 +176,7 @@
 								plus.storage.setItem("genderCd", "女");
 							}
 							plus.storage.setItem("birthDate", res.UserInfo.birthDate.split(" ")[0]); // 出生日期
-							plus.storage.setItem("address", res.UserInfo.addr); // 出生日期
-
-							var ownPage = plus.webview.getWebviewById("own");
-							mui.fire(ownPage, "refresh");
-							var indexPage = plus.webview.getWebviewById("index_");
-							mui.fire(indexPage, "refresh");
-							var msgPage = plus.webview.getWebviewById("msg");
-							mui.fire(msgPage, "refresh");
-							
-							
+							plus.storage.setItem("address", res.UserInfo.addr); // 住址
 						} else if (res.code == 401) {
 							// userStatus = 0; // 未登录
 							plus.storage.setItem("userStatus", "0")
@@ -210,32 +197,22 @@
 				
 						} else {
 							otherErr();
-						}
+						};
+						
+						var ownPage = plus.webview.getWebviewById("own");
+						mui.fire(ownPage, "refresh");
+						var indexPage = plus.webview.getWebviewById("index_");
+						mui.fire(indexPage, "refresh");
+						var msgPage = plus.webview.getWebviewById("msg");
+						mui.fire(msgPage, "refresh");
+						
 					},
 					error: function(xhr, type, errorThrown) {
 						plus.nativeUI.closeWaiting();
 						ajaxError();
 					}
 				});
-				
 			}
-			
-			window.addEventListener("reloadIndex", function() {
-				index = plus.webview.getWebviewById("index_");
-					index.show();
-					if(msg) {
-						msg.hide()
-					}
-					if(own) {
-						own.hide()
-					}
-				document.getElementById("index_").className = "mui-active mui-tab-item";
-				document.getElementById("msg").className = "mui-tab-item";
-				document.getElementById("own").className = "mui-tab-item";
-
-			}, {
-				passive: false
-			})
 		
 		</script>
 	</body>

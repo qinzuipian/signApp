@@ -26,7 +26,7 @@ const JTURL = "http://192.168.1.188:8089/jkda/"
 
 
 // 获取本地存储的数据
-var token,phone,areaCode,idCard,personId,userName;
+var token,phone,areaCode,idCard,personId,userName,userStatus;
 function getStorageDate(){
 	token = plus.storage.getItem("token");
 	phone = plus.storage.getItem("phone");
@@ -35,6 +35,8 @@ function getStorageDate(){
 	userId = plus.storage.getItem("userId");
 	personId = plus.storage.getItem("personId");
 	userName = plus.storage.getItem("userName");
+	userStatus = plus.storage.getItem("userStatus");
+	
 }
 
 // 清楚本地所有缓存

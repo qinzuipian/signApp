@@ -503,6 +503,9 @@
 					msgType: e.detail.msgType
 				};
 				app.chatList.push(obj);
+				setTimeout(function(){
+					chatContentBox.scrollTop = chatContentBox.scrollHeight;
+				},100)
 				console.log(JSON.stringify(obj));
 			});
 		</script>

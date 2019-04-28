@@ -43,7 +43,7 @@
 			</div>
 
 			<div id="noContent" style="display: block;">
-				<p>暂无数据</p>
+				<p id="reloadPage">暂无数据</p>
 			</div>
 		</div>
 
@@ -62,7 +62,8 @@
 				el: "#app",
 				data: {
 					chatList: [],
-					activeDoc: 0
+					activeDoc: 0,
+					historyListDQ: []
 				},
 				methods: {
 					toChatWindow: function(it) {
@@ -70,42 +71,53 @@
 						it.isRead = false;
 						it.readNum = 0;
 						app.$forceUpdate(); //重新渲染dom元素
-						// 获取历史记录
-						var conversationTypeHistory = RongIMLib.ConversationType.PRIVATE; //单聊, 其他会话选择相应的消息类型即可
-						var timestrap = null; // 默认传 null，若从头开始获取历史消息，请赋值为 0, timestrap = 0;
-						var count = 20; // 每次获取的历史消息条数，范围 0-20 条，可以多次获取
-						targetId = it.doctorNo;
-						RongIMLib.RongIMClient.getInstance().getHistoryMessages(conversationTypeHistory, targetId, timestrap, count, {
-							onSuccess: function(list, hasMsg) {
-								console.log(JSON.stringify(list));
-								console.log(hasMsg);
-								// list => Message 数组。
-								// hasMsg => 是否还有历史消息可以获取。
-								chatWindow = plus.webview.create("./msg/chatWindow.html", "chatWindow", {}, {
-									chatObj: it,
-									chatHistoryList: list
-								});
-								plus.webview.show(chatWindow, "slide-in-right", 300);
-								
-							},
-							onError: function(error) {
-								console.log('GetHistoryMessages, errorcode:' + error);
-								chatWindow = plus.webview.create("./msg/chatWindow.html", "chatWindow", {}, {
-									chatObj: it,
-									chatHistoryList: []
-								});
-								plus.webview.show(chatWindow, "slide-in-right", 300);
-							}
-						});
+						
+						if(app.historyListDQ.length == 0){
+							// 获取历史记录
+							var conversationTypeHistory = RongIMLib.ConversationType.PRIVATE; //单聊, 其他会话选择相应的消息类型即可
+							var timestrap = null; // 默认传 null，若从头开始获取历史消息，请赋值为 0, timestrap = 0;
+							var count = 20; // 每次获取的历史消息条数，范围 0-20 条，可以多次获取
+							targetId = it.doctorNo;
+							RongIMLib.RongIMClient.getInstance().getHistoryMessages(conversationTypeHistory, targetId, timestrap, count, {
+								onSuccess: function(list, hasMsg) {
+									// console.log(JSON.stringify(list));
+									app.historyListDQ = list
+									console.log(hasMsg);
+									// list => Message 数组。
+									// hasMsg => 是否还有历史消息可以获取。
+									chatWindow = plus.webview.create("./msg/chatWindow.html", "chatWindow", {}, {
+										chatObj: it,
+										chatHistoryList: list
+									});
+									plus.webview.show(chatWindow, "slide-in-right", 300);
+									
+								},
+								onError: function(error) {
+									console.log('GetHistoryMessages, errorcode:' + error);
+									chatWindow = plus.webview.create("./msg/chatWindow.html", "chatWindow", {}, {
+										chatObj: it,
+										chatHistoryList: []
+									});
+									plus.webview.show(chatWindow, "slide-in-right", 300);
+								}
+							});
+						}else{
+							chatWindow = plus.webview.create("./msg/chatWindow.html", "chatWindow", {}, {
+								chatObj: it,
+								chatHistoryList: app.historyListDQ
+							});
+							plus.webview.show(chatWindow, "slide-in-right", 300);
+
+						}
+						
 					}
 				}
 			});
-			var userStatus, teamCode;
+			var teamCode;
 
 			var chatWindow; // 聊天界面
 
 			mui.plusReady(function() {
-				userStatus = plus.storage.getItem("userStatus");
 				teamCode = plus.storage.getItem("teamCode");
 
 				getStorageDate();
@@ -254,6 +266,7 @@
 			var noContent = document.getElementById("noContent");
 
 			function msgInit() {
+				console.log(userStatus);
 				if (userStatus == 2) { // 正常状态
 					msgContent.style.display = "block";
 					noContent.style.display = "none";
@@ -301,8 +314,10 @@
 
 			// 刷新
 			window.addEventListener("refresh", function() {
-				getStorageDate();
-				msgInit();
+				// getStorageDate();
+				// msgInit();
+				var ws = plus.webview.currentWebview();
+				ws.reload();
 			});
 
 			// 发送消息
@@ -353,6 +368,13 @@
 			window.addEventListener("chatWindowClose", function() {
 				chatWindow = null;
 				app.activeDoc = 0;
+			})
+		
+			document.getElementById("reloadPage").addEventListener("tap", function(){
+// 				getStorageDate();
+// 				msgInit();
+				var ws = plus.webview.currentWebview();
+				ws.reload();
 			})
 		</script>
 	</body>
