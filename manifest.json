@@ -2,7 +2,7 @@
 	"@platforms": ["android", "iPhone", "iPad"],
 	"id": "H5E986503",
 	/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "family+doctor",
+	"name": "卫康签约_居民",
 	/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",
@@ -50,6 +50,9 @@
 		},
 		"Audio": {
 			"description": "音频"
+		},
+		"OAuth": {
+			"description": "登录鉴权"
 		}
 	},
 	"plus": {

@@ -20,6 +20,10 @@
 
 		<div id="app" style="display: none;">
 			<div class="chat-content-box" id="chatContentBox">
+				<div class="chatlist-loding" v-show="hasHistory">
+					<button type="button" id="loadingMoreHistory" data-loading-text="正在加载" class="mui-btn" @click="loadingMore()">点击加载更多</button>
+				</div>
+				<p class="nomoreHistory" v-show="!hasHistory">没有更早的历史记录了</p>
 				<div v-for="(it, index) in chatList" class="chatmsgbox">
 					<div v-if="it.msgType == 'text'">
 						<div v-if="it.senderId != chatUserId">
@@ -170,21 +174,16 @@
 			var app = new Vue({
 				el: "#app",
 				data: {
-					chatUserId: 1,
+					chatUserId: 1, // 自己的ID
 					chatUserName: "爸爸",
+					hasHistory: true, // 是否有历史记录
 					chatList: [
-						// 																		{
-						// 																			senderName: "亮亮",
-						// 																			senderId: 2,
-						// 																			content: "爸爸我饿了",
-						// 																			msgType: "text"
-						// 																		},
-						// 												{
-						// 													senderName: "爸爸",
-						// 													senderId: 1,
-						// 													content: "乖，爸爸带你吃东西",
-						// 													msgType: "text"
-						// 												}
+							{
+								senderName: "亮亮",
+								senderId: 2,
+								content: "爸爸我饿了",
+								msgType: "text"
+							}
 					]
 				},
 				methods: {
@@ -249,34 +248,27 @@
 				var ws = plus.webview.currentWebview();
 				document.getElementById("chatNameDom").innerHTML = ws.chatObj.doctorName;
 				targetId = ws.chatObj.doctorNo;
-				// app.chatList = ws.chatHistoryList;
 				for (var i = 0; i < ws.chatHistoryList.length; i++) {
-					// 					{
-					// 						senderName: "亮亮",
-					// 						senderId: 2,
-					// 						content: "爸爸我饿了",
-					// 						msgType: "text"
-					// 					},
 					var obj = {};
-					if(ws.chatHistoryList[i].senderUserId == app.chatUserId){
+					if (ws.chatHistoryList[i].senderUserId == app.chatUserId) {
 						obj.senderName = userName;
 						obj.senderId = userId;
-					}else{
+					} else {
 						obj.senderName = ws.chatObj.doctorName;
 						obj.senderId = ws.chatObj.doctorNo;
 					}
-					
+
 					obj.content = ws.chatHistoryList[i].content.content;
-					
-					if(ws.chatHistoryList[i].messageType = "TextMessage"){
+
+					if (ws.chatHistoryList[i].messageType = "TextMessage") {
 						obj.msgType = "text"
 					}
 					app.chatList.push(obj);
 				};
-				
-				setTimeout(function(){
+
+				setTimeout(function() {
 					chatContentBox.scrollTop = chatContentBox.scrollHeight;
-				},10)
+				}, 10)
 
 
 				// 聊天列表页面
@@ -287,7 +279,6 @@
 
 
 			});
-
 
 			// 初始化
 			function chatWindowInit() {
@@ -302,13 +293,54 @@
 				// console.log(userId);
 				app.chatUserId = userId;
 			};
-			
-			// 监听页面滑动时间
-			chatContentBox.addEventListener("swipedown", function(){
+
+			// 监听页面滑动事件
+			chatContentBox.addEventListener("swipedown", function() {
 				console.log(chatContentBox.scrollTop);
-				if(chatContentBox.scrollTop == 0){
+				if (chatContentBox.scrollTop == 0) {
 					console.log("到顶部了,加载下一页聊天记录");
 				}
+			});
+
+			// 点击加载更多历史记录
+			function loadingMore() {
+				mui("#loadingMoreHistory").button('loading');
+				mui.fire(msgPage, 'getHistory', {
+					targetId: targetId
+				})
+			}
+
+			// 从msg页面返回的历史记录列表
+			window.addEventListener("gotHistoryList", function(e) {
+				if(e.detail.historyList.length < 20){
+					app.hasHistory = false
+				}else{
+					app.hasHistory = true
+				}
+				for (var i = 0; i < e.detail.historyList.length; i++) {
+					var obj = {};
+					if (e.detail.historyList[i].senderUserId == app.chatUserId) {
+						obj.senderName = userName;
+						obj.senderId = userId;
+					} else {
+						obj.senderName = document.getElementById("chatNameDom").innerHTML;
+						obj.senderId = targetId;
+					}
+
+					obj.content = e.detail.historyList[i].content.content;
+
+					if (e.detail.historyList[i].messageType = "TextMessage") {
+						obj.msgType = "text"
+					}
+					app.chatList.unshift(obj);
+				};
+				setTimeout(function() {
+					mui("#loadingMoreHistory").button('reset');
+					app.$forceUpdate();
+					chatContentBox.scrollTop = e.detail.historyList.length * 70;
+					console.log(JSON.stringify(app.chatList));
+				}, 10)
+
 			})
 			// 监听发送按钮
 			sendBtn.addEventListener("tap", function() {
@@ -319,13 +351,13 @@
 					msgType: "text"
 				};
 				app.chatList.push(obj);
-			
+
 				// 讲发送消息的事件发送给列表页
 				mui.fire(msgPage, 'sendMsg', {
 					targetId: targetId,
 					content: messageCon.value
 				})
-			
+
 				messageCon.blur();
 				messageCon.value = "";
 				moreIcon.style.display = "inline-block";
@@ -503,9 +535,9 @@
 					msgType: e.detail.msgType
 				};
 				app.chatList.push(obj);
-				setTimeout(function(){
+				setTimeout(function() {
 					chatContentBox.scrollTop = chatContentBox.scrollHeight;
-				},100)
+				}, 100)
 				console.log(JSON.stringify(obj));
 			});
 		</script>

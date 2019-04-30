@@ -3,9 +3,13 @@
 
 .chat-content-box{
 	width: 100%;
+	/* padding-left: 5%; */
+	/* padding-right: 5%; */
+	overflow: scroll;
+}
+.chatmsgbox{
 	padding-left: 5%;
 	padding-right: 5%;
-	overflow: scroll;
 }
 
 .footer-content{
@@ -182,4 +186,29 @@
 }
 .activeAudio {
 	background: #669900!important;
+}
+
+/* .chatlist-loding{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.chatlist-loding p{
+	margin: 0;
+	line-height: 30px;
+	color: gray;
+}
+.chatlist-loding img{
+	width: 20px;
+} */
+
+#loadingMoreHistory{
+	border: 0;
+	width: 100%;
+}
+.nomoreHistory{
+	color: gray;
+	line-height: 30px;
+	width: 100%;
+	text-align: center;
 }
