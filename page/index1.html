@@ -38,27 +38,27 @@
 			</div>
 			<div class="service flex">
 				<li class="service-item" id="appointment">
-					<img src="../img/index/icon-test.png" >
-					<p>服务预约</p>
+					<img src="../img/index/icon-test.png">
+					<p>预约挂号</p>
 				</li>
 				<li class="service-item" id="hospital">
-					<img src="../img/index/yiyuan.png" >
+					<img src="../img/index/yiyuan.png">
 					<p>接种预约</p>
 				</li>
 				<li class="service-item" id="bodycheck">
-					<img src="../img/index/tijian.png" >
+					<img src="../img/index/tijian.png">
 					<p>体检服务</p>
 				</li>
 				<li class="service-item" id="insurance">
-					<img src="../img/index/baoxian.png" >
+					<img src="../img/index/baoxian.png">
 					<p>保险服务</p>
 				</li>
 			</div>
-			
+
 			<div id="signMain" style="display: none;">
 				<div class="sign flex">
 					<div class="sign-logo">
-						<img src="../img/index/yisheng.jpg" >
+						<img src="../img/index/yisheng.jpg">
 					</div>
 					<div class="sign-box">
 						<p>我的家庭医生</p>
@@ -68,28 +68,28 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="shop">
 				<div class="flex">
 					<p class="shop-title">寻健康<span>小生活大健康</span></p>
 					<p class="mui-icon mui-icon-arrowright more-shop"></p>
 				</div>
-				
+
 				<div class="flex">
 					<div class="left">
-						<img src="../img/index/zhongyiyangsheng.jpg" >
+						<img src="../img/index/zhongyiyangsheng.jpg">
 					</div>
 					<div class="right">
 						<div>
-							<img src="../img/index/fuyoubaojian.jpg" >
+							<img src="../img/index/fuyoubaojian.jpg">
 						</div>
 						<div>
-							<img src="../img/index/ajiao.jpg" >
+							<img src="../img/index/ajiao.jpg">
 						</div>
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="news">
 				<div class="flex">
 					<p class="shop-title">健康新闻</p>
@@ -98,47 +98,47 @@
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell mui-media flex">
 						<div class="news-pic">
-							<img src="../img/index/hashiqi.jpg" >
+							<img src="../img/index/hashiqi.jpg">
 						</div>
 						<div class="news-title">
 							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
 							<p>2019-10-10</p>
 						</div>
 					</li>
-					
+
 					<li class="mui-table-view-cell mui-media flex">
 						<div class="news-pic">
-							<img src="../img/index/hashiqi.jpg" >
+							<img src="../img/index/hashiqi.jpg">
 						</div>
 						<div class="news-title">
 							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
 							<p>2019-10-10</p>
 						</div>
 					</li>
-					
+
 					<li class="mui-table-view-cell mui-media flex">
 						<div class="news-pic">
-							<img src="../img/index/hashiqi.jpg" >
+							<img src="../img/index/hashiqi.jpg">
 						</div>
 						<div class="news-title">
 							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
 							<p>2019-10-10</p>
 						</div>
 					</li>
-					
+
 					<li class="mui-table-view-cell mui-media flex">
 						<div class="news-pic">
-							<img src="../img/index/hashiqi.jpg" >
+							<img src="../img/index/hashiqi.jpg">
 						</div>
 						<div class="news-title">
 							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
 							<p>2019-10-10</p>
 						</div>
 					</li>
-					
+
 					<li class="mui-table-view-cell mui-media flex">
 						<div class="news-pic">
-							<img src="../img/index/hashiqi.jpg" >
+							<img src="../img/index/hashiqi.jpg">
 						</div>
 						<div class="news-title">
 							<p>时间睡眠日,睡眠君、我该如何拯救你？</p>
@@ -147,13 +147,18 @@
 					</li>
 				</ul>
 			</div>
-			
+
 		</div>
-		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.js"></script>
 		<script src="../js/common.js"></script>
 		<script src="../js/swiper.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init({
+
+			});
+			// 			function pullRefreshFunc(){
+			// 				console.log(111);
+			// 			}
 			var sign = document.getElementById("sign"); // 免费签约
 			// var toCity = document.getElementById("toCity"); // 选择城市
 			var cityName = document.getElementById("city-name"); //城市名字 
@@ -161,7 +166,6 @@
 			mui.plusReady(function() {
 				// 轮播图的定时器
 				sblider();
-				
 				// common.js 获取本地数据
 				getStorageDate();
 				indexPageInit();
@@ -191,80 +195,93 @@
 				insurance = document.getElementById("insurance"),
 				bodycheck = document.getElementById("insurance"),
 				signMain = document.getElementById("signMain");
-			
-			appointment.addEventListener("tap", function(){
+
+			appointment.addEventListener("tap", function() {
+				// plus.nativeUI.toast("暂未开放此功能")
+				var appoDoctor = plus.webview.create("./index1/appoDoctor.html", appoDoctor);
+				plus.webview.show(appoDoctor, "slide-in-right", 300)
+				
+// 				var self = plus.webview.currentWebview(),
+// 					childWV = null,
+// 					targetUrl = "http://qdwz.sx.witdoctor.cn/Register/hosList?um=JKSX_WX";
+// 				childWV = plus.webview.create(targetUrl, 'baiduMap', {
+// 					top: '64px',
+// 					bottom: 0
+// 				});
+// 				self.append(childWV);
+// 				childWV.show('slide-in-bottom');
+			}, {
+				passive: false
+			});
+			hospital.addEventListener("tap", function() {
 				plus.nativeUI.toast("暂未开放此功能")
-			},{passive: false});
-			hospital.addEventListener("tap", function(){
+			}, {
+				passive: false
+			});
+			insurance.addEventListener("tap", function() {
 				plus.nativeUI.toast("暂未开放此功能")
-			},{passive: false});
-			insurance.addEventListener("tap", function(){
+			}, {
+				passive: false
+			});
+			bodycheck.addEventListener("tap", function() {
 				plus.nativeUI.toast("暂未开放此功能")
-			},{passive: false});
-			bodycheck.addEventListener("tap", function(){
-				plus.nativeUI.toast("暂未开放此功能")
-			},{passive: false});
-			
+			}, {
+				passive: false
+			});
+
 			// 选择城市
-// 			toCity.addEventListener("tap", function() {
-// 				var city = plus.webview.create("./index1/selectCity.html", "city");
-// 				plus.webview.show(city,"slide-in-right", 200);
-// 			}, {
-// 				passive: false
-// 			})
-			
+			// 			toCity.addEventListener("tap", function() {
+			// 				var city = plus.webview.create("./index1/selectCity.html", "city");
+			// 				plus.webview.show(city,"slide-in-right", 200);
+			// 			}, {
+			// 				passive: false
+			// 			})
+
 			// 监听从选择城市页面传来的值
-			document.addEventListener("selectCity",  function(e){
+			document.addEventListener("selectCity", function(e) {
 				// console.log(JSON.stringify(e.detail.name));
 				cityName.innerHTML = e.detail.name
-			},{passive: false})
-			
+			}, {
+				passive: false
+			})
+
 			// 签约
-			function signing(){
+			function signing() {
 				// var userStatus = plus.storage.getItem("userStatus");
-				if(userStatus == "0"){
+				if (userStatus == "0") {
 					var login = plus.webview.create("./login/login.html", "login");
 					plus.webview.show(login, "slide-in-right", 300);
-				}else if(userStatus == "1"){
+				} else if (userStatus == "1") {
 					var bindIdCard = plus.webview.create("./login/bindIdCard.html", "bindIdCard");
 					plus.webview.show(bindIdCard, "slide-in-right", 300);
-				}else{
-					var teamList = plus.webview.create("./index1/teamList.html","teamList");
+				} else {
+					var teamList = plus.webview.create("./index1/teamList.html", "teamList");
 					plus.webview.show(teamList, "slide-in-right", 300);
 				}
 			}
-			
-			window.addEventListener("refresh", function(){
+
+			window.addEventListener("refresh", function() {
 				console.log("index_刷新了一下");
 				getStorageDate();
 				indexPageInit();
-			},{passive:false})
-			
-			function indexPageInit (){
+			}, {
+				passive: false
+			})
+
+			function indexPageInit() {
 				console.log(userStatus);
 				var isContrct = plus.storage.getItem("isContrct");
-				if(isContrct == 0){
+				if (isContrct == 0) {
 					signMain.style.display = "block"
-				}else{
+				} else {
 					signMain.style.display = "none"
 				}
 			};
-			
-			function sweepCode(){
+
+			function sweepCode() {
 				var sweepCode = plus.webview.create("./index1/sweepCode.html", "sweepCode");
 				plus.webview.show(sweepCode, "slide-in-right", 300);
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		</script>
 	</body>
 

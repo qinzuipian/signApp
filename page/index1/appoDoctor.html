@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>预约挂号</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">预约挂号</h1>
+		</header>
+
+
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview(),
+					childWV = null,
+					targetUrl = "http://qdwz.sx.witdoctor.cn/Register/hosList?um=JKSX_WX";
+				childWV = plus.webview.create(targetUrl, 'baiduMap', {
+					top: '40px',
+					bottom: 0
+				});
+				self.append(childWV);
+				childWV.show('slide-in-bottom');
+			});
+		</script>
+	</body>
+
+</html>
