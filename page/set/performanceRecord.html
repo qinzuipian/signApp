@@ -27,8 +27,9 @@
 						<p class="record-endtime shengluohao">结束时间: <span v-text="it.endDate"></span></p>
 					</div>
 					<div class="record-btn">
-						<button type="button" v-if="it.num != 0" data-loading-text="正在加载" class="mui-btn mui-btn-primary" @click="performance(it, index)">履约</button>
-						<button type="button" v-if="it.num == 0" data-loading-text="正在加载" class="mui-btn mui-btn-primary" disabled="" @click="performance(it, index)">已完成</button>
+						<button type="button" v-if="it.applyFlag == 0" data-loading-text="正在加载" class="mui-btn mui-btn-primary" @click="performance(it, index)">履约</button>
+						<button type="button" v-if="it.applyFlag == 1" data-loading-text="正在加载" disabled class="mui-btn mui-btn-primary">等待中</button>
+						<button type="button" v-if="it.applyFlag == 2" data-loading-text="正在加载" class="mui-btn mui-btn-primary" disabled="" @click="performance(it, index)">已完成</button>
 					</div>
 				</li>
 			</ul>

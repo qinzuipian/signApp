@@ -16,7 +16,7 @@
 			<h1 class="mui-title mui-text-center colors">签约记录</h1>
 		</header>
 		<div id="app">
-			<div v-for="(it,index) in recordlist">
+			<div v-for="(it,index) in recordlist" v-show="recordlist.length!=0">
 				<div class="submit_time">
 					<p class="time">提交时间</p>
 					<p class="time" id="time" v-text="it.applyDate"></p>
@@ -40,6 +40,8 @@
 					<p class="sign-status" :class="{'font-blue': it.status=='已同意', 'font-gray': it.status=='已拒绝', 'font-green': it.status=='待审核'}" v-text="it.status"></p>
 				</div>
 			</div>
+			
+			<p class="signMsg" v-show="recordlist.length==0">还没有签约记录</p>
 		</div>
 		<script src="../../js/mui.js"></script>
 		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
@@ -47,6 +49,15 @@
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能,
+				
+				//下拉刷新
+				pullRefresh: {
+					container: '#app',
+					down: {
+						style: 'circle',
+						callback: pulldownRefresh
+					}
+				}
 			})
 			mui.plusReady(function() {
 				getStorageDate();
@@ -59,6 +70,13 @@
 					recordlist: [] //数据
 				}
 			})
+			
+			//下拉刷新
+			function pulldownRefresh() {
+				var ws =plus.webview.currentWebview();
+				ws.reload();
+				mui('#app').pullRefresh().endPulldownToRefresh(false);
+			}
 			//签约记录
 			function signRecodeInit() {
 				mui.ajax(JTURL + 'jkda/bascontract/list', {

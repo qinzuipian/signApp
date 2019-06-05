@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>药品详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">药品详情</h1>
+		</header>
+		<div id="app">
+			<div v-for="(it,index) in content" :key="index">
+				<p style="width: 100%;background: white;color: black; font-size: 16px;padding: 10px 0 10px 10px;">{{index}}:{{it}}</p>
+			</div>
+
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+				keyEventBind: {
+					backbutton: true //关闭back按键监听
+				}
+			})
+			var app = new Vue({
+				el: "#app",
+				data: {
+					med_id: "",
+					content: []
+				}
+			})
+			mui.plusReady(function() {
+				getStorageDate();
+				plus.nativeUI.showWaiting("数据加载中...");
+				getdetail();
+				med_detail();
+
+			})
+
+			function getdetail() {
+				var meds = plus.webview.getWebviewById("singleDetail");
+				// console.log(JSON.stringify(meds.drug.descriptionCode));
+				app.med_id = meds.drug.descriptionCode;
+
+			}
+
+			function med_detail() {
+				mui.ajax('http://47.93.33.135:8089/drug/basdrugbatch/queryMongoDrugInfo', {
+					data: {
+						descId: app.med_id
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						plus.nativeUI.closeWaiting();
+						if(res.code == 0) {
+							app.content = res.data[0];
+						} else if(res.code == 401) {
+							closeActivePage()
+							tokenFail();
+						} else {
+							mui.toast(res.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						ajaxError(type);
+
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

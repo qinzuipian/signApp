@@ -28,6 +28,10 @@
 					<p id="idCard"></p>
 				</li>
 				<li class="mui-table-view-cell flex confirm-item">
+					<p>民族</p>
+					<p id="nation"></p>
+				</li>
+				<li class="mui-table-view-cell flex confirm-item">
 					<p>性别</p>
 					<p id="sex"></p>
 				</li>
@@ -57,6 +61,7 @@
 			var userMsg; // 用户信息
 			var nameU = document.getElementById("nameU"); // 名字
 			var idCard = document.getElementById("idCard"); // 身份证号码
+			var nation = document.getElementById("nation"); // 民族
 			var sex = document.getElementById("sex"); // 性别
 			var birthDate = document.getElementById("birthDate"); // 出生日期
 			var address = document.getElementById("address"); // 住址
@@ -71,13 +76,15 @@
 			// 获取上个页面传过来的用户信息
 			function getUserMsg(){
 				var currentPage = plus.webview.currentWebview();
-				userMsg = currentPage.userMsg;
-				nameU.innerHTML = userMsg.name;
-				idCard.innerHTML = userMsg.idNo;				
-				idNo = userMsg.idNo;
-				sex.innerHTML = userMsg.genderCd;
-				birthDate.innerHTML = userMsg.birthDate.split(" ")[0];
-				address.innerHTML = userMsg.addr
+				 userMsg = currentPage.userMsg;
+				 console.log(JSON.stringify(userMsg))
+				nameU.innerHTML = userMsg.words_result.姓名.words;
+				idCard.innerHTML = userMsg.words_result.公民身份号码.words;				
+				idNo = userMsg.words_result.公民身份号码.words;
+				nation.innerHTML = userMsg.words_result.民族.words
+				sex.innerHTML =  userMsg.words_result.性别.words
+				birthDate.innerHTML = userMsg.words_result.出生.words
+				address.innerHTML = userMsg.words_result.住址.words
 			}
 			
 			// var idCardInner = idCard.innerHTML;

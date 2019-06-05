@@ -1,0 +1,131 @@
+@charset "utf-8";
+.banner{
+	width: 100%;
+	height: 180px;
+	background: white;
+}
+.photo{
+	width: 80px;
+	height: 80px;
+	border-radius: 50px;
+	margin-left: calc(50% - 40px);  
+	
+}
+.team_meb{
+	width: 100%;
+	height: 220px;
+	margin-top: 10px;
+}
+.loc{
+	width: 100%;
+	height: 50px;
+	margin-top: 10px;
+	background: white;
+	border-bottom: 1px solid gainsboro;
+}
+.title{
+	/*background: beige;*/
+	font-size: 14px;
+	border-bottom: 1px solid gainsboro;	
+	width: 100%;
+	line-height: 40px;
+}
+#footer{
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	bottom: 0px;
+	background: white;
+}
+#gotosign{
+	width: 90%;
+	margin-left: 5%;
+	margin-top: 10px;
+	height: 40px;
+	border-radius: 10px;
+	font-size: 16px;
+	letter-spacing: 2px;
+}
+.MyClass{
+	bottom: 1px;
+}
+.bg{
+	background: gainsboro;
+}
+.doc{
+	margin-top: 15px;
+	font-size: 14px;
+}
+.doc_team{
+	margin-top: 15px;
+	font-size: 16px;
+}
+.iconloc{
+	font-size: 18px;
+	color: deepskyblue;
+	padding: 4px 0 0 12px ;
+}
+.iconaddress{
+	font-size: 14px;
+	line-height: 50px;
+	
+}
+.callphone{
+	line-height: 1.8;
+	width: 60px;
+	height: 50px;
+	color: cornflowerblue;
+}
+.team_people{
+	font-size: 18px;
+	color: deepskyblue;
+	padding: 4px 0 0 12px ;
+}
+.swiper-wrapper div{
+	width: 32%;
+	height: 140px;
+	background: whitesmoke;
+}
+.team_description{
+	color: black;
+	font-size: 14px;
+	padding: 10px 10px 0px 10px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	text-overflow:ellipsis;
+	white-space: wrap;
+	-webkit-line-clamp: 4; 
+	overflow: hidden;
+}
+.swiper-slide img{
+	border-radius: 50px;
+}
+.doc_name{
+	color: black;
+	margin: 0px;
+}
+.icondoc{
+	width: 60px;
+	height: 60px;
+	margin-top: 10px;
+	border-radius: 50px;
+}
+.threeBtn {
+	text-align: center;
+	margin-top: 8px;
+	
+	
+}
+.threeBtn button {
+	width: 30%;
+	margin-left: 2%;
+	border-radius: 8px;
+
+}
+.signMsg {
+	text-align: center;
+	line-height: 50px;
+	font-size: 14px;
+	background-color: #efeff4;
+	color: gray;
+}

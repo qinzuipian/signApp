@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../../css/iconfont.css">
+		<link rel="stylesheet" href="../css/pressure.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">我的血压</h1>
+		</header>
+		<div id="app">
+			<div class="main">
+				<div class="round">
+					<span>2019-05-22</span>
+					<br>
+					<span>120/80</span>
+					<br>
+					<span>mmHg</span>
+				</div>
+				
+				<div class="sign" id="handsign">
+					<span class="iconfont" style="font-size: 20px;color: goldenrod;">&#xe693;</span>
+					<span>手动记录</span>
+				</div>
+			</div>
+			
+			<div class="pregoal">
+				<span>指标：</span>
+				<span>收缩压：90-140mmHg</span>
+				<span>舒张压：60-90mmHg</span>
+			</div>
+			<div class="botChart" style="width:100%;height:450px;" id="botchart">
+				
+			</div>
+		</div>
+		
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/echarts.min.js"></script>
+		
+
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function() {
+				chartInit();
+			})
+			
+			function chartInit() {
+				var myChart = echarts.init(document.getElementById("botchart"));
+				var option = {
+						title: {
+							text: '血压变化'
+						},
+						tooltip: {
+							trigger: 'axis'
+						},
+						legend: {
+							data:['舒张压','收缩压']
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						/* toolbox: {
+							feature: {
+								saveAsImage: {}
+							}
+						}, */
+						xAxis: {
+							type: 'category',
+							boundaryGap: false,
+							data: ['周一','周二','周三','周四','周五','周六','周日']
+						},
+						yAxis: {
+							type: 'value',
+							axisLabel:{
+								formatter:'{value}mmHg'
+							}
+						},
+						series: [
+							{
+								name:'舒张压',
+								type:'line',
+								stack: '总量',
+								data:[60,50,90,100,70,90,80]
+							},
+							{
+								name:'收缩压',
+								type:'line',
+								stack: '总量',
+								data:[90,120,130,100,110,110,120]
+							}
+							
+						]
+					};				
+				 myChart.setOption(option);
+			}
+			
+			//手动输压
+			document.getElementById("handsign").addEventListener("tap",function() {
+				var inputPressure = plus.webview.create("inputPressure.html", inputPressure);
+				plus.webview.show(inputPressure, "slide-in-right", 300)
+			})
+		</script>
+	</body>
+
+</html>
+

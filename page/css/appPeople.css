@@ -1,0 +1,123 @@
+ul {
+	padding: 0;
+	margin: 0;
+}
+ul li {
+	padding: 10px;
+	/* border-top: 1px solid grey; */
+	margin-top: 0.625rem;
+	width: 100%;
+	height: 3.125rem;
+	background-color: #fff;
+	/* height: 6.25rem;
+	line-height: 6.25rem; */
+}
+ul li img {
+	width: 2.25rem;
+	vertical-align:middle;
+	
+}
+ul li span {
+	font-size: 16px;
+	margin-left: 0.625rem;
+}
+ul li .sign {
+	width: 3.125rem;
+	height: 1.25rem;
+	display: inline-block;
+	background-color: #26C6C6;
+	color: #fff;
+	font-size: 0.75rem;
+	text-align: center;
+	margin-left: 1.25rem;
+}
+.toappdoctor {
+	
+	top: 12.5rem;
+	z-index: 999;	
+}
+.datasure,.toalldoctor {
+	bottom: 0;
+}
+.toalldoctor,.toappdoctor,.datasure,.toappBtn {
+	width: 90%;
+	text-align: center;
+	margin-left: 5%;
+	font-size: 16px;
+	line-height: 30px;
+	/*background: #007AFF;*/
+	color: white;
+	border-radius:10px;
+	margin-top: 0.625rem;
+	margin-bottom: 0.625rem;
+	position: fixed; 
+	
+}
+
+
+.signFlag {
+	color: #F0AD4E;
+	font-size: 0.875rem;
+	padding: 0.375rem;
+}
+
+.img {
+	text-align: center;
+	margin-top: 6.25rem;
+}
+.img img {
+	width: 6.25rem;
+}
+.img p  {
+	font-size: 1rem;
+	font-weight: 700;
+	margin-top: 0.625rem;
+	
+}
+.img p span {
+	margin-right: 0.625rem ;
+}
+.img .hosname {
+	margin-top: 1.25rem;
+}
+.img .hosname,.img .hosaddress {
+	font-size: 0.875rem;
+	font-weight: 400;
+	color:gray
+}
+
+.itemrecord {
+	padding: 0.625rem;
+}
+.itemrecord .hosname {
+	font-size: 1.125rem;
+	font-weight: 700;
+	color:gray;
+}
+.itemrecord .cancelbtn {
+	position: relative;
+}
+.itemrecord .cancelbtn button {
+	position: absolute;
+	right: 0;
+}
+.itemrecord .already {
+	width: 100%;
+	height: 3.125rem;
+	line-height: 3.125rem;
+	border-top: 1px solid #E8E8E8;
+	border-bottom: 1px solid #E8E8E8;
+	margin-top: 1.625rem;
+	color: #007aff;
+	font-size: 1rem;
+}
+.itemrecord .red {
+	color: #FF0000;
+}	
+.itemrecord .already .iconfont {
+	margin-right: 0.625rem;
+}
+.appindex {
+	font-size: 1rem;
+	color: #007aff;
+}

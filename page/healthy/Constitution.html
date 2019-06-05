@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../css/Constitution.css">
+		<link rel="stylesheet" href="../../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../../css/mui.poppicker.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">中医体质辨识</h1>
+		</header>
+		<div id="app">
+			<div class="docRound">
+				“亿万苍生，九种体质，人各有质，体病相关；体质平和，健康之源，体质偏颇，百病之因。”
+				中医体质辨识为中医体质与易发健康风险的宏观对应开辟了新的标准化途径，
+				在此基础上综合运用中医“天人合一”的整体观、“体病相关、体质可分、体质可调”的中医体质学说理论和中医调理方案，
+				可以实现“未病先防”和“既病防变”的治未病目标。
+			</div>
+			<div class="docBtn">
+				<button type="button" data-loading-icon-position="left" id="toConstitution"  class="mui-btn mui-btn-outlined mui-btn-primary">中医体质测试</button>
+				<button type="button" data-loading-icon-position="left" id="toHistory"  class="mui-btn mui-btn-outlined mui-btn-primary">历史测试</button>
+			</div>
+		</div>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			
+			var userPicker = new mui.PopPicker();
+			userPicker.setData([{
+				value: '1',
+				text: '女生'
+			}, {
+				value: '0',
+				text: '男生'
+			}]);
+			//中医体质测试
+			document.getElementById("toConstitution").addEventListener("tap",function() {
+					userPicker.show(function(items) {
+						var toConstitution = plus.webview.create("toConstitution.html",toConstitution,{},{
+							sex:items[0]
+						});
+						plus.webview.show(toConstitution,"slide-in-right",300)
+						// userResult.innerText = JSON.stringify(items[0]);
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+					});
+			
+				/* var toConstitution = plus.webview.create("toConstitution.html",toConstitution);
+				plus.webview.show(toConstitution,"slide-in-right",300) */
+			})
+			//历史记录
+			document.getElementById("toHistory").addEventListener("tap",function(){
+				var toHistory = plus.webview.create("toHistory.html",toHistory);
+				plus.webview.show(toHistory,"slide-in-right",300)
+			})
+		</script>
+	</body>
+
+</html>
+

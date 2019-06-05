@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../css/babyCheck.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">预产期自测</h1>
+		</header>
+		<div id="app">
+			<form class="mui-input-group">
+				<div class="mui-input-row" id='pickDateBtn'>
+					<label>末次月经日期</label>
+					<input type="text" v-model="dateInfo" readonly="readonly">
+				</div>
+			</form>
+			<button type="button" data-loading-icon-position="left" id="productFine"  class="mui-btn mui-btn-primary toalldoctor">确定</button>
+		</div>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					dateInfo:""
+				},
+				methods:{}
+			})
+			
+			document.getElementById("pickDateBtn").addEventListener('tap', function() {
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					vm.dateInfo = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					console.log(JSON.stringify(vm.dateInfo))
+				}, function(e) {
+					
+				}, {
+					title: "请选择日期",
+					/* date: dDate,
+					minDate: minDate,
+					maxDate: maxDate */
+				});
+			})
+			
+			//确认按钮
+			document.getElementById("productFine").addEventListener("tap",function() {
+				if(vm.dateInfo!="") {
+					var productFine = plus.webview.create("productFine.html",productFine);
+					plus.webview.show(productFine,"slide-in-right",300);
+				} else {
+					mui.toast("请输入末次月经日期");
+				}
+				
+			})
+		</script>
+	</body>
+
+</html>

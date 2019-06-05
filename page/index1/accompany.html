@@ -1,0 +1,1009 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>聊天窗口</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/chatWindow.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title" id="chatNameDom"></h1>
+		</header>
+
+		<div id="app_error" style="display: block;"></div>
+
+		<div id="app" style="display: none;">
+			<div class="chat-content-box" id="chatContentBox">
+				<!-- <div class="chatlist-loding" v-show="hasHistory">
+					<button type="button" id="loadingMoreHistory" data-loading-text="正在加载" class="mui-btn" @click="loadingMore()">点击加载更多</button>
+				</div> -->
+				<p class="nomoreHistory" v-show="!hasHistory">没有更早的历史记录了</p>
+				<!-- <div v-if="pushMessage.length!=0">
+					<p class="sender-name"></p>
+					<div class="sender-box">
+						<div>
+							<img src="../../img/msg/jiqiren.png">
+						</div>
+						<p v-text="pushMessage"></p>
+					</div>
+				</div> -->
+				<div v-for="(it, index) in chatList" class="chatmsgbox">
+					<div v-if="it.msgType == 'text'">
+						<div v-if="it.senderId != 3">
+							<div v-if="it.reply.length!=0">
+								<p class="sender-name" v-text="it.senderName"></p>
+								<div class="sender-box">
+									<div>
+										<img src="../../img/msg/jiqiren.png">
+									</div>
+									<p v-text="it.reply"></p>
+								</div>
+							</div>
+						</div>
+						
+						<div v-if="it.senderId != 3">
+							<div v-if="it.remind.length!=0">
+								<p class="sender-name" v-text="it.senderName"></p>
+								<div class="sender-box">
+									<div>
+										<img src="../../img/msg/jiqiren.png">
+									</div>
+									<p v-text="it.remind"></p>
+								</div>
+							</div>
+						</div>
+						
+						<div v-if="it.senderId != 3">
+							<div v-if="it.content.length!=0">
+								<p class="sender-name" v-text="it.senderName"></p>
+								<div class="sender-box">
+									<div>
+										<img src="../../img/msg/jiqiren.png">
+									</div>
+									<p v-text="it.content"></p>
+								</div>
+							</div>
+							
+						</div>
+						
+						<div v-if="it.senderId != 3 && it.tag.length!=0">
+							<p class="sender-name" v-text="it.senderName"></p>
+							<div class="sender-box">
+								<div>
+									<img src="../../img/msg/jiqiren.png">
+								</div>
+								<ul>
+									<li  v-for="(it, index) in it.tag">
+										<span v-text="it"></span>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<div v-if="it.senderId == 3">
+							<p class="sender-name-self" v-text="it.senderName"></p>
+							<div class="sender-box-self">
+								<div>
+									<img src="../../img/msg/huanzhe.png">
+								</div>
+								<p v-text="it.content"></p>
+							</div>
+						</div>
+					</div>
+
+				<div v-if="it.msgType == 'voice'">
+						<div v-if="it.senderId != 3">
+							<p class="sender-name" v-text="it.senderName"></p>
+							<div class="sender-box">
+								<div>
+									<img src="../../img/msg/jiqiren.png">
+								</div>
+								<p @click="playThisAudio(it, index)" :style="{width: it.widthLength}" :class="{activeAudio: it.isPlay == 1}" v-text="it.duration"></p>
+							</div>
+						</div>
+
+						<div v-if="it.senderId == 3">
+							<p class="sender-name-self" v-text="it.senderName"></p>
+							<div class="sender-box-self">
+								<div>
+									<img src="../../img/msg/huanzhe.png">
+								</div>
+								<p @click="playThisAudio(it, index)" :style="{width: it.widthLength}" :class="{activeAudio: it.isPlay == 1}"
+								 v-text="it.duration"></p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="footer-content" id="footerContent">
+				<div class="voice-icon" id="voiceIconBox" style="display: block;">
+					<i class="mui-icon mui-icon-mic"></i>
+				</div>
+
+				<div class="voice-icon" id="textIconBox" style="display: none;">
+					<i class="mui-icon mui-icon-compose"></i>
+				</div>
+
+				<div class="input-content">
+					<textarea name="msgContent" id="messageCon" cols="20" rows="1" style="display: block;"></textarea>
+					<button type="button" id="holdToSpeak" class="mui-btn mui-btn-outlined hold-to-speak" style="display: none;">按住说话</button>
+				</div>
+				<div class="more-menu" id="moreIcon" style="display: block;">
+					<i class="mui-icon mui-icon-plus"></i>
+				</div>
+				<div class="more-menu" id="sendBtn" style="display: none;">
+					<span>发送</span>
+				</div>
+			</div>
+
+			<!-- <div class="more-box" id="morBox" style="display: none;">
+				<div class="item-box">
+					<ul class="mui-table-view item-icon-box">
+						<li class="mui-table-view-cell item-icon">
+							<img src="../../img/index/paizhao.png">
+						</li>
+					</ul>
+					<p>拍照</p>
+				</div>
+
+				<div class="item-box">
+					<ul class="mui-table-view item-icon-box">
+						<li class="mui-table-view-cell item-icon">
+							<img src="../../img/index/xiangce.png">
+						</li>
+					</ul>
+					<p>相册</p>
+				</div>
+
+				<div class="item-box">
+					<ul class="mui-table-view item-icon-box">
+						<li class="mui-table-view-cell item-icon">
+							<img src="../../img/index/yuyinliaotian.png">
+						</li>
+					</ul>
+					<p>语音聊天</p>
+				</div>
+
+				<div class="item-box">
+					<ul class="mui-table-view item-icon-box">
+						<li class="mui-table-view-cell item-icon">
+							<img src="../../img/index/shipinliaotian.png">
+						</li>
+					</ul>
+					<p>视频</p>
+				</div>
+			</div> -->
+
+			<div class="microphone" id="microphoneBox" style="display: none;">
+				<img src="../../img/msg/microphone.png">
+				<p id="microphoneNum">60</p>
+			</div>
+
+			<div class="microphone" id="microphoneBoxShort" style="display: none;">
+				<img src="../../img/msg/jinggao.png">
+				<p style="font-size: 14px;">录音时间太短</p>
+			</div>
+
+		</div>
+
+
+
+		<script src="../../js/mui.js"></script>
+<!-- 		<script src="https://cdn.ronghub.com/RongIMLib-2.4.0.min.js"></script> -->
+		<script src="../../js/vue.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+					// mui.fire(msgPage, 'chatWindowClose')
+				},
+				gestureConfig: {
+					tap: true, //默认为true
+					longtap: true, //默认为false
+					hold: true, //默认为false，不监听
+					release: true //默认为false，不监听
+				}
+			});
+
+			var audioObj = null; // 录音对象
+			var playThisAudioObj = null; // 播放语音对象
+			var audioPath = null; // 录音路径
+			var voiceTime; // 倒计时 -- 定时器
+			var isHoldEven = false; // 判断是否为长按,   如果没有这一步,点击之后也会执行release函数;
+
+			var app = new Vue({
+				el: "#app",
+				data: {
+					chatUserId: 3, // 自己的ID
+					chatUserName: "患者",
+					hasHistory: true, // 是否有历史记录
+					chatList: [
+ 							/* {
+ 								senderName: "小艾",
+ 								senderId: 2,
+								content: "下午好",
+								msgType: "text",
+								tag:["症状加重","出现并发症","用药不良反应","吸烟饮酒","血压120.0；低压60.0","饮食控制差"]
+							},
+							{
+								senderName: "患者",
+								senderId: 3,
+								content: "下午好",
+								msgType: "text"
+							} */
+					],
+					audio:"",
+					pushMessage:"",
+					souce:""
+					/* reply:"",
+					remind:"",*/
+					
+				},
+				methods: {
+					// 点击播放语音
+					playThisAudio: function(it, index) {
+						console.log(JSON.stringify(it, index))
+						playThisAudioObj = plus.audio.createPlayer(it.voicePath);
+
+						if (it.isPlay == 0) { // 点了一下,需要播放语音
+							it.isPlay = 1;
+							for (var i = 0; i < this.chatList.length; i++) { // 循环查找当前有没有正在播放的语音
+								if (i != index) { // 如果当前循环项不是当前点击项
+									if (this.chatList[i].isPlay == 1) { // 如果当前循环项正在播放
+										this.chatList[i].isPlay = 0; // 关闭当前播放的语音
+									}
+								}
+							}
+							// 播放录音
+							if (plus.audio == undefined) {
+								alert("播放出错,请检查是否支持播放功能");
+							};
+							playThisAudioObj.play(function() {
+								console.log("播放完毕");
+								// 播放完毕
+								it.isPlay = 0;
+							}, function(e) {
+								console.log("Audio play error: " + e.message);
+								it.isPlay = 0;
+							});
+							app.$forceUpdate(); // 重新渲染DOM
+
+						} else if (it.isPlay == 1) { // 点了一下,需要停止播放
+						console.log(2)
+							playThisAudioObj.stop();
+							it.isPlay = 0;
+							app.$forceUpdate(); // 重新渲染DOM
+						}
+					}
+				}
+			});
+			
+			var sugId,pushId,suifangType;
+			//当dataFlag==1时,为文字聊天,当dataFlag==2时,为语音聊天
+			var dataFlag = 1;
+			function accompanyDetail() {
+				var ws = plus.webview.currentWebview();
+				console.log(JSON.stringify(ws));				
+				sugId = ws.accompanyDetail;
+				// pushId = ws.accompanyPush.title
+				if(sugId == "高血压") {
+					suifangType = 'GXYSF'
+				}
+				else if(sugId == "糖尿病"){
+					suifangType = 'TNBSF'
+				}
+				
+				if(ws.accompanyPush) {
+					// alert(JSON.stringify(ws.accompanyPush))
+					if(ws.accompanyPush.title=='新消息GXYSF') {
+						suifangType = 'GXYSF'
+					} else if(ws.accompanyPush.title=='新消息TNBSF') {
+						suifangType = 'TNBSF'
+					}
+					app.pushMessage = ws.accompanyPush.content;
+					var obj = {
+						senderId: 2,
+						// senderId: app.chatUserId,
+						// senderName: app.chatUserName,
+						senderName: '随访护士',
+						content: app.pushMessage,
+						remind: "",
+						reply: "",
+						tag:"",
+						msgType: "text"
+					
+					};
+					app.chatList.push(obj);
+					console.log(JSON.stringify(app.chatList))
+				} else {
+					
+				}
+				
+				
+			}
+			var messageCon = document.getElementById("messageCon"); // 输入框
+			var moreIcon = document.getElementById("moreIcon"); // 更多 按钮
+			var sendBtn = document.getElementById("sendBtn"); // 发送按钮
+			var morBox = document.getElementById("morBox"); // 更多区域
+			var chatContentBox = document.getElementById("chatContentBox"); // 聊天内容区域
+			var voiceIconBox = document.getElementById("voiceIconBox"); // 语音输入
+			var holdToSpeak = document.getElementById("holdToSpeak"); // 按住说话
+			var textIconBox = document.getElementById("textIconBox"); // 点击切换到编辑文本
+			var microphoneBox = document.getElementById("microphoneBox"); // 麦克风提示框
+			var microphoneNum = document.getElementById("microphoneNum"); // 语音输入倒计时
+			var microphoneBoxShort = document.getElementById("microphoneBoxShort"); // 录音时间太短
+			var footerContent = document.getElementById("footerContent"); // 底部输入块
+
+			// var ryAppKey, ryToken, targetId; // 融云的appkey和token
+
+			var targetId; // 聊天对象的ID
+			var msgPage;
+			mui.plusReady(function() {
+			/* 	var id_emergency = plus.webview.currentWebview().accompanyPush;
+				app.pushMessage = id_emergency.content;
+				var pushstyle = id_emergency.title;
+				if(pushstyle == "新消息GXYSF") {
+					suifangType = 'GXYSF'
+				}
+				else if(pushstyle == "新消息TNBSF"){
+					suifangType = 'TNBSF'
+				}
+				var obj = {
+					senderId: 3,
+					// senderId: app.chatUserId,
+					senderName: app.chatUserName,
+					content: app.pushMessage,
+					msgType: "text",
+					reply:"",
+					remind:"",
+				
+				};
+				app.chatList.push(obj);
+				console.log(JSON.stringify(app.chatList)) */
+				
+				getStorageDate();
+				chatWindowInit();
+				//接受父页面传过来的参数
+				accompanyDetail();
+				//接受index页面推送的信息
+				// accompanyPush();
+
+				// 显示聊天对象
+				// var ws = plus.webview.currentWebview();
+				document.getElementById("chatNameDom").innerHTML = '随访护士';
+				// chatwithInit("2",dataFlag);
+				// targetId = ws.chatObj.doctorNo;
+	/* 			for (var i = 0; i < ws.chatHistoryList.length; i++) {
+					var obj = {};
+					if (ws.chatHistoryList[i].senderUserId == app.chatUserId) {
+						obj.senderName = userName;
+						obj.senderId = userId;
+					} else {
+						obj.senderName = ws.chatObj.doctorName;
+						obj.senderId = ws.chatObj.doctorNo;
+					}
+
+					obj.content = ws.chatHistoryList[i].content.content;
+
+					if (ws.chatHistoryList[i].messageType = "TextMessage") {
+						obj.msgType = "text"
+					}
+					app.chatList.push(obj);
+				}; */
+				//聊天历史纪录
+				historyList();
+				
+				setTimeout(function() {
+					chatContentBox.scrollTop = chatContentBox.scrollHeight;
+				}, 10)
+
+
+				// 聊天列表页面
+				// msgPage = plus.webview.getWebviewById("msg");
+
+				document.getElementById("app_error").style.display = "none";
+				document.getElementById("app").style.display = "block"
+
+
+			});
+			/* function accompanyPush() {
+				var ws = plus.webview.currentWebview();
+				console.log(JSON.stringify(ws));
+				// chatwithInit("你好",dataFlag);
+			} */
+			
+			//查询聊天历史纪录
+			function historyList() {
+				var data = JSON.stringify({
+					personId: personId,
+					qaType:suifangType
+				})
+				console.log(data)
+				plus.nativeUI.showWaiting("等待中...");
+				mui.ajax(JTURL + 'jkda/heathai/queryHeathAiConversionByPersonId', {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；					
+					success: function(res) {
+						console.log(JSON.stringify(res))
+						if(res.code == 0) {
+							// plus.nativeUI.closeWaiting();
+							var chatData = res.data;
+							for(var i=0;i<chatData.length;i++) {
+									if(chatData[i].questiontype == 1) {
+										/* var taglist = [];
+										taglist.push(chatData[i].tag); */
+										var nurseobj = {
+											senderId: 2,
+											// senderId: app.chatUserId,
+											// senderName: app.chatUserName,
+											senderName: '随访护士',
+											content: chatData[i].question,
+											remind: chatData[i].remind,
+											reply: chatData[i].reply,
+											tag:chatData[i].tag,
+											msgType: "text"
+										};
+										
+										var patientobj = {
+											senderId: 3,
+											// senderId: app.chatUserId,
+											senderName: app.chatUserName,
+											content: chatData[i].lastreply,
+											msgType: "text",
+											reply:"",
+											remind:"",										
+										};
+										app.chatList.push(nurseobj,patientobj);
+									} else if(chatData[i].questiontype == 2) {
+										var base64Str = chatData[i].video;
+										var lastbase64Str = chatData[i].lastreply;
+										var toURL;
+										// 录音完毕,保存在本地,并展示在页面
+										var l = 60 - microphoneNum.innerHTML; // 语音长度
+										var widthNum = plus.display.resolutionWidth * 0.9 - 100;
+										var ratio = (widthNum - 50) / 60;								
+										// console.log(ratio);
+										dataURL2Audio(base64Str, function(entry){
+												toURL = entry.toURL();	
+												app.audio = toURL;
+												console.log(app.audio)
+												var nurseobj = {
+														// senderId: app.chatUserId,
+														senderId: 2,
+														senderName: '随访护士',
+														// voicePath: audioPath,
+														voicePath: app.audio,
+														//duration: l + "s",
+														duration: "🔊",
+														msgType: "voice",
+														widthLength: ratio * l + 50 + "px",
+														isPlay: 0
+													};
+										
+												app.chatList.push(nurseobj);
+										
+										})
+										
+										dataURL2Audio(lastbase64Str, function(entry){
+												toURL = entry.toURL();	
+												app.audio = toURL;
+												console.log(app.audio)
+												var patientobj = {
+													// senderId: app.chatUserId,
+													senderId: 3,
+													senderName: app.chatUserName,
+													voicePath: app.audio,
+													duration:"🔊",
+													msgType: "voice",
+													widthLength: ratio * l + 50 + "px",
+													isPlay: 0
+												};
+												app.chatList.push(patientobj);
+										
+										})
+										
+									} 
+								
+								
+						}
+						chatscroll();
+						plus.nativeUI.closeWaiting();
+					}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log(type);
+					}
+				});
+			} 
+			
+			
+			//查询AI与病人的聊天列表
+			function chatwithInit(msg,type) {
+				console.log(JSON.stringify("msg"+msg+","+"type"+type))
+				if(type == 1) {
+					var data=JSON.stringify({
+					reqData:{
+					userId:personId,
+					questionType:1,
+					lastReply:msg,
+					qaType:suifangType,
+					userDataType:"1",
+					},
+					flag:"2"
+					}
+					)
+				} else if(type == 2) {
+					var data=JSON.stringify({
+						reqData:{
+						userId:personId,
+						questionType:2,
+						lastReply:msg,
+						qaType:suifangType,
+						userDataType:"2",
+						format:"amr",
+						rate:"8000"
+						},
+						flag:"2"
+						})
+				}
+				
+					// console.log(data)
+					mui.ajax(JTURL + '/jkda/heathai/heathAiConversion', {
+					data:data,
+					dataType: 'json', //服务器返回json格式数据
+					headers:{'Content-Type':'application/json'},	
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						// plus.nativeUI.closeWaiting();
+						// console.log(JSON.stringify(res));			
+						if (res.code == 0) {
+						// var list = res.resData;
+						// var list = res.resData.replace(/\\"/g,'');
+						// var question = list.resData.question;
+						console.log(JSON.stringify(res.question))
+						/* app.reply = res.reply;
+						app.remind = res.remind; */
+					/* 	if(res.reply!=""&&res.remind=="") {
+							app.flag = 2;
+							console.log(1)
+						} else if(res.remind!=""&&res.reply=="") {
+							app.flag = 3;
+							console.log(2)
+						} else if(res.reply!=""&&res.remind!=""){
+							app.flag = 4;
+							console.log(3)
+						}else if(res.reply==""&&res.remind==""){
+							app.flag = 5;
+							console.log(4)
+						} */
+						if(type == 1) {
+							var obj = {
+								senderId: 2,
+								// senderId: app.chatUserId,
+								// senderName: app.chatUserName,
+								senderName: '随访护士',
+								content: res.question,
+								remind: res.remind,
+								reply: res.reply,
+								tag:res.tag,
+								msgType: "text"
+							};
+							app.chatList.push(obj);
+						}
+						else if(type == 2) {
+							var base64Str = res.video;
+							var toURL;
+							// 录音完毕,保存在本地,并展示在页面
+							var l = 60 - microphoneNum.innerHTML; // 语音长度
+							var widthNum = plus.display.resolutionWidth * 0.9 - 100;
+							var ratio = (widthNum - 50) / 60;
+							
+							// console.log(ratio);
+						dataURL2Audio(base64Str, function(entry){
+								toURL = entry.toURL();	
+								app.audio = toURL;
+								console.log(app.audio)
+								var obj = {
+										// senderId: app.chatUserId,
+										senderId: 2,
+										senderName: '随访护士',
+										// voicePath: audioPath,
+										voicePath: app.audio,
+										// duration: l + "s",
+										duration: "🔊",
+										msgType: "voice",
+										widthLength: ratio * l + 50 + "px",
+										isPlay: 0
+									};
+								app.chatList.push(obj);
+								// 播放音频
+								// playAudio(toURL);
+						})
+						
+						}						
+						
+						chatscroll();						
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+						ajaxError();
+					}
+				});
+			}
+			//自动滚动(监听聊天内容是否到达最底部)
+			function chatscroll() {
+				setTimeout(function() {
+					chatContentBox.scrollTop = chatContentBox.scrollHeight;					
+				}, 10)
+				if(chatContentBox.scrollTop >= chatContentBox.scrollHeight) {
+                   chatContentBox.scrollTop = 0;
+                   // console.log(1)
+               } else {
+					chatContentBox.scrollTop = chatContentBox.scrollHeight + "px"
+					// console.log(2)
+               }
+			   
+			}
+
+			// 初始化
+			function chatWindowInit() {
+				// 获取窗口高度并设置聊天内容显示区域的大小
+				chatContentBox.style.maxHeight = plus.screen.resolutionHeight - 45 - 75 + "px";
+				chatContentBox.scrollTop = chatContentBox.scrollHeight;
+
+				// 初始化录音
+				audioObj = plus.audio.getRecorder();
+
+				// 获取当前用户的ID 
+				// console.log(userId);
+				app.chatUserId = userId;
+			};
+
+			// 监听页面滑动事件
+			chatContentBox.addEventListener("swipedown", function() {
+				console.log(chatContentBox.scrollTop);
+				if (chatContentBox.scrollTop == 0) {
+					console.log("到顶部了,加载下一页聊天记录");
+				}
+			});
+
+			// 点击加载更多历史记录
+			function loadingMore() {
+				mui("#loadingMoreHistory").button('loading');
+				/* mui.fire(msgPage, 'getHistory', {
+					targetId: targetId
+				}) */
+			}
+
+			// 从msg页面返回的历史记录列表
+		/* 	window.addEventListener("gotHistoryList", function(e) {
+				if(e.detail.historyList.length < 20){
+					app.hasHistory = false
+				}else{
+					app.hasHistory = true
+				}
+				for (var i = 0; i < e.detail.historyList.length; i++) {
+					var obj = {};
+					if (e.detail.historyList[i].senderUserId == app.chatUserId) {
+						obj.senderName = userName;
+						obj.senderId = userId;
+					} else {
+						obj.senderName = document.getElementById("chatNameDom").innerHTML;
+						obj.senderId = targetId;
+					}
+
+					obj.content = e.detail.historyList[i].content.content;
+
+					if (e.detail.historyList[i].messageType = "TextMessage") {
+						obj.msgType = "text"
+					}
+					app.chatList.unshift(obj);
+				};
+				setTimeout(function() {
+					mui("#loadingMoreHistory").button('reset');
+					app.$forceUpdate();
+					chatContentBox.scrollTop = e.detail.historyList.length * 70;
+					console.log(JSON.stringify(app.chatList));
+				}, 10)
+
+			}) */
+			// 监听发送按钮
+			sendBtn.addEventListener("tap", function() {
+				
+				
+				var obj = {
+					senderId: 3,
+					// senderId: app.chatUserId,
+					senderName: app.chatUserName,
+					content: messageCon.value,
+					msgType: "text",
+					reply:"",
+					remind:"",
+
+				};
+				app.chatList.push(obj);
+				console.log(JSON.stringify(app.chatList))
+				dataFlag = 1;
+				console.log(dataFlag)
+				chatwithInit(messageCon.value,dataFlag);
+
+				// 讲发送消息的事件发送给列表页
+				/* mui.fire(msgPage, 'sendMsg', {
+					targetId: targetId,
+					content: messageCon.value
+				}) */
+
+				messageCon.blur();
+				messageCon.value = "";
+				moreIcon.style.display = "inline-block";
+				sendBtn.style.display = "none";
+				window.setTimeout(function() {
+					chatContentBox.scrollTop = chatContentBox.scrollHeight;
+				}, 100);
+			}, {
+				passive: false
+			});
+			
+
+			// 监听输入框   改变发送与更多切换
+			messageCon.addEventListener("input", function() {
+				if (messageCon.value == "") {
+					moreIcon.style.display = "inline-block";
+					sendBtn.style.display = "none";
+				} else {
+					moreIcon.style.display = "none";
+					sendBtn.style.display = "block";
+				}
+
+			}, {
+				passive: false
+			})
+
+			// 监听更多按钮事件,打开更多功能
+			/* moreIcon.addEventListener("tap", function() {
+				if (morBox.style.display == "none") {
+					// 打开更多功能
+					morBox.style.display = "flex";
+					chatContentBox.style.height = plus.screen.resolutionHeight - 45 - 185 + "px";
+					footerContent.style.bottom = 115 + "px";
+				} else {
+					// 隐藏更多功能
+					morBox.style.display = "none";
+					chatContentBox.style.height = plus.screen.resolutionHeight - 45 - 75 + "px";
+					footerContent.style.bottom = 0;
+				}
+
+				// 判断输入框是否为获取焦点状态
+				if (messageCon == document.activeElement) {
+					messageCon.blur();
+				}
+			}, {
+				passive: false
+			}) */
+
+			// 输入框获取焦点的时候,弹出软键盘,隐藏更多功能
+			messageCon.addEventListener("focus", function() {
+				// morBox.style.display = "none";
+				document.getElementById("chatContentBox").style.height = plus.screen.resolutionHeight - 45 - 75 + "px";
+				footerContent.style.bottom = 0;
+
+			}, {
+				passive: false
+			});
+
+			// 点击聊天内容区域 使输入框失去焦点  隐藏更多功能选择区域
+			chatContentBox.addEventListener("tap", function() {
+				messageCon.blur(); // 输入框失去焦点
+				// 隐藏更多功能选择区域
+				// morBox.style.display = "none";
+				document.getElementById("chatContentBox").style.height = plus.screen.resolutionHeight - 45 - 75 + "px";
+				footerContent.style.bottom = 0;
+
+			})
+
+			// 点击发送语音按钮
+			voiceIconBox.addEventListener("tap", function() {
+				voiceIconBox.style.display = "none";
+				textIconBox.style.display = "block";
+				messageCon.style.display = "none";
+				holdToSpeak.style.display = "block";
+			}, {
+				passive: false
+			});
+
+			// 点击文本编辑按钮
+			textIconBox.addEventListener("tap", function() {
+				voiceIconBox.style.display = "block";
+				textIconBox.style.display = "none";
+				messageCon.style.display = "block";
+				holdToSpeak.style.display = "none";
+			}, {
+				passive: false
+			})
+
+			// 长按 "按住说话" 按钮
+			holdToSpeak.addEventListener("hold", function() {
+				isHoldEven = true;
+				console.log(isHoldEven);
+				microphoneBox.style.display = "block";
+				microphoneNum.innerHTML = "60";
+				voiceTime = window.setInterval(function() {
+					if (microphoneNum.innerHTML == 0) {
+						microphoneBox.style.display = "none";
+						window.clearInterval(voiceTime);
+						// todo  直接发送消息
+
+					} else {
+						microphoneNum.innerHTML = microphoneNum.innerHTML - 1;
+					}
+				}, 1000);
+
+				// 开始录音
+				if (audioObj == null) {
+					alert("设备录音异常,请检查是否支持录音功能");
+					return;
+				}
+				audioObj.record({
+					filename: "_doc/audio/"
+				}, function(recordFile) {
+					audioPath = recordFile;
+					Audio2dataURL(recordFile)
+					console.log(recordFile)
+				}, function(e) {
+					console.log("Audio record failed: " + e.message);
+				});
+
+			});
+			
+			//将base64转换为语音
+			
+			function dataURL2Audio (base64Str, callback) {
+				var base64Str = base64Str.replace('data:audio/amr;base64,','');
+				var audioName = (new Date()).valueOf() + '.amr';
+				plus.io.requestFileSystem(plus.io.PRIVATE_DOC,function(fs){
+					fs.root.getFile(audioName,{create:true},function(entry){
+						// 获得平台绝对路径
+						var fullPath = entry.fullPath;
+						if(mui.os.android){  
+							// 读取音频
+							var Base64 = plus.android.importClass("android.util.Base64");
+							var FileOutputStream = plus.android.importClass("java.io.FileOutputStream");
+							try{
+								var out = new FileOutputStream(fullPath);
+								var bytes = Base64.decode(base64Str, Base64.DEFAULT);
+								out.write(bytes); 
+								out.close();
+								// 回调
+								callback && callback(entry);
+							}catch(e){
+								console.log(e.message);
+							}
+						}else if(mui.os.ios){
+							var NSData = plus.ios.importClass('NSData');
+							var nsData = new NSData();
+							nsData = nsData.initWithBase64EncodedStringoptions(base64Str,0);
+							if (nsData) {
+								nsData.plusCallMethod({writeToFile: fullPath,atomically:true});
+								plus.ios.deleteObject(nsData);
+							}
+							// 回调
+							callback && callback(entry);
+						}
+					})
+				})
+			}
+			
+			
+			//将声音转换为base64
+			var souce;
+			function Audio2dataURL (path) {
+				plus.io.resolveLocalFileSystemURL(path, function(entry){
+					entry.file(function(file){
+						var reader = new plus.io.FileReader();
+						reader.onloadend = function (e) {
+							console.log(e.target.result);
+							var str = e.target.result;
+							app.souce = str.substring(str.indexOf(',')+1);
+							// console.log(souce);
+						};
+						reader.readAsDataURL(file);
+					},function(e){
+						mui.toast("读写出现异常: " + e.message );
+					})
+				})
+			}
+	
+
+			// 松开 "按住说话" 按钮
+			holdToSpeak.addEventListener("release", function() {
+				// console.log(souce);
+				if (isHoldEven == true) {
+					// 关闭录音
+					audioObj.stop();
+					microphoneBox.style.display = "none";
+					window.clearInterval(voiceTime);
+					isHoldEven = false;
+					setTimeout(function() {
+						if (microphoneNum.innerHTML >= 60) {
+							microphoneBoxShort.style.display = "block"
+							var voiceShort = window.setTimeout(function() {
+								microphoneBoxShort.style.display = "none";
+							}, 1000);
+						} else {
+							microphoneBoxShort.style.display = "none";
+
+							// 录音完毕,保存在本地,并展示在页面
+							var l = 60 - microphoneNum.innerHTML; // 语音长度
+							var widthNum = plus.display.resolutionWidth * 0.9 - 100;
+							var ratio = (widthNum - 50) / 60;
+
+							console.log(ratio);
+							var obj = {
+								// senderId: app.chatUserId,
+								senderId: 3,
+								senderName: app.chatUserName,
+								voicePath: audioPath,
+								// voicePath: souce,
+								// duration: l + "s",
+								duration:"🔊",
+								msgType: "voice",
+								widthLength: ratio * l + 50 + "px",
+								isPlay: 0
+							};
+							console.log(JSON.stringify(obj));
+							app.chatList.push(obj);
+							dataFlag = 2;
+							chatwithInit(app.souce,dataFlag);
+							window.setTimeout(function() {
+								chatContentBox.scrollTop = chatContentBox.scrollHeight;
+							}, 100)
+						};
+					}, 500)
+				} else {
+					microphoneBoxShort.style.display = "block"
+					var voiceShort = window.setTimeout(function() {
+						microphoneBoxShort.style.display = "none";
+					}, 1000);
+				}
+
+			});
+
+			// 监听父页面传来的接收消息
+			/* window.addEventListener("receiveMsg", function(e) {
+				var obj = {
+					senderName: document.getElementById("chatNameDom").innerHTML,
+					senderId: targetId,
+					content: e.detail.content,
+					msgType: e.detail.msgType
+				};
+				app.chatList.push(obj);
+				setTimeout(function() {
+					chatContentBox.scrollTop = chatContentBox.scrollHeight;
+				}, 100)
+				console.log(JSON.stringify(obj));
+			}); */
+		</script>
+	</body>
+
+</html>

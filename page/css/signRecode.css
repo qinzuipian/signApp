@@ -95,3 +95,10 @@
 	color: #00CC66;
 }
 
+.signMsg {
+	text-align: center;
+	line-height: 50px;
+	font-size: 14px;
+	background-color: #efeff4;
+	color: gray;
+}

@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link href="../../css/common.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/appPeople.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">预约成功</h1>
+		</header>
+		<div id="app">
+			<div class="img">
+				<img src="../../img/index/duihao.png" alt="">
+				<p>
+					<span>成功预约</span>
+					<span v-text="fatherData"></span>
+				</p>
+				<p class="hosname">
+					<span>预约项目:</span>
+					<span v-text="vaccineName"></span>
+				</p>
+				<!-- <p class="hosaddress">
+					地址：西安市莲湖区土门大桥西段16号
+				</p> -->
+			</div>
+			<button type="button" data-loading-icon-position="left" id="toappBtn" class="mui-btn mui-btn-primary toappBtn">预约记录</button>
+			
+		</div>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function() {
+				appdata();
+			});
+			
+			var app = new Vue({
+				el: "#app",
+				data: {
+					fatherData:"",
+					vaccineName:""
+				}
+			})
+			//接受父页面的参数
+			function appdata() {
+				var ws = plus.webview.currentWebview();
+				console.log(JSON.stringify(ws))
+				app.fatherData = ws.appdata.hbDate;
+				app.vaccineName = ws.appdata.vaccineName;
+				// console.log(app.fatherData)
+			}
+			document.getElementById("toappBtn").addEventListener("tap",function() {
+				var appRecord = plus.webview.create("appRecord.html",appRecord);
+				plus.webview.show(appRecord, "slide-in-right", 300)
+			})
+		</script>
+	</body>
+
+</html>

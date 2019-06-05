@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../../css/iconfont.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">我的百科全书</h1>
+		</header>
+		<div id="app">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" id="medical">
+					<a class="mui-navigate-right">
+						<div style="display: flex;line-height: 34px;">
+							<p class="iconfont" style="font-size: 18px;color: blue;">&#xe60a;</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">药品百科</p>
+						</div>
+					</a>
+				</li>
+				<!-- <li class="mui-table-view-cell" id="signRecode">
+					<a class="mui-navigate-right">
+						<div style="display: flex;line-height: 34px;">
+							<p class="iconfont" style="font-size: 20px;color: goldenrod;">&#xe693;</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">签约记录</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="performanceRecord">
+					<a class="mui-navigate-right">
+						<div style="display: flex;line-height: 34px;">
+							<p class="iconfont" style="font-size: 18px;color: red;">&#xe626;</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">我的签约团队</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="caseUpload">
+					<a class="mui-navigate-right">
+						<div style="display: flex;line-height: 34px;">
+							<p class="iconfont" style="font-size: 18px;color: burlywood;">&#xe693;</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">病案咨询</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="ownSuggest">
+					<a class="mui-navigate-right">
+						<div style="display: flex;line-height: 34px;">
+							<p class="iconfont" style="font-size: 18px;color: burlywood;">&#xe633;</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">我的评价</p>
+						</div>
+					</a>
+				</li> -->
+				
+			</ul>
+		</div>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			
+			//药品百科
+			document.getElementById("medical").addEventListener("tap",function() {
+				var medicalDetail = plus.webview.create("medicalDetail.html", medicalDetail);
+				plus.webview.show(medicalDetail, "slide-in-right", 300)
+			})
+		</script>
+	</body>
+
+</html>
+

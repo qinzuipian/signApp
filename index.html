@@ -35,6 +35,7 @@
 		
 		<script src="js/mui.js"></script>
 		<script src="js/common.js"></script>
+		<script type="text/javascript" src="js/vue.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能,
@@ -78,8 +79,17 @@
 					}
 				],
 			});
+			
+			var app = new Vue({
+				el: "#app",
+				data: {clientId :""},
+				})
 
 			mui.plusReady(function() {
+				/* void plus.push.setAutoNotification(true);
+				var info = plus.push.getClientInfo();
+				app.clientId = info.clientid;
+				alert(app.clientId) */
 				getStorageDate();
 				indexInit();
 			});
@@ -149,6 +159,7 @@
 			},{passive:false});
 			
 			function indexInit(){
+				console.log(JSON.stringify(token))
 				plus.nativeUI.showWaiting("正在验证用户信息");
 				mui.ajax(JTURL + 'jkda/ehrpiruser/getUser', {
 					data: {
@@ -213,6 +224,24 @@
 					}
 				});
 			}
+			
+		
+			
+			// 监听plusready事件 推送消息  
+			document.addEventListener( "plusready", function(){
+				// 扩展API加载完毕，现在可以正常调用扩展API
+				// 添加监听从系统消息中心点击某条消息启动应用事件
+				plus.push.addEventListener( "click", function (msg) {
+					// 分析msg.payload处理业务逻辑 
+					/* alert(JSON.stringify(msg))
+					alert( "You clicked: " + msg.content +"1"+ JSON.stringify(msg.payload) +"2"+ JSON.stringify(msg.option)); */
+					var goTocompany = plus.webview.create("page/index1/accompany.html",goTocompany,{},
+					{accompanyPush:msg});
+					goTocompany.addEventListener('loaded', function() {
+						goTocompany.show('slide-in-right', 150); //把新的webview窗口显示出来
+					}, false);
+				}, false ); 
+			}, false );
 		
 		</script>
 	</body>

@@ -1,0 +1,37 @@
+.docRound {
+	width: 100%;
+	/* border: 1px solid #f00; */
+	margin: 0 auto;
+	padding: 0.875rem;
+	font-size: 16px;
+	color: gray;
+}
+.docBtn {
+	text-align: center;
+}
+.docBtn .mui-btn {
+	width: 80%;
+	margin-top: 0.625rem;
+	line-height: 1.875rem;
+	border-radius: 0.5rem;
+}
+
+/* tohistory */
+.hisMain {
+	padding: 0.375rem;
+	margin: 0;
+}
+.hisMain li {
+	background-color: #fff;
+	padding: 0.5rem;
+	margin-top: 0.625rem;
+	border-radius: 0.5rem;
+}
+.hisMain li p:nth-child(1) {
+	color: olivedrab;
+	font-size: 1rem;
+}
+.hisMain li p:nth-child(2) {
+	font-size: 14px;
+	color: gray;
+}

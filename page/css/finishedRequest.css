@@ -1,0 +1,76 @@
+@charset "utf-8";
+
+#name{
+	color: black;
+	font-size: 18px;
+	padding: 0px 0  0 20px;
+}
+
+.record-name{
+	font-size: 16px;
+}
+.record-num{
+	font-size: 16px;
+}
+.record-starttime,.record-endtime{
+	font-size: 13px;
+	color: gray;
+}
+.right button{
+	margin-top: 20px;
+	width: 62px;
+	text-align: center;
+	font-size: 12px;
+}
+
+
+.left{
+	width: 80%;
+}
+.right{
+	width: 20%;
+}
+
+
+.mui-slider-indicator .mui-segmented-control{
+	position: fixed;
+	top: 44px;
+	z-index: 999;
+	background: white;
+}
+.good,.level,.date,.ser,.ser_name {
+		padding: 2px 4px 0 4px;
+}
+.good{
+	color:black;
+	font-size: 14px;
+}
+
+.level{
+	width: 50%;
+
+	color: #FFB400;
+	font-size: 18px;
+	
+}
+.date{
+	width: 46%;
+	color: gray;
+	
+}
+.ser,.ser_name{
+	font-size: 15px;
+	color: gray;
+	
+}
+.btnBox {
+	position: relative;
+}
+.btnBox .btn {
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+	color: #f00;
+	font-size: 24px;
+	font-weight: 700;
+}

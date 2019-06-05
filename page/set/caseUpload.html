@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/uploadfile.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 class="mui-title mui-text-center mui-action-back">上传报告</h1>
+		</header>
+		<div id="app" style="margin-top: 50px;">
+			<div v-show="isInternet == 0">
+				<!-- <form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>体检机构</label>
+						<input type="text" placeholder="请输入本次体检的机构名称">
+					</div>
+				</form> -->
+				<ul class="mui-table-view" style="margin-top: 0px;" id="picktime">
+					<li class="mui-table-view-cell time">
+						<p style="font-size: 16px;color: black;width: 45%;">上传时间</p>
+						<p class="babynum" v-text="pickedtime"></p>
+						<span class="mui-icon mui-icon-arrowright" style="line-height:2.5;width: 5%; font-size: 18px;"></span>
+					</li>
+				</ul>
+				<form class="mui-input-group">
+					<!-- <div class="mui-input-row">
+						<label>体检人</label>
+						<input type="text" placeholder="请输入本次体检人">
+					</div> -->
+					<p style="color: black;font-size: 17px;line-height: 30px;margin: 16px 0px 4px 16px;">问题描述</p>
+					<textarea rows="100" class="text" placeholder="请输入你想咨询的问题，供医生参考" v-model="question" style="background:rgb(246,246,246); border-radius:10px;"></textarea>
+					<p style="text-align: right;padding: 15px 10px 10px 0 ;background: rgb(246,246,246);width: 94%;margin-left:3%;border-radius:10px;margin-top: -20px;">0/200</p>
+					<span style="color: black;font-size: 17px;line-height: 30px;margin: 16px 0px 4px 16px;">添加图片</span>
+					<span style="font-size: 12px;">(每次可上传6张)</span>
+					<div class="addphoto">
+						<p id="addphoto" style="width: 70px;height: 70px;background: rgb(246,246,246);margin: 4px 0 0 15px;">
+							<img src="../../img/set/camcer.png" style="width: 30px;height: 30px;width: 50%;margin:26% 0 0 25%;" />
+						</p>
+			
+					</div>
+					<div class="imglist">
+						<ul id="imgs"></ul>
+					</div>
+					
+					<button type="button" data-loading-icon-position="left" class="mui-btn mui-btn-yellow toProtect" id="doctorAppiont">预约解读</button>
+				</form>
+				
+				
+	
+				<p class="tipword" v-show="isInternet == 1">没有网络了！可能是您的网络设置未开启</p>
+				<button type="button" id="refresh"  class="mui-btn mui-btn-warning tipbtn" v-show="isInternet == 1">点击重试</button>
+			</div>
+			
+		</div>
+
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript" src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false //启用右滑关闭功能,
+			})
+			var app = new Vue({
+				el: "#app",
+				data: {
+					pickedtime: "",
+					isInternet:3,
+					database64list:[],
+					question:""
+				}
+			})
+			mui.plusReady(function() {
+				getdeviceStatus();
+				getStorageDate();
+				fatherDoctor();
+				var picktime = document.getElementById("picktime"),
+					addphoto = document.getElementById("addphoto"),
+					refresh = document.getElementById("refresh");
+				//时间选择
+				picktime.addEventListener("tap", function() {
+					pickDate();
+				})
+				addphoto.addEventListener("tap", function() {
+					galleryImgs();
+				})
+				refresh.addEventListener("tap",function(){
+					app.isInternet = 3;
+					getdeviceStatus();
+				})
+
+			})
+			
+			
+			//接受父页面的参数
+			var doctorId;
+			function fatherDoctor() {
+				var ws = plus.webview.currentWebview();
+				console.log(JSON.stringify(ws))
+				doctorId = ws.casedata;
+			}
+			//日期选择器
+			function pickDate() {
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					app.pickedtime = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate()
+					console.log("选择的日期：" + app.pickedtime);
+				}, function(e) {
+
+				});
+			}
+			var fileArr = [];
+			var flag = false;
+			// 从相册中选择多张图片 
+			function galleryImgs() {
+				// 从相册中选择图片
+				console.log("从相册中选择多张图片:");
+				plus.gallery.pick(function(e) {
+					for(var i in e.files) {
+						// console.log(e.files[i]);
+						setHtml(e.files[i])
+						setFile(e.files[i])
+						//appendFile(e.files[i]); //处理图片的地方
+					}
+				}, function(e) {
+					console.log("取消选择图片");
+				}, {
+					filter: "image",
+					multiple: true,
+					maximum: 6,
+					system: false,
+					onmaxed: function() {
+						plus.nativeUI.alert('最多只能选择6张图片');
+					}
+				});
+			}
+			
+			function setHtml(path) {
+				console.log(path)
+				  var ul = document.getElementById('imgs');
+			
+			　　　　//添加 li
+			　　　　var li = document.createElement("li");
+			
+			　　　　//添加 img
+			　　　　var img = document.createElement("img");
+			　		//删除图片
+					var closeButton = document.createElement('div');
+					closeButton.setAttribute('class', 'image-close');
+					closeButton.innerHTML = 'X';
+			
+			　　　　//设置 img 图片地址
+			　　　　img.src = path;
+			
+			　　　　li.appendChild(img);
+			　　　　li.appendChild(closeButton);
+			　　　　ul.appendChild(li);
+					
+				  closeButton.addEventListener('tap', function(event) {
+					 flag = true;
+					setTimeout(function() {
+						ul.removeChild(li);
+						// setFile(path)
+					}, 10);
+					return false;
+				}, false);
+			
+				}
+				
+			function setFile(fileSrc){
+				console.log(JSON.stringify(fileSrc))
+				// console.log(JSON.stringify(flag))
+				// var image = new Image();  
+				if(flag == true) {
+					// console.log(JSON.stringify(fileArr))
+					for(var i=0;i<fileArr.length;i++) {
+						if(fileSrc == fileArr[i].src) {
+							fileArr.splice(i,1);						
+						}
+					}
+				} else {
+					// var image = new Image();
+					getBase64(fileSrc);
+					
+					var image = {};  
+					image.src = fileSrc;
+					fileArr.push(image);
+					// console.log(JSON.stringify(fileArr))				
+					}
+				
+				
+			}
+			function getBase64(fileSrc) {		
+				//转成base64
+				var Img = new Image();
+				Img.src = fileSrc; // 传过来的图片路径在这里用。
+				/* console.log(Img.src)*/
+				Img.width = "280";
+				Img.height = "240";
+				
+				Img.onload = function() {
+					 var canvas = document.createElement("canvas");  
+					canvas.width = Img.width;  
+					canvas.height = Img.height;  
+					var ctx = canvas.getContext("2d");  
+					ctx.drawImage(Img, 0, 0, Img.width, Img.height);  
+					var ext = Img.src.substring(Img.src.lastIndexOf(".")+1).toLowerCase();  
+					var dataURL = canvas.toDataURL("image/"+ext);
+					//截掉前缀
+					// var database64 = dataURL.substring(dataURL.indexOf(',') + 1);
+					// console.log(database64)
+					app.database64list.push(dataURL);
+					// console.log(JSON.stringify(app.database64list));
+				}
+			}
+			
+			function getdeviceStatus() {
+				var types = {};
+				//未知网络
+				types[plus.networkinfo.CONNECTION_UNKNOW] = "Unknown connection";
+				//无网络
+				types[plus.networkinfo.CONNECTION_NONE] = "None connection";
+				//以太网
+				types[plus.networkinfo.CONNECTION_ETHERNET] = "Ethernet connection";
+				//wifi
+				types[plus.networkinfo.CONNECTION_WIFI] = "WiFi connection";
+
+				//wifi连接
+				if (types[plus.networkinfo.getCurrentType()] == types[plus.networkinfo.CONNECTION_NONE] || types[plus.networkinfo.getCurrentType()] ==
+					types[plus.networkinfo.CONNECTION_UNKNOW]) {
+					// 无网络
+					plus.nativeUI.showWaiting("数据加载中...");
+					setTimeout(function() {
+					plus.nativeUI.closeWaiting();
+					app.isInternet = 1
+				}, 3000)
+
+				} else {
+					// 有网络
+//					plus.nativeUI.showWaiting("数据加载中...");
+					//一些对数据的操作
+					app.isInternet = 0;
+
+				}
+			}
+			
+			//上传病案文件
+			document.getElementById("doctorAppiont").addEventListener("tap",function() {
+				var data = JSON.stringify({
+					personId:personId,
+					token: token,
+					doctorCode:doctorId,
+					messageInfo:app.question,
+					file:app.database64list,
+					type:2
+					})
+				console.log(data)
+				plus.nativeUI.showWaiting("等待中...");
+				mui.ajax(JTURL + 'jkda/medicalupload/upload', {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					timeout: 100000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {							
+							plus.nativeUI.closeWaiting();
+							plus.nativeUI.toast(res.msg);
+							var c = plus.webview.currentWebview();
+							var b = c.opener();
+							var a = c.opener().opener();
+							b.close();
+							c.close();
+						}else if(res.code == 401){
+							plus.nativeUI.closeWaiting();
+							ajaxTokenInvalid();
+						}else{
+							plus.nativeUI.closeWaiting();
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						console.log(type)
+						plus.nativeUI.closeWaiting();
+						// mui(apply).button('reset');
+						ajaxError();
+					}
+				});
+			})
+			
+			
+		</script>
+		
+	</body>
+
+</html>

@@ -1,30 +1,108 @@
 {
-	"index.html": {
-		"resources": [
-			"img/首页-选中.png",
-			"page/index1.html"
-		],
-		"refer": [
-			"page/own.html",
-			"page/heathy.html",
-			"page/msg.html",
-			"page/index1.html"
-		]
-	},
-	"page/index1.html": {
-		"refer": [
-			"page/index1/chooseteam.html"
-		]
-	},
-	"page/index1/chooseteam.html": {
-		"refer": [
-			"page/index1/team_des.html",
-			"page/index1/apply_for.html"
-		]
-	},
-	"page/index1/apply_for.html": {
-		"refer": [
-			"page/index1/free.html"
-		]
-	}
+  "index.html": {
+    "resources": [
+      "img/�u-\t-.png",
+      "page/index1.html"
+    ],
+    "refer": [
+      "page/own.html",
+      "page/heathy.html",
+      "page/msg.html",
+      "page/index1.html",
+      "page/login/bindIdCard.html"
+    ]
+  },
+  "page/index1.html": {
+    "refer": [
+      "page/index1/chooseteam.html",
+      "page/index1/teamList.html",
+      "page/index1/sweepCode.html",
+      "page/index1/appoDoctor.html",
+      "page/set/set.html",
+      "page/index1/signOrno.html"
+    ]
+  },
+  "page/index1/chooseteam.html": {
+    "refer": [
+      "page/index1/team_des.html",
+      "page/index1/apply_for.html"
+    ]
+  },
+  "page/index1/apply_for.html": {
+    "refer": [
+      "page/index1/free.html"
+    ]
+  },
+  "page/index1/sign.html": {
+    "refer": [
+      "page/index1/free.html"
+    ]
+  },
+  "page/own.html": {
+    "refer": [
+      "page/set/performanceRecord.html",
+      "page/set/set.html",
+      "page/index1/signRecode.html",
+      "page/set/healthyDangan.html",
+      "page/login/login.html",
+      "page/set/ownSuggest.html",
+      "page/login/bindIdCard.html",
+      "page/set/signAndperfor.html",
+      "page/set/allSuggest.html"
+    ]
+  },
+  "page/set/performanceRecord.html": {
+    "refer": [
+      "page/set/toPerformance.html"
+    ]
+  },
+  "page/index1/sweepCode.html": {
+    "refer": [
+      "page/index1/sign.html"
+    ]
+  },
+  "page/msg.html": {
+    "refer": [
+      "page/msg/chatWindow.html"
+    ]
+  },
+  "page/login/register.html": {
+    "refer": [
+      "page/login/setPwd.html"
+    ]
+  },
+  "page/set/healthyDangan.html": {
+    "refer": [
+      "page/set/hobbylist.html"
+    ]
+  },
+  "page/login/login.html": {
+    "refer": [
+      "page/login/register.html"
+    ]
+  },
+  "page/login/bindIdCard.html": {
+    "refer": [
+      "page/login/bindIdCard.html"
+    ]
+  },
+  "page/set/signAndperfor.html": {
+    "refer": [
+      "page/set/performanceRecord.html",
+      "page/set/sign_detail.html"
+    ]
+  },
+  "page/set/toPerformance.html": {
+    "refer": [
+      "page/set/ownSuggest.html"
+    ]
+  },
+  "page/set/allSuggest.html": {
+    "resources": [
+      "page/css/finishedRequest.css"
+    ],
+    "refer": [
+      "page/set/ownSuggest.html"
+    ]
+  }
 }

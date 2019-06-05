@@ -17,6 +17,19 @@
 	top: 15px;
 }
 
+.idCardstyle {
+	position: relative;
+}
+.camcerstyle {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.375rem;
+	z-index: 999;
+	
+}
+.camcerstyle .mui-icon-camera {
+	font-size: 1.875rem;
+}
 .next{
 	line-height: 44px;
 	width: 70px;
@@ -27,4 +40,50 @@
 	width: calc(100% - 140px);
     margin-left: 26px;
     text-align: center;
+}
+
+.imgUpload {
+	background-color: #efeff4;
+	padding: 10px;
+	border: 0;
+	margin-top: 6px;
+	height: 240px;
+}
+/* .imgUpload .mui-icon-camera {
+	font-size: 50px;
+} */
+#imgs {
+	background-color: #efeff4;
+
+}
+#imgs li {
+	float: left;
+	width: 34%;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+#imgs li .image-close{
+	position: absolute;
+	display: inline-block;
+	left: -6px;
+	top: -6px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	border-radius: 12px;
+	background-color: #FF5053;
+	color: #f3f3f3;
+	border: solid 1px #FF5053;
+	font-size: 10px;
+	font-weight: 200;
+	z-index: 1;
+}
+#imgs li img{
+	width: 90%;
+}
+.pigcolor {
+	color: gray;
+	font-size: 14px;
 }

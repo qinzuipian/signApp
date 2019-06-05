@@ -50,12 +50,7 @@
 
 
 
-
-
-
-
-
-
+// const JTURL = "http://192.168.1.199:8089/jkda/"
 const JTURL = "http://47.93.33.135:8089/jkda/"
 // const JTURL = "http://192.168.1.4:8089/jkda/"
 
@@ -72,6 +67,7 @@ function getStorageDate() {
 	personId = plus.storage.getItem("personId");
 	userName = plus.storage.getItem("userName");
 	userStatus = plus.storage.getItem("userStatus");
+	teamCode = plus.storage.getItem("teamCode");
 
 }
 
@@ -131,3 +127,4 @@ function refreshIndexPage() {
 	mui.fire(heathy, "refresh");
 	mui.fire(own, "refresh");
 }
+

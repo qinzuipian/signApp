@@ -35,3 +35,10 @@
 	padding-left: 20px;
 }
 
+.signMsg {
+	text-align: center;
+	line-height: 50px;
+	font-size: 14px;
+	background-color: #efeff4;
+	color: gray;
+}

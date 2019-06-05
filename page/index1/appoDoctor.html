@@ -7,18 +7,70 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" href="../css/uploadfile.css">
+		<link rel="stylesheet" href="../css/appPeople.css">
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav header-blue">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title bind-title">预约挂号</h1>
+			<a class="mui-icon mui-icon-list mui-pull-right" id="recordMenu"></a>
 		</header>
-
+		<div id="app">
+			<div v-show="type == 1">
+				<ul class="mui-table-view" style="margin-top: 0px;">
+					<li class="mui-table-view-cell time" id="pickDocDate">
+						<p style="font-size: 16px;color: black;width: 45%;">预约时间</p>
+						<p class="babynum" id="docinfo"></p>
+						<span class="mui-icon mui-icon-arrowright" style="line-height:2.5;width: 5%; font-size: 18px;"></span>
+					</li>
+					<li class="mui-table-view-cell time" id="appDocpeople">
+						<p style="font-size: 16px;color: black;width: 45%;">预约人</p>
+						<p class="babynum" v-text="username"></p>
+						<span class="mui-icon mui-icon-arrowright" style="line-height:2.5;width: 5%; font-size: 18px;"></span>
+					</li>
+					<li class="mui-table-view-cell time" id="appDoctor">
+						<p style="font-size: 16px;color: black;width: 45%;">预约医生</p>
+						<p class="babynum" v-text="doctorname"></p>
+						<span class="mui-icon mui-icon-arrowright" style="line-height:2.5;width: 5%; font-size: 18px;"></span>
+					</li>
+					<li class="mui-table-view-cell time" id="appPoject">
+						<p style="font-size: 16px;color: black;width: 45%;">预约项目</p>
+						<p class="babynum" v-text="taskName"></p>
+						<span class="mui-icon mui-icon-arrowright" style="line-height:2.5;width: 5%; font-size: 18px;"></span>
+					</li>
+				</ul>
+				<button type="button" data-loading-icon-position="left" id="toappdoctor" class="mui-btn mui-btn-primary toalldoctor">预约</button>
+			</div>
+			<div v-show="type == 2">
+				<ul class="mui-table-view" style="margin-top: 0px;">
+					<li class="mui-table-view-cell time" id="pickDateBtn">
+						<p style="font-size: 16px;color: black;width: 45%;">接种时间</p>
+						<p class="babynum" id="info"></p>
+						<span class="mui-icon mui-icon-arrowright" style="line-height:2.5;width: 5%; font-size: 18px;"></span>
+					</li>
+					<li class="mui-table-view-cell time" id="appPeople">
+						<p style="font-size: 16px;color: black;width: 45%;">接种人姓名</p>
+						<p class="babynum" v-text="username"></p>
+						<span class="mui-icon mui-icon-arrowright" style="line-height:2.5;width: 5%; font-size: 18px;"></span>
+					</li>
+					<li class="mui-table-view-cell time" id="vaccine">
+						<p style="font-size: 16px;color: black;width: 45%;">疫苗种类</p>
+						<p class="babynum" v-text="vaccine"></p>
+						<span class="mui-icon mui-icon-arrowright" style="line-height:2.5;width: 5%; font-size: 18px;"></span>
+					</li>
+				</ul>
+				<button type="button" data-loading-icon-position="left" id="toappvaccine" class="mui-btn mui-btn-primary toalldoctor">预约</button>
+			</div>
+			
+		
+		</div>
 
 
 		<script src="../../js/mui.js"></script>
 		<script src="../../js/common.js"></script>
+		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能
@@ -27,16 +79,216 @@
 				}
 			});
 			mui.plusReady(function() {
-				var self = plus.webview.currentWebview(),
+				getStorageDate();
+				appType();
+				/* var self = plus.webview.currentWebview(),
 					childWV = null,
-					targetUrl = "http://qdwz.sx.witdoctor.cn/Register/hosList?um=JKSX_WX";
+					targetUrl = "http://qdwz.sx.witdoctor.cn/Guider/bodyPlace?um=SXSJKT_WX";
 				childWV = plus.webview.create(targetUrl, 'baiduMap', {
 					top: '40px',
 					bottom: 0
 				});
 				self.append(childWV);
-				childWV.show('slide-in-bottom');
+				childWV.show('slide-in-bottom'); */
 			});
+			
+			var app = new Vue({
+				el: '#app',
+				data: {
+					vaccine:"",
+					vaccineId:"",
+					username:"",
+					type:"",
+					doctorname:"",
+					doctorId:"",
+					hospitalCode:"",
+					taskName:"",
+					packId:"",
+					itemId:""
+					
+				},
+				methods: {}
+			})
+			
+			function appType() {
+				var ws = plus.webview.currentWebview();
+				app.type = ws.appType;
+			}
+			//接受子页面传过来的参数
+			window.addEventListener('nameFun',function(event){
+				app.vaccine = event.detail.vaccineName;
+				app.vaccineId = event.detail.vaccineId;
+				console.log(JSON.stringify(event.detail))
+			});
+			window.addEventListener('username',function(event){
+				app.username = event.detail;
+				console.log(JSON.stringify(event.detail))
+			});
+			//预约医生子穿父数据
+			window.addEventListener("doctorName",function(event) {
+				console.log(JSON.stringify(event.detail))
+				app.doctorname = event.detail.doctorName;
+				app.doctorId = event.detail.doctorNo;
+				app.hospitalCode = event.detail.hospitalCode;
+			})
+			
+			window.addEventListener("performance",function(event) {
+				console.log(JSON.stringify(event.detail))
+				app.packId = event.detail.packId;
+				app.itemId = event.detail.itemId;
+				app.taskName = event.detail.taskName;
+			})
+			
+			//日期选择
+			var info;
+			document.getElementById("pickDateBtn").addEventListener('tap', function() {
+				dateSelect();			
+			});
+			document.getElementById("pickDocDate").addEventListener('tap', function() {
+				dateSelect();			
+			});
+			
+			//日期选择
+			function dateSelect() {
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					info = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					document.getElementById("info").innerHTML = info;
+					document.getElementById("docinfo").innerHTML = info;
+				}, function(e) {
+					info = "";
+					document.getElementById("info").innerHTML = info;
+					document.getElementById("docinfo").innerHTML = info;
+				}, {
+					title: "请选择日期",
+					/* date: dDate,
+					minDate: minDate,
+					maxDate: maxDate */
+				});
+			}
+			
+			//接种人姓名选择
+			document.getElementById("appPeople").addEventListener("tap",function() {
+				var appPeople = plus.webview.create("appPeople.html",appPeople);
+				plus.webview.show(appPeople, "slide-in-right", 300)
+			})
+			
+			//预约人姓名选择
+			document.getElementById("appDocpeople").addEventListener("tap",function() {
+				var appPeople = plus.webview.create("appPeople.html",appPeople);
+				plus.webview.show(appPeople, "slide-in-right", 300)
+			})
+			
+			//预约医生选择
+			document.getElementById("appDoctor").addEventListener("tap",function() {
+				var appDoctor = plus.webview.create("./../set/casedoctor.html",appDoctor,{},{
+					doctorType:2
+				});
+				plus.webview.show(appDoctor, "slide-in-right", 300)
+			})
+			//预约项目
+			document.getElementById("appPoject").addEventListener("tap",function() {
+				var appPoject = plus.webview.create("appPoject.html",appPoject);
+				plus.webview.show(appPoject, "slide-in-right", 300)
+			})
+			//疫苗种类
+			document.getElementById("vaccine").addEventListener("tap",function() {
+				var appvaccine = plus.webview.create("appvaccine.html",appvaccine);
+				plus.webview.show(appvaccine, "slide-in-right", 300)
+			})
+			//预约记录
+			document.getElementById("recordMenu").addEventListener("tap",function() {
+				var appRecord = plus.webview.create("appRecord.html",appRecord);
+				plus.webview.show(appRecord, "slide-in-right", 300)
+			})
+			
+			//医生预约保存
+			document.getElementById("toappdoctor").addEventListener("tap",function() {				
+			var info = document.getElementById("docinfo").innerHTML;
+			var appdata = {hbDate:info,vaccineName:app.taskName}
+			 if(app.doctorname!=""&&info!=""&&app.username!=""&&app.taskName!="") {
+				 var data = JSON.stringify({
+				 	 token:token,
+					 personId:personId,
+					 doctorNo:app.doctorId,
+					 personName:app.username,
+					 doctorName:app.doctorname,
+					 hospitalCode:app.hospitalCode,
+					 packId:app.packId,
+					 itemId:app.itemId,
+					 hbDate:info			 	
+				  })
+				 console.log(data)
+				 mui.ajax(JTURL + '/jkda/basappointreg/save', {
+				 	data: data,
+				 	dataType: 'json', //服务器返回json格式数据
+				 	headers:{'Content-Type':'application/json'},	
+				 	type: 'post', //HTTP请求类型
+				 	timeout: 10000, //超时时间设置为10秒；
+				 	success: function(res) {
+				 		console.log(JSON.stringify(res));
+				 		if (res.code == 0) {
+				 			var appSuccess = plus.webview.create("appSuccess.html",appSuccess,{},{
+				 				appdata:appdata
+				 			});
+				 			plus.webview.show(appSuccess, "slide-in-right", 300)
+				 		} else if (res.code == 401) {
+				 			ajaxTokenInvalid();
+				 		} else {
+				 			otherErr();
+				 		}
+				 	},
+				 	error: function(xhr, type, errorThrown) {
+				 		ajaxError(type);
+				 	}
+				 });
+			 } else {
+				  mui.toast('预约内容不能为空',{ duration:'long', type:'div' }) 
+			 }
+				
+			})
+			
+			//疫苗预约保存
+			document.getElementById("toappvaccine").addEventListener("tap",function() {
+				
+				var info = document.getElementById("info").innerHTML;
+			 if(app.vaccine!=""&&info!=""&&app.username!="") {
+				 var data = JSON.stringify({
+				 	 token:token,
+				 	 vaccineName:app.vaccine,
+				 	 vaccineId:app.vaccineId,
+				 	 personId:personId,
+				 	 hbDate:info
+				  })
+				 console.log(data)
+				 mui.ajax(JTURL + 'jkda/basvaccinationreg/save', {
+				 	data: data,
+				 	dataType: 'json', //服务器返回json格式数据
+				 	headers:{'Content-Type':'application/json'},	
+				 	type: 'post', //HTTP请求类型
+				 	timeout: 10000, //超时时间设置为10秒；
+				 	success: function(res) {
+				 		console.log(JSON.stringify(res));
+				 		if (res.code == 0) {
+				 			var appSuccess = plus.webview.create("appSuccess.html",appSuccess,{},{
+				 				appdata:JSON.parse(data)
+				 			});
+				 			plus.webview.show(appSuccess, "slide-in-right", 300)
+				 		} else if (res.code == 401) {
+				 			ajaxTokenInvalid();
+				 		} else {
+				 			otherErr();
+				 		}
+				 	},
+				 	error: function(xhr, type, errorThrown) {
+				 		ajaxError(type);
+				 	}
+				 });
+			 } else {
+				  mui.toast('预约内容不能为空',{ duration:'long', type:'div' }) 
+			 }
+				
+			})
 		</script>
 	</body>
 

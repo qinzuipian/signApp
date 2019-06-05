@@ -1,0 +1,193 @@
+<!doctype html>
+<html  lang="en" class="feedback">
+
+	<head>
+		<meta charset="utf-8">
+		<title>我的评价</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+<!--		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />-->
+		<link rel="stylesheet" type="text/css" href="../css/ownSuggest.css" />
+	</head>
+
+	<body>
+		<header  class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<!--<button id="submit" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">发送</button>-->
+			<h1 class="mui-title">我的评价</h1>
+		</header>
+		<div id="#app">
+			<div class="mui-content">
+				<div class="mui-content-padded">
+					<div class="mui-inline">问题和意见</div>
+				
+				</div>
+				<div class="row mui-input-row">
+					<textarea id='question' class="mui-input-clear question" placeholder="请详细描述你的问题和意见..."></textarea>
+				</div>
+	
+				<div class="mui-content-padded">
+					<div class="mui-inline">服务评分</div>
+					<div class="icons mui-inline" style="margin-left: 6px;">
+						<i data-index="1" class="mui-icon mui-icon-star"></i>
+						<i data-index="2" class="mui-icon mui-icon-star"></i>
+						<i data-index="3" class="mui-icon mui-icon-star"></i>
+						<i data-index="4" class="mui-icon mui-icon-star"></i>
+						<i data-index="5" class="mui-icon mui-icon-star"></i>
+					</div>
+				</div><br />
+				<button type="button" id="submit" class="mui-btn mui-btn-primary feekSubmit">提交</button>
+			</div>
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				},
+			
+			});
+			
+			var app = new Vue({
+				el: "#app",
+				data: {
+				},
+				methods:{
+					
+				}
+			})
+			
+			var sugId;
+			mui.plusReady(function() {
+				suggestId();
+				// allSugId();
+			});
+			
+			
+			function suggestId() {
+				var ws = plus.webview.currentWebview();
+				console.log(JSON.stringify(ws));
+				sugId = ws.suggestId;
+//				console.log(JSON.stringify(sugId))
+			}
+
+			 //服务评分
+			 mui('.icons').on('tap','i',function(){
+			  	var index = parseInt(this.getAttribute("data-index"));
+			  	var parent = this.parentNode;
+			  	var children = parent.children;
+			  	if(this.classList.contains("mui-icon-star")){
+			  		for(var i=0;i<index;i++){
+		  				children[i].classList.remove('mui-icon-star');
+		  				children[i].classList.add('mui-icon-star-filled');
+			  		}
+			  	}else{
+			  		for (var i = index; i < 5; i++) {
+			  			children[i].classList.add('mui-icon-star')
+			  			children[i].classList.remove('mui-icon-star-filled')
+			  		}
+			  	}
+			  	starIndex = index;
+		  });
+			var feedback = {
+				question: document.getElementById('question'), 
+				submitBtn: document.getElementById('submit')
+			};
+			
+			/**
+			*提交成功之后，恢复表单项 
+			*/
+			feedback.clearForm = function() {
+				feedback.question.value = '';
+						//清除所有星标
+				mui('.icons i').each(function (index,element) {
+						
+				if (element.classList.contains('mui-icon-star-filled')) {
+						element.classList.add('mui-icon-star')
+					  	element.classList.remove('mui-icon-star-filled')
+				}
+				})
+			};
+							
+			feedback.submitBtn.addEventListener('tap', function(event) {
+				if (feedback.question.value == '') {
+					return mui.toast('信息填写不符合规范');
+				}
+				if (feedback.question.value.length > 200) {
+					return mui.toast('信息超长,请重新填写~')
+				}
+				//判断网络连接
+				if(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_NONE){
+					return mui.toast("连接网络失败，请稍后再试");
+				}
+				feedback.send(mui.extend({},{
+					content: feedback.question.value,
+					score:''+starIndex
+				})) 
+			}, false)
+			
+				feedback.send = function(content) {
+					console.log(JSON.stringify(content))
+					var data=JSON.stringify({
+						id:sugId,
+						score: content.score,
+						scoreRemark: content.content
+					})
+						mui.ajax( JTURL + '/jkda/basservicetask/update',{
+							data:data,
+							headers:{'Content-Type':'application/json'},	
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success:function(res){
+								console.log(JSON.stringify(res));
+								if(res.code == 0){
+//									mui(mui("#makesure")).button('reset');
+									plus.nativeUI.toast("提交成功");
+									mui.back();
+								}else if(res.code == 401){
+									ajaxTokenInvalid();
+								}else{
+									otherErr();
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								ajaxError();
+							}
+						});
+					/*feedback.uploader = plus.uploader.createUpload('https://service.dcloud.net.cn/feedback', {
+						method: 'POST'
+					}, function(upload, status) {
+			//			plus.nativeUI.closeWaiting()
+						console.log("upload cb:"+upload.responseText);
+						if(status==200){
+							var data = JSON.parse(upload.responseText);
+							//上传成功，重置表单
+							if (data.ret === 0 && data.desc === 'Success') {
+								mui.toast('反馈成功~')
+								console.log("upload success");
+								feedback.clearForm();
+							}
+						}else{
+							console.log("upload fail");
+						}
+						
+					});*/
+					
+					//添加上传数据
+					/*mui.each(content, function(index, element) {
+						if (index !== 'images') {
+							console.log("addData:"+index+","+element);
+							feedback.uploader.addData(index, element)
+						} 
+					});*/
+				};
+		</script>
+	</body>
+
+</html>

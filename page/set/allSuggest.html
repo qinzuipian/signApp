@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>评价列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../css/finishedRequest.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title mui-text-center colors">评价列表</h1>
+		</header>
+		<div id="app">
+			<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" id="muiSlide">
+					<a class="mui-control-item mui-active" href="#item1">未完成</a>
+					<a class="mui-control-item" href="#item2">已完成</a>				
+			</div>
+			<div id="item1" class="mui-control-content mui-active">
+			
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell flex" v-for="(item,index) in noSuggest">
+							<div class="left">
+								<p class="record-name shengluohao">服务内容: <span v-text="item.taskName"></span></p>
+								<!-- <p class="record-num shengluohao">服务描述: <span class="record-starttime" v-text="item.description"></span></p> -->
+								<!-- <p class="record-starttime shengluohao">开始时间: <span>444</span></p>
+								<p class="record-endtime shengluohao">结束时间: <span>444</span></p> -->
+								
+							</div>
+							<div class="right">
+								<button type="button" data-loading-text="正在加载" class="mui-btn mui-btn-primary" @click="goTosuggest(item)">去评价</button>
+							</div>
+						</li>
+					</ul>
+		
+			</div>
+			<div id="item2" class=" mui-control-content">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" v-for="(item,index) in suggestList">
+							<p class="good" v-text="item.scoreRemark"></p>
+							<div class="dis_flex">
+								<span class="ser">服务内容：</span>
+								<span class="ser_name" v-text="item.taskName"></span>
+							</div>
+							<div class="dis_flex btnBox">
+								<p class="level" v-text="item.score"></p>
+								<p class="date" v-text="item.modifyDate"></p>
+								<!--<span class="btn mui-icon mui-icon-trash" @click="suggestDelete()"></span>-->
+							</div>
+						</li>
+					</ul>
+			</div>
+		</div>
+			
+			<script src="../../js/mui.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+			<script type="text/javascript">
+				mui.init({
+					swipeBack: false,
+					keyEventBind: {
+						backbutton: true //关闭back按键监听
+						}					
+					
+				})
+	
+			
+				var app = new Vue({
+					el: '#app',
+					data: {
+					noSuggest:[],
+					suggestList:[]
+					},
+					methods: {
+						//去评论
+						goTosuggest:function(item) {
+							suggestGoto(item)
+						},
+						//删除评论
+						suggestDelete:function(){
+							console.log('ok')
+							deletesuggest()
+						}
+					}
+				})
+				mui.plusReady(function() {
+					getStorageDate();
+					suggestlist();
+					noSuggest();
+				})
+				
+				//评价列表
+				function suggestlist() {
+					mui.ajax(JTURL + 'jkda/basservicetask/queryScoreList', {
+					data: {
+						teamCode: teamCode,
+						personId: personId,
+						visible:1,
+						token:token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							app.suggestList = res.data;
+							for (var i=0;i<app.suggestList.length;i++) {								
+								switch (app.suggestList[i].score){
+									case 1:
+										app.suggestList[i].score = "★"
+										break;
+									case 2:
+										app.suggestList[i].score = "★★"
+										break;
+									case 3:
+										app.suggestList[i].score = "★★★"
+										break;
+									case 4:
+										app.suggestList[i].score = "★★★★"
+										break;
+									case 5:
+										app.suggestList[i].score = "★★★★★"
+										break;
+									default:
+										break;
+								}
+							}
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type);
+					}
+				});
+					
+				}
+				
+				//未评价列表
+				function noSuggest() {
+					mui.ajax(JTURL + 'jkda/basservicetask/queryScoreList', {
+					data: {
+						teamCode: teamCode,
+						personId: personId,
+						invisible :1,
+						token:token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							app.noSuggest = res.data;
+				
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type);
+					}
+				});
+					
+				}
+				//删除评论
+				/* function deletesuggest(it) {
+					console.log(JSON.stringify(it));
+					var btnArray = ['否', '是'];
+					mui.confirm('确认删除评论', '', btnArray, function(e) {
+						if (e.index == 1) {
+							plus.nativeUI.toast("删除成功")
+						} else {
+							plus.nativeUI.toast("取消删除")
+						}
+					})
+				} */
+
+				function suggestGoto(item){
+					console.log(JSON.stringify(item))
+					var goTosuggest = plus.webview.create("./ownSuggest.html",goTosuggest,{},{
+						suggestId:item.id
+					});
+					plus.webview.show(goTosuggest, "slide-in-right", 300)
+				};
+				
+			
+			</script>
+	</body>
+
+</html>

@@ -1,0 +1,56 @@
+.step {
+	text-align: center;
+}
+.step img {
+	width: 100%;
+	height: 12rem;
+	/* margin-bottom: 1.675rem; */
+}
+
+.step p {
+	text-align: center;
+	font-size: 1.125rem;
+	color: #2C9AFF;
+}
+.step .round {
+	width: 16.5rem;
+	height: 16.5rem;
+	/* line-height: 13rem; */
+	border: 0.75rem solid #2C9AFF;
+	border-radius: 16.5rem;
+	margin: 0 auto;
+	position: relative;
+}
+.step .round .roundfirst {
+	margin-top: 1.875rem;
+}
+.step .round .roundfirst span:nth-child(1),.step .round .roundfirst span:nth-child(5) {
+	font-size: 1rem;
+	position: absolute;
+}
+.step .round .roundfirst span:nth-child(1) {
+	top: 10%;
+	left: 36%;
+}
+.step .round .roundfirst span:nth-child(5) {
+	bottom: 20%;
+	left: 24%;
+}
+.step .round .roundfirst span:nth-child(3) {
+	line-height: 5rem;
+	font-size: 1.75rem;
+	font-weight: 700;
+	position: absolute;
+	left: 46%;
+	top: 28%;
+}
+.step .stepflex {
+	 display: flex;
+	 flex-direction:row;
+	 justify-content: space-around;
+	 align-items:center;
+	 margin-top: 0.625rem;
+	 font-size: 1rem;
+	 color: #2C9AFF;
+}
+	

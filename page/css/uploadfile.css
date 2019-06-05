@@ -1,0 +1,124 @@
+@charset "utf-8";
+.banner {
+	width: 100%;
+	height: 50px;
+	background: white;
+	text-align: center;
+	color: black;
+	line-height: 50px;
+	font-size: 20px;
+	letter-spacing: 2px;
+}
+.mui-input-row label {
+	width: 30%;
+	line-height: 2.1;
+	font-size: 16px;
+}
+.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
+	width: 68%;
+	line-height: 55px;
+	height: 55px;
+	text-align: right;
+	margin-right: 6px;
+}
+
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea{
+	line-height: 55px;
+	height: 55px;
+}
+.mui-input-group .mui-input-row{
+	line-height: 55px;
+	height: 55px;
+}
+.time{
+	height: 50px;
+	line-height: 50px;
+}
+.time{
+	padding: 3px 0 0 15px;
+	display: flex;
+}
+.mui-navigate-right:after, .mui-push-right:after{
+	right: 30px;
+}
+.text{
+	width: 94%;
+	height: 180px;
+	line-height: 24px;
+	margin-left: 3%;
+	z-index: 990;
+}
+
+/* .foot{
+	position: fixed; 
+	bottom:0px; 
+	width:100%; 
+	height:60px;
+	background-color:white;
+	z-index:99;
+} */
+.toProtect{
+	width: 90%;
+	text-align: center;
+	margin-left: 5%;
+	font-size: 16px;
+	line-height: 30px;
+	/*background: #007AFF;*/
+	color: white;
+	border-radius:10px;
+	margin-top: 0.625rem;
+	margin-bottom: 0.625rem;
+	/* position: fixed; 
+	bottom: 0;
+	z-index: 999; */
+
+	
+}
+.babynum{
+	width: 46%;
+	text-align: right;
+	line-height: 2.7;
+	color: black;
+	font-size: 16px;
+}
+
+#imgs {
+	background-color: #efeff4;
+
+}
+#imgs li {
+	float: left;
+	width: 34%;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+#imgs li .image-close{
+	position: absolute;
+	display: inline-block;
+	left: -6px;
+	top: -6px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	border-radius: 12px;
+	background-color: #FF5053;
+	color: #f3f3f3;
+	border: solid 1px #FF5053;
+	font-size: 10px;
+	font-weight: 200;
+	z-index: 1;
+}
+#imgs li img{
+	width: 90%;
+}
+
+.imglist {
+	width: 90%;
+	height: 18.75rem;
+	/* border: 1px solid #aaa; */
+	border-radius: 8px;
+	margin-left: 4%;
+	background: rgb(246, 246, 246);
+}

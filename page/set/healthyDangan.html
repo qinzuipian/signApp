@@ -49,13 +49,28 @@
 		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init()
-			mui.plusReady(function() {
+			mui.plusReady(function() {				
+				/* void plus.push.setAutoNotification(true);
+				var info = plus.push.getClientInfo();
+				app.clientId = info.clientid;
+				alert(app.clientId) */
+				/* void plus.push.setAutoNotification(true);
+				var timer = setInterval(function(){  
+                    if(plus.push.getClientInfo().clientid != null && plus.push.getClientInfo().clientid != ""){  
+                        // alert(JSON.stringify(plus.push.getClientInfo()))  
+                        cilentid = plus.push.getClientInfo().clientid;  
+						alert(cilentid)
+						console.log(cilentid)
+                        clearInterval(timer)  
+                        }  
+                },100)  */				
 				getStorageDate();
 				getdetailmsg();
 			})
 			var app = new Vue({
 				el: "#app",
 				data: {
+					// clientId:"",
 					hosbbylist: [{
 							title: "运动情况",
 							id: '183',

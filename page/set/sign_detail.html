@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>家医详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title mui-text-center">医生详情</h1>
+		</header>
+		<div id="app">
+			<div class="bar dis_flex">
+				<div class="icon">
+					<img src="../../img/set/teams.jpg" />
+				</div>
+				<div class="info">
+					<p id="name"></p>
+					<p id="hos_loc"></p>
+				</div> 
+			</div>
+			<div class="contont dis_flex">
+				<p class="a"></p>
+				<span class="title">医生简介</span>
+			</div>
+			<div class="nei">
+				<p class="doc_nei" id="doc_nei"></p>
+			</div>
+			<div class="contont dis_flex">
+				<p class="a"></p>
+				<p class="title">所属团队</p>
+			</div>
+			<div  class="nei_">
+				<p class="team_name" id="team_nei"></p>
+			</div>
+
+			
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+				keyEventBind: {
+					backbutton: true //关闭back按键监听
+				}
+			})
+			var app = new Vue({
+				el:"#app",
+				data:{
+					doc_name:""
+				}
+			})
+			mui.plusReady(function () {
+			    getStorageDate();
+				var detail = plus.webview.getWebviewById("doc_detail");
+				
+				document.getElementById("team_nei").innerHTML = detail.doc_detail.teamName;
+			    document.getElementById("hos_loc").innerHTML = detail.doc_detail.hospitalName;
+			    var docNo = detail.doc_detail.doctorNo;
+			    docDetail(docNo);//医生的详细信息
+			})
+			
+			
+			function docDetail(docNo){
+				mui.ajax( JTURL +'jkda/basdoctor/list',{
+					data:{
+						doctorNo:docNo,
+						token:token
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(res){
+						console.log(JSON.stringify(res));
+						if(res.code == 0){
+			   				document.getElementById("name").innerHTML = res.page.list[0].doctorName; 
+							document.getElementById("doc_nei").innerHTML = res.page.list[0].description;
+						} else if(res.code == 401) {
+							tokenFail();
+						}else{
+							mui.toast(res.msg)
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						ajaxError(type);
+					}
+				});
+			}
+			
+		</script>
+	</body>
+
+</html>

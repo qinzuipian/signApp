@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../../css/iconfont.css">
+		<link rel="stylesheet" href="../css/appPeople.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">预约记录</h1>
+		</header>
+		<div id="app">
+			<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" id="muiSlide">
+					<a class="mui-control-item mui-active" href="#item1">接种预约</a>
+					<a class="mui-control-item" href="#item2">医生预约</a>				
+			</div>
+			<div id="item1" class="mui-control-content mui-active">
+				<div class="itemrecord" v-for="(it,index) in recordList">
+					<p class="appindex">序号<span v-text="index+1"></span></p>
+					<div>
+						<p class="hosname" v-text="it.hospitalName"></p>
+						<p>预约时间：<span v-text="it.hbDate"></span></p>
+						<p>疫苗种类：<span v-text="it.vaccineName"></span></p>
+						<p class="cancelbtn">
+							<!-- <span>接种人：乔倩倩</span> -->
+							<button type="button" data-loading-icon-position="left" v-show="it.visitStatus == 0"  @click="cancelvacBtn(it)" class="mui-btn mui-btn-primary">取消</button>
+							<button type="button" data-loading-icon-position="left" v-show="it.visitStatus == 3" disabled=""  class="mui-btn mui-btn-danger">已取消预约</button>
+						</p>
+							
+					</div>
+					<p class="already" v-show="it.visitStatus==0"><span class="iconfont" style="font-size: 18px;">&#xe693;</span>已预约</p>
+					<p class="already red" v-show="it.visitStatus==3"><span class="iconfont" style="font-size: 18px;">&#xe693;</span>已取消</p>
+				</div>
+			</div>
+			<div id="item2" class=" mui-control-content">
+				<div class="itemrecord" v-for="(it,index) in doctorList">
+					<p class="appindex">序号<span v-text="index+1"></span></p>
+					<div>
+						<p class="hosname" v-text="it.hospitalName"></p>
+						<p>预约时间：<span v-text="it.hbDate"></span></p>
+						<p>预约服务：<span v-text="it.taskName"></span></p>
+						<p class="cancelbtn">
+							<span>医生：</span>
+							<span v-text="it.doctorName"></span>
+							<button type="button" data-loading-icon-position="left" v-show="it.visitStatus==0" @click="canceldocBtn(it)" class="mui-btn mui-btn-primary">取消</button>
+							<button type="button" data-loading-icon-position="left" v-show="it.visitStatus==3" disabled class="mui-btn mui-btn-danger">已取消预约</button>
+						</p>
+							
+					</div>
+					<p class="already" v-show="it.visitStatus==0"><span class="iconfont" style="font-size: 18px;">&#xe693;</span>已预约</p>
+					<p class="already red" v-show="it.visitStatus==3"><span class="iconfont" style="font-size: 18px;">&#xe693;</span>已取消</p>
+				</div>		
+			</div>
+		</div>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function() {
+				getStorageDate();
+				recordlist();
+				doctorlist();
+			})
+			var app = new Vue({
+				el: '#app',
+				data: {
+					recordList:[],
+					doctorList:[]
+				},
+				methods:{
+					cancelvacBtn(it) {
+						cancelApp(it)
+						console.log(JSON.stringify(it))
+					},
+					
+					//医生预约取消
+					canceldocBtn(it) {
+						var data = JSON.stringify({
+							token:token,
+							personId:personId,
+							packId:it.packId,
+							itemId:it.itemId,
+							visitStatus:3,
+							doctorNo:it.doctorNo
+						})
+						mui.ajax(JTURL + 'jkda/basappointreg/updateVisitStatus', {
+							data: data,
+							dataType: 'json', //服务器返回json格式数据
+							headers:{'Content-Type':'application/json'},	
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(res) {
+								console.log(JSON.stringify(res));
+								if (res.code == 0) {
+									mui.toast('已取消预约')
+								} else if (res.code == 401) {
+									ajaxTokenInvalid();
+								} else {
+									otherErr();
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								ajaxError(type);
+							}
+						});
+					}
+						
+					}
+			})
+			
+			//接种取消预约
+			function cancelApp(it) {
+				var data = JSON.stringify({
+					token:token,
+					personId:personId,
+					visitStatus:3,
+					vaccineId:it.vaccineId
+				})
+				mui.ajax(JTURL + 'jkda/basvaccinationreg/updateVisitStatus', {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					headers:{'Content-Type':'application/json'},	
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							mui.toast('已取消预约')
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type);
+					}
+				});
+			}
+			
+			//医生预约记录
+			function doctorlist() {
+				// console.log('ok')
+				mui.ajax(JTURL + 'jkda/basappointreg/list', {
+					data: {
+						token:token,
+						personId:personId,
+						limit:1000
+					},
+					dataType: 'json', //服务器返回json格式数据
+					// headers:{'Content-Type':'application/json'},	
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							app.doctorList = res.page.list;
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type);
+					}
+				});
+			}
+			
+			//接种预约记录
+			function recordlist() {
+				// console.log('ok')
+				mui.ajax(JTURL + 'jkda/basvaccinationreg/list', {
+					data: {
+						token:token,
+						personId:personId,
+						limit:1000
+					},
+					dataType: 'json', //服务器返回json格式数据
+					// headers:{'Content-Type':'application/json'},	
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if (res.code == 0) {
+							app.recordList = res.page.list;
+						} else if (res.code == 401) {
+							ajaxTokenInvalid();
+						} else {
+							otherErr();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

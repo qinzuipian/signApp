@@ -56,16 +56,23 @@
 					<a class="mui-navigate-right">
 						<div style="display: flex;line-height: 34px;">
 							<p class="iconfont" style="font-size: 18px;color: red;">&#xe626;</p>
-							<p style="color: black;font-size: 14px;margin-left: 8px;">履约记录</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">我的签约团队</p>
 						</div>
 					</a>
 				</li>
-
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="caseUpload">
+					<a class="mui-navigate-right">
+						<div style="display: flex;line-height: 34px;">
+							<p class="iconfont" style="font-size: 18px;color: burlywood;">&#xe693;</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">病案咨询</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="ownSuggest">
 					<a class="mui-navigate-right">
 						<div style="display: flex;line-height: 34px;">
 							<p class="iconfont" style="font-size: 18px;color: burlywood;">&#xe633;</p>
-							<p style="color: black;font-size: 14px;margin-left: 8px;">意见反馈</p>
+							<p style="color: black;font-size: 14px;margin-left: 8px;">我的评价</p>
 						</div>
 					</a>
 				</li>
@@ -173,10 +180,40 @@
 				} else if (userStatus == 1) {
 					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
 				} else {
-					var performanceRecord = plus.webview.create("./set/performanceRecord.html", performanceRecord);
+					var performanceRecord = plus.webview.create("./set/signAndperfor.html", performanceRecord);
 					plus.webview.show(performanceRecord, "slide-in-right", 300);
 				}
 			}, {
+				passive: false
+			})
+			
+			//我的意见
+			document.getElementById("ownSuggest").addEventListener("tap",function(){
+				console.log(111);
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {
+					var ownSuggest = plus.webview.create("./set/allSuggest.html", ownSuggest);
+					plus.webview.show(ownSuggest, "slide-in-right", 300);
+				}
+			},{
+				passive: false
+			})
+			
+			//案件上传
+			document.getElementById("caseUpload").addEventListener("tap",function() {
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {
+					var casedoctor = plus.webview.create("./set/casedoctor.html", casedoctor,{},{
+						doctorType:1
+					});
+					plus.webview.show(casedoctor, "slide-in-right", 300);}
+				},{
 				passive: false
 			})
 		</script>

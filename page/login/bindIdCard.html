@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="feedback">
 
 	<head>
 		<meta charset="utf-8">
@@ -23,9 +23,24 @@
 					<label>证件类型</label>
 					<input type="text" class="mui-input-clear" value="身份证" disabled="disabled">
 				</div>
-				<div class="mui-input-row">
+				<div class="mui-input-row idCardstyle">
 					<label>号码</label>
-					<input type="number" class="mui-input-clear" id="idCard" placeholder="请输入证件号码">
+					<input type="number" class="mui-input-clear" id="idCard" v-model="idCard" placeholder="请输入证件号码">
+					<a class="mui-icon-right-nav camcerstyle">
+						<span id="headImage" class="mui-icon mui-icon-camera"></span>
+					</a>
+				</div>
+				<div class="imgUpload">
+					<p class="pigcolor">请上传本人正面照片,进行数据比对</p>
+					<!-- <a class="mui-icon-right-nav">
+						<span id="headImage" class="mui-icon mui-icon-camera"></span>
+					</a> -->
+				   <!--<a class="mui-icon-right-nav">
+						<span id="uploadImage" class="mui-icon mui-icon-upload"></span>
+					</a>-->
+
+					<ul id="imgs"></ul>
+
 				</div>
 			</form>
 
@@ -36,6 +51,7 @@
 
 		<script src="../../js/mui.js"></script>
 		<script src="../../js/common.js"></script>
+		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能
@@ -47,18 +63,37 @@
 
 			});
 			
+			var app = new Vue({
+				el: "#app",
+				data: {
+					base64_: "",
+					idCard:""
+				}
+			})
+			
 			
 			var next = document.getElementById("next"); // 下一步
 			var idCard = document.getElementById("idCard"); // 身份证号码
+			var userMsg;
 			
-			
+			idCard.addEventListener("focus",function() {
+				// console.log('ok')
+				//禁止弹出手机键盘
+				document.activeElement.blur();
+				plus.nativeUI.toast("请先上传本人的身份证正面照");
+			})
 			// 下一步
 			next.addEventListener("tap", function(){
 				if(idCard.value.length != 18){
-					plus.nativeUI.toast("请输入正确的证件号码");
+					// plus.nativeUI.toast("请输入正确的证件号码");
+					plus.nativeUI.toast("身份证号不能为空");
 				}else{
+						var confirm = plus.webview.create("./confirm.html", "confirm",{},{
+						userMsg: userMsg
+					});
+					plus.webview.show(confirm, "slide-in-right", 300)
 					// 查询个人信息接口
-					mui.ajax( JTURL + "jkda/ehrpir/list",{
+			/* 		mui.ajax( JTURL + "jkda/ehrpir/list",{
 						data:{
 							idNo: idCard.value
 						},
@@ -91,13 +126,246 @@
 						error:function(xhr,type,errorThrown){
 							ajaxError();
 						}
-					});
+					}); */
 				}
 			},{passive: false})
 			
+			var fileArr = [];
+			var flag = false;
+			document.getElementById('headImage').addEventListener('tap', function() {
+			if(mui.os.plus) {
+				var buttonTit = [{
+					title: "拍照"
+				}, {
+					title: "从手机相册选择"
+				}];
+
+
+				plus.nativeUI.actionSheet({
+//					title: "上传图片",
+					cancel: "取消",
+					buttons: buttonTit
+				}, function(b) { /*actionSheet 按钮点击事件*/
+					switch(b.index) {
+						case 0:
+							break;
+						case 1:
+							getImage(); /*拍照*/
+							break;
+						case 2:
+							galleryImg(); /*打开相册*/
+							break;
+						default:
+							break;
+					}
+				})
+			}
+		}, false);
+
+
+		// 拍照获取图片  
+		function getImage() {
+			var c = plus.camera.getCamera();
+			c.captureImage(function(e) {
+				plus.io.resolveLocalFileSystemURL(e, function(entry) {
+					var imgSrc = entry.toLocalURL() + "?version=" + new Date().getTime(); //拿到图片路径
+					// var imgSrc = entry.fullPath;  
+					setFile(imgSrc);
+					setHtml(imgSrc);
+				}, function(e) {
+					console.log("读取拍照文件错误：" + e.message);
+				});
+			}, function(s) {
+				console.log("error" + s.message);
+			}, {
+				filename: "_doc/camera/"
+			})
+		}
+		// 从相册中选择图片   
+		function galleryImg() {
+			// 从相册中选择图片  
+			plus.gallery.pick(function(e) {
+				console.log(JSON.stringify())
+				for(var i in e.files) {
+					var fileSrc = e.files[i];
+					console.log(fileSrc)
+					setFile(fileSrc);
+					setHtml(fileSrc);
+				}
+			}, function(e) {
+				console.log("取消选择图片");
+			}, {
+				filter: "image",
+				multiple: true,
+				maximum: 2,
+				system: false,
+				onmaxed: function() {
+					plus.nativeUI.alert('最多只能选择2张图片');
+				}
+			});
+		}
+
+
+		function setHtml(path) {
+		  var ul = document.getElementById('imgs');
+
+	　　　　//添加 li
+	　　　　var li = document.createElement("li");
+	
+	　　　　//添加 img
+	　　　　var img = document.createElement("img");
+	　		//删除图片
+			var closeButton = document.createElement('div');
+			closeButton.setAttribute('class', 'image-close');
+			closeButton.innerHTML = 'X';
+
+	　　　　//设置 img 图片地址
+	　　　　img.src = path;
+	
+	　　　　li.appendChild(img);
+	　　　　li.appendChild(closeButton);
+	　　　　ul.appendChild(li);
 			
+		  closeButton.addEventListener('tap', function(event) {
+			 flag = true;
+			setTimeout(function() {
+				ul.removeChild(li);
+				setFile(path)
+			}, 10);
+			return false;
+		}, false);
+
+		}
+		
+		function setFile(fileSrc){
+			console.log(JSON.stringify(fileSrc))
+			// console.log(JSON.stringify(flag))
+			// var image = new Image();  
+			if(flag == true) {
+				// console.log(JSON.stringify(fileArr))
+				for(var i=0;i<fileArr.length;i++) {
+					if(fileSrc == fileArr[i].src) {
+						fileArr.splice(i,1);						
+					}
+				}
+			} else {
+				// var image = new Image();
+				getBase64(fileSrc);
+				
+				var image = {};  
+				image.src = fileSrc;
+				fileArr.push(image);
+				// console.log(JSON.stringify(fileArr))
+
+				}
+
+				
+			}
 			
+		// }
+		
+		function getBase64(fileSrc) {		
+			//转成base64
+			var Img = new Image();
+			Img.src = fileSrc; // 传过来的图片路径在这里用。
+			console.log(Img.src)
+			Img.width = "280";
+			Img.height = "240";
 			
+			Img.onload = function() {
+				 var canvas = document.createElement("canvas");  
+				canvas.width = Img.width;  
+				canvas.height = Img.height;  
+				var ctx = canvas.getContext("2d");  
+				ctx.drawImage(Img, 0, 0, Img.width, Img.height);  
+				var ext = Img.src.substring(Img.src.lastIndexOf(".")+1).toLowerCase();  
+				var dataURL = canvas.toDataURL("image/"+ext);  
+				/* canvas.getContext("2d").drawImage(Img, 0, 0, width, height); //将图片绘制到canvas中
+				app.base64_ = canvas.toDataURL('image/jpeg', 1); //转换图片为dataURL
+				// console.log(app.base64_) */
+				imgUpload(dataURL)
+				//app.base64_ = base64.substring(base64.indexOf(',') + 1);
+		}
+		}
+		function imgUpload(url) {
+			// console.log(url) 
+			var data = JSON.stringify({
+				image: url
+			})
+			// console.log(data)
+			 plus.nativeUI.showWaiting("等待中...");
+			mui.ajax( JTURL + "jkda/baiduFace/identificationIdCard",{
+				data:data,
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:100000,//超时时间设置为10秒；
+				headers: {
+				'Content-Type': 'application/json'
+				},
+				success:function(res){
+					console.log(JSON.stringify(res));
+					if(res.code == 0){
+						 plus.nativeUI.closeWaiting();
+						userMsg = res.data;
+						var idcard = res.data.words_result.公民身份号码.words;
+						
+						plus.storage.setItem('idCardpath',res.data.filePath);
+						plus.storage.setItem('personId',res.data.personId);
+
+						console.log(res.data.filePath)
+						console.log(idcard)
+						setTimeout(function(){
+							app.idCard = idcard;
+							console.log(app.idCard)
+						}, 100);
+						
+					}else if(res.code == 401){ // token失效
+						plus.nativeUI.closeWaiting();
+						ajaxTokenInvalid();
+					}else if(res.code == 203){
+						mui.toast('个人健康档案不存在,请重新上传')
+					}else{
+						 plus.nativeUI.closeWaiting();
+						 otherErr();
+					}
+				},
+				error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				ajaxError();
+				console.log(type)
+				}
+			}); 
+		}
+		
+	/*	document.getElementById('uploadImage').addEventListener('tap',function(){
+			var files = fileArr;
+		 	var wt=plus.nativeUI.showWaiting();
+            var task=plus.uploader.createUpload('http://192.168.1.111:8181/sys-privilege/Upload',
+                {method:"POST"},
+                function(t,status){ //上传完成
+                    if(status==200){
+                        alert("上传成功："+t.responseText);
+                        wt.close(); //关闭等待提示按钮
+                    }else{
+                        alert("上传失败："+status);
+                        wt.close();//关闭等待提示按钮
+                    }
+                }
+            );  
+             //将文件集合添加到上传队列中
+		    for(var i=0;i<files.length;i++){
+		        var f=files[i];
+		        task.addFile(f.src,{key:i});
+		    }
+		    //传其他的参数 如备注
+		    //添加其他参数
+		    //遍历5个input框
+		    
+            task.addData("comment","test");
+            task.start();
+		});	*/
+
+		
 			
 			
 			

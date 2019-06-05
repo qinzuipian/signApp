@@ -1,0 +1,60 @@
+ul li .left {
+	width: 76%;
+	float: left;
+}
+ul li .left p:nth-child(1) {
+	font-size: 0.875rem;
+}
+ul li .left p:nth-child(2) {
+	margin-top: 0.625rem;
+	color: gray;
+}
+ul li .left p span:nth-child(1),ul li .left p span:nth-child(2) {
+	color: orangered;
+	font-size: 1.125rem;
+}
+
+ul li .right {
+	width: 24%;
+	margin-top: 4%;
+	float: left;
+}
+ul li .right span {
+	font-size: 1.125rem;
+	margin-right: 0.225rem;
+}
+ul li .right .mui-icon {
+	font-size: 1.25rem;
+	color: coral;
+}
+
+/* 添加用药提醒 */
+ul .time {
+	height: 2.5rem;
+	line-height: 2.5rem;
+}
+.toalldoctor {
+	width: 90%;
+	text-align: center;
+	margin-left: 5%;
+	font-size: 16px;
+	line-height: 30px;
+	background: #FFA500;
+	border: 1px solid #FFA500;
+	color: white;
+	border-radius:10px;
+	margin-top: 0.625rem;
+	margin-bottom: 0.625rem;
+	position: fixed; 
+	bottom: 0;
+}
+.mui-table-view {
+	background-color: transparent;
+}
+.mui-table-view li {
+	background-color: #fff;
+}
+
+.mui-table-view li:nth-child(2),.mui-table-view li:nth-child(3),.mui-table-view li:nth-child(7) {
+	margin-top: 8px;
+}

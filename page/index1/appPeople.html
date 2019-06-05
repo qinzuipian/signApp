@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../css/appPeople.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">选择就诊人</h1>
+		</header>
+		<div id="app">
+			<ul>
+				<li @click="userClick(app.username)">
+					<img src="../../img/index/chengyuan.png" alt="">
+					<span v-text="username"></span>
+					<span class="sign">已签约</span>
+				</li>
+			</ul>
+			<button type="button" data-loading-icon-position="left" class="mui-btn mui-btn-primary toappdoctor">+添加成员</button>
+		</div>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function() {
+				getStorageDate();
+				
+				username();
+			})
+			
+			var app = new Vue({
+				el: '#app',
+				data: {
+					username:""
+				},
+				methods: {
+					userClick:function(it) {
+						console.log(JSON.stringify(it))
+						var selfPage = plus.webview.currentWebview();
+						var openerPage = selfPage.opener();
+						mui.fire(openerPage,'username',it);
+						selfPage.close();
+						openerPage.show(); 
+					}
+				}
+			})
+			function username() {
+				app.username = userName;
+				
+				/* var selfPage = plus.webview.currentWebview();
+				var openerPage = selfPage.opener();
+				mui.fire(openerPage,'nameFun',userName);
+				selfPage.close();
+				openerPage.show(); */
+			}	
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../css/appPeople.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title bind-title">选择疫苗种类</h1>
+		</header>
+		<div id="app">
+			<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" id="muiSlide">
+					<a class="mui-control-item mui-active" href="#item1">一类疫苗（免费）</a>
+					<!-- <a class="mui-control-item" href="#item2">二类疫苗（收费）</a>				 -->
+			</div>
+			<div id="item1" class="mui-control-content mui-active">
+					<p class="signFlag">请选择您要预约的疫苗，接种疫苗仅供参考，具体以现场医生为准</p>
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell flex" v-for="(it,index) in vaccineList" @click="vaccineClick(it)">
+							<div class="left" v-text="it.vaccineName"></div>
+						</li>
+					</ul>
+					<!-- <button type="button" data-loading-icon-position="left" class="mui-btn mui-btn-primary datasure">确认</button>	 -->
+			</div>
+			<!-- <div id="item2" class=" mui-control-content">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<div class="dis_flex">
+								脊髓灰质炎
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="dis_flex">
+								脊髓灰质炎
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="dis_flex">
+								脊髓灰质炎
+							</div>
+						</li>
+					</ul>
+					<button type="button" data-loading-icon-position="left" class="mui-btn mui-btn-primary datasure">确认</button>	
+			</div> -->
+		</div>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能
+				beforeback: function() {
+					closeActivePage();
+				}
+			});
+			mui.plusReady(function() {
+				getStorageDate();
+				
+				vaccinelist();
+			})
+			
+			var app = new Vue({
+				el: '#app',
+				data: {
+				vaccineList:[]
+				},
+				methods: {
+					vaccineClick(it) {
+						console.log(JSON.stringify(it))
+						
+						var selfPage = plus.webview.currentWebview();
+						var openerPage = selfPage.opener();
+						mui.fire(openerPage,'nameFun',it);
+						selfPage.close();
+						openerPage.show();
+					}
+					
+				}
+			})
+			
+			//疫苗列表
+			function vaccinelist() {
+				console.log('ok')
+				mui.ajax(JTURL + 'jkda/vaccinationitem/list', {
+				data: {
+					token:token,
+					limit:1000
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(res) {
+					console.log(JSON.stringify(res));
+					if (res.code == 0) {
+						app.vaccineList = res.page.list;
+						// console.log(JSON.stringify(app.vaccineList))
+					} else if (res.code == 401) {
+						ajaxTokenInvalid();
+					} else {
+						otherErr();
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					ajaxError(type);
+				}
+			});
+				
+			}
+		</script>
+	</body>
+
+</html>
+

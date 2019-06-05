@@ -1,0 +1,70 @@
+@charset "utf-8";
+.bar{
+	width: 100%;
+	height: 150px;
+	background: white;
+}
+.icon{
+	border-radius: 50px;
+	/*width: 80px;
+	height: 80px;
+	margin: 30px 20px 0 18px;*/
+	text-align: center;
+}
+.icon img{
+	border-radius: 50px;
+}
+.info{
+	/*margin-top: 40px;*/
+	text-align: center;
+}
+.info p{
+	color: black;
+	font-size: 16px;
+}
+.contont{
+	width: 100%;
+	height: 22px; 
+	background: ghostwhite;
+	margin-top: 10px;	
+}
+.a{
+	width: 1%;
+	height:20px;
+	background: blue;
+	margin: 1px 4px 0 4px; 
+}
+.title{
+	font-size: 16px;
+	color: black;
+}
+.nei{
+	width: 100%;
+	height: 140px;
+	line-height: 20px;
+	background: ghostwhite;
+}
+.doc_nei{
+	color: black;
+	font-size: 14px;
+	padding: 20px 10px 0px 10px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	text-overflow:ellipsis;
+	white-space: wrap;
+	-webkit-line-clamp: 5;
+	overflow: hidden;
+}
+.team_nei{
+	
+}
+.nei_{
+	width: 100%;
+	height: 60px;
+	background: ghostwhite;
+}
+.team_name{
+	color: black;
+	font-size: 16px;
+	padding: 20px 20px 0px 40px;
+}

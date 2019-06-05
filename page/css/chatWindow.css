@@ -212,3 +212,10 @@
 	width: 100%;
 	text-align: center;
 }
+
+.sender-box ul {
+	padding: 6px; margin: 0; display: flex; flex-direction:column; flex-wrap: wrap; border-radius: 8px; background: gray;
+}
+.sender-box ul li {
+	font-size: 14px; color: white; width: 100%;
+}

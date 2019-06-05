@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/common.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 class="mui-title mui-text-center mui-action-back">医生列表</h1>
+		</header>
+		<div id="app">
+			
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" v-for="(it,index) in doc_list" @click="signdetail(it,app.doctorType)">			
+						<div style="display: flex;line-height: 34px;">
+							<p style="color: black;font-size: 14px;margin-left: 8px;" v-text="it.doctorName"></p>
+							(<span style="font-size: 14px;" v-text="it.professional"></span>)
+						</div>
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+				mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+					keyEventBind: {
+						backbutton: true //关闭back按键监听
+				}
+			})
+			mui.plusReady(function() {
+				getStorageDate();
+				team_meb();
+				doctorType();
+			})
+			var app = new Vue({
+				el:"#app",
+				data:{
+					doc_list:[],
+					doctorType:""
+				},
+				methods:{
+					signdetail:function(it,doctorType){
+						console.log(JSON.stringify(it))
+						console.log(JSON.stringify(doctorType))
+						if(doctorType === 1) {
+							var caseUpload = plus.webview.create("caseUpload.html", caseUpload,{},{
+								casedata:it.doctorNo
+							});
+							plus.webview.show(caseUpload, "slide-in-right", 300);
+						} else {
+							var selfPage = plus.webview.currentWebview();
+							var openerPage = selfPage.opener();
+							mui.fire(openerPage,'doctorName',it);
+							selfPage.close();
+							openerPage.show();
+						}
+						
+					}
+				}
+			})
+			
+			//接受父元素传过来的参数
+			function doctorType() {
+				var ws = plus.webview.currentWebview();
+				console.log(JSON.stringify(ws))
+				app.doctorType = ws.doctorType;
+			}
+			function team_meb(){
+				mui.ajax(JTURL + 'jkda/basteam/list',{
+					data:{
+						teamCode:teamCode,
+						personId:personId,
+						token:token
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(res){
+						console.log(JSON.stringify(res));
+						if(res.code == 0){
+							app.doc_list = res.page.list;
+						} else if(res.code == 401) {
+							tokenFail();
+						}else{
+							mui.toast(res.msg)
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						ajaxError(type);
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

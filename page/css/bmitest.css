@@ -1,0 +1,78 @@
+.mui-switch.mui-active:before {
+	content:"女";
+}
+.mui-switch {
+	background-color: #007aff;
+	border: 1px solid #007aff;
+	
+}
+.mui-switch:before {
+	content:"男";
+	color: #fff;
+}
+.toalldoctor {
+	width: 90%;
+	text-align: center;
+	margin-left: 5%;
+	font-size: 16px;
+	line-height: 30px;
+	/*background: #007AFF;*/
+	color: white;
+	border-radius:10px;
+	margin-top: 0.625rem;
+	margin-bottom: 0.625rem;
+	position: fixed; 
+}
+.topMain {
+	width: 100%;
+	text-align: center;
+	background-color: rgb(44, 154, 255);
+	padding: 1.25rem;
+	/* height: 7.5rem; */
+	/* background-color: #000; */
+}
+.topMain p:nth-child(1) {
+	font-size: 1.125rem;
+	color: #fff;
+}
+.topMain p:nth-child(2) {
+	font-size: 2.5rem;
+	color: #FFA500;
+	padding: 0.625rem;
+	
+}
+.topMain span:nth-child(3) {
+	font-size: 1.125rem;
+	color: #FFA500;
+	
+}
+.topMain p:nth-child(4),.topMain p:nth-child(5) {
+	font-size: 1.125rem;
+	color: #FFFFFF;
+}
+.botMain {
+	padding: 0.625rem;
+}
+.botMain table {
+	width: 100%;
+	text-align: center;
+	margin-top: 1.25rem;
+}
+.botMain table th {
+	color: gray;
+}
+.botMain table td {
+	font-size: 1.125rem;
+	color: rgb(44, 154, 255);
+	height: 3.125rem;
+	line-height: 3.125rem;
+}
+.sign {
+	width: 100%;
+	/* height: 100px; */
+	background-color: #fff;
+	/* margin-top: 0.625rem; */
+	padding: 10px;
+	font-size: 0.875rem;
+	color: rgb(44, 154, 255);
+}

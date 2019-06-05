@@ -38,21 +38,27 @@
 			</div>
 			<div class="service flex">
 				<li class="service-item" id="appointment">
-					<img src="../img/index/icon-test.png">
-					<p>预约挂号</p>
+					<img src="../img/index/hang.jpg">
+					<p>预约</p>
 				</li>
 				<li class="service-item" id="hospital">
-					<img src="../img/index/yiyuan.png">
-					<p>接种预约</p>
-				</li>
-				<li class="service-item" id="bodycheck">
-					<img src="../img/index/tijian.png">
-					<p>体检服务</p>
+					<img src="../img/index/key.jpg">
+					<p>履约</p>
 				</li>
 				<li class="service-item" id="insurance">
-					<img src="../img/index/baoxian.png">
-					<p>保险服务</p>
+					<img src="../img/index/suifang.jpg">
+					<p>随访</p>
 				</li>
+				<li class="service-item" id="bodycheck">
+					<img src="../img/index/pingjia.jpg">
+					<p>评价</p>
+				</li>
+				
+				
+				<!-- <li class="service-item" id="push">
+					<img src="../img/index/baoxian.png">
+					<p>push</p>
+				</li> -->
 			</div>
 
 			<div id="signMain" style="display: none;">
@@ -90,7 +96,7 @@
 				</div>
 			</div>
 
-			<div class="news">
+			<!-- <div class="news">
 				<div class="flex">
 					<p class="shop-title">健康新闻</p>
 					<p class="mui-icon mui-icon-arrowright more-shop"></p>
@@ -146,7 +152,7 @@
 						</div>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 
 		</div>
 		<script src="../js/mui.js"></script>
@@ -154,6 +160,23 @@
 		<script src="../js/swiper.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init({
+				
+				pullRefresh: {
+					container: "#app", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+						color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+						height: '50px', //可选,默认50px.下拉刷新控件的高度,
+						range: '100px', //可选 默认100px,控件可下拉拖拽的范围
+						offset: '0px', //可选 默认0px,下拉刷新控件的起始位置
+						auto: false, //可选,默认false.首次加载自动上拉刷新一次
+						callback: function() { //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+							var ws = plus.webview.currentWebview();
+							ws.reload();
+							mui('#app').pullRefresh().endPulldownToRefresh(false);
+						}
+					}
+				}
 
 			});
 			// 			function pullRefreshFunc(){
@@ -169,6 +192,8 @@
 				// common.js 获取本地数据
 				getStorageDate();
 				indexPageInit();
+				//调用父页面的函数
+				plus.webview.currentWebview().opener().evalJS("indexInit()");
 			})
 			// 轮播图
 			function sblider() {
@@ -191,15 +216,45 @@
 
 			// 四大功能 appointment   hospital   insurance    bodycheck
 			var appointment = document.getElementById("appointment"),
-				hospital = document.getElementById("appointment"),
+				hospital = document.getElementById("hospital"),
 				insurance = document.getElementById("insurance"),
-				bodycheck = document.getElementById("insurance"),
+				bodycheck = document.getElementById("bodycheck"),
 				signMain = document.getElementById("signMain");
+				// push = document.getElementById("push");
+			
+		
 
 			appointment.addEventListener("tap", function() {
 				// plus.nativeUI.toast("暂未开放此功能")
-				var appoDoctor = plus.webview.create("./index1/appoDoctor.html", appoDoctor);
-				plus.webview.show(appoDoctor, "slide-in-right", 300)
+					if(mui.os.plus) {
+								var buttonTit = [{
+									title: "医生预约"
+								}, {
+									title: "接种疫苗预约"
+								}];
+				
+				
+								plus.nativeUI.actionSheet({
+				//					title: "上传图片",
+									cancel: "取消",
+									buttons: buttonTit
+								}, function(b) { /*actionSheet 按钮点击事件*/
+									switch(b.index) {
+										case 0:
+											break;
+										case 1:
+											getAppointment(1);
+											break;
+										case 2:
+											getAppointment(2);
+											break;
+										default:
+											break;
+									}
+								})
+							}
+				/* var appoDoctor = plus.webview.create("./index1/appoDoctor.html", appoDoctor);
+				plus.webview.show(appoDoctor, "slide-in-right", 300) */
 				
 // 				var self = plus.webview.currentWebview(),
 // 					childWV = null,
@@ -213,22 +268,65 @@
 			}, {
 				passive: false
 			});
+			
+			function getAppointment(type)  {
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {
+					var appoDoctor = plus.webview.create("./index1/appoDoctor.html", appoDoctor,{},{
+						appType:type
+					});
+					plus.webview.show(appoDoctor, "slide-in-right", 300)
+				}
+				
+			}
+			//履约
 			hospital.addEventListener("tap", function() {
-				plus.nativeUI.toast("暂未开放此功能")
+				// plus.nativeUI.toast("暂未开放此功能")
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {	
+					var performanceRecord = plus.webview.create("set/performanceRecord.html", performanceRecord);
+					plus.webview.show(performanceRecord, "slide-in-right", 300)}
+			
 			}, {
 				passive: false
 			});
 			insurance.addEventListener("tap", function() {
-				plus.nativeUI.toast("暂未开放此功能")
+				// plus.nativeUI.toast("暂未开放此功能")	
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {	
+					var accompany = plus.webview.create("./index1/accompanyindex.html", accompany);
+					plus.webview.show(accompany, "slide-in-right", 300)
+				}
+				
 			}, {
 				passive: false
 			});
+			//评价
 			bodycheck.addEventListener("tap", function() {
-				plus.nativeUI.toast("暂未开放此功能")
+				// plus.nativeUI.toast("暂未开放此功能")
+				if (userStatus == 0) {
+					plus.nativeUI.toast("检测到尚未登录,请登录之后查看")
+				} else if (userStatus == 1) {
+					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
+				} else {	
+					var allSuggest = plus.webview.create("set/allSuggest.html", allSuggest);
+					plus.webview.show(allSuggest, "slide-in-right", 300)
+				}
+				
 			}, {
 				passive: false
 			});
-
+			
+			
 			// 选择城市
 			// 			toCity.addEventListener("tap", function() {
 			// 				var city = plus.webview.create("./index1/selectCity.html", "city");
@@ -271,6 +369,7 @@
 			function indexPageInit() {
 				console.log(userStatus);
 				var isContrct = plus.storage.getItem("isContrct");
+				console.log(isContrct)
 				if (isContrct == 0) {
 					signMain.style.display = "block"
 				} else {

@@ -39,7 +39,7 @@
 					
 				}
 			});
-			var packId,itemId;
+			var packId,itemId,suggestId;
 			mui.plusReady(function () {
 				getStorageDate();
 			    toPerformanceInit();
@@ -52,6 +52,7 @@
 				document.getElementById("serverContent").innerHTML = ws.performanceItem.description;
 				packId = ws.performanceItem.packId;
 				itemId = ws.performanceItem.itemId;
+				suggestId = ws.performanceItem.id;
 				// console.log(packId + " " + itemId + " " + personId);
 			}
 			
@@ -61,7 +62,8 @@
 					data:{
 						packId: packId,
 						itemId: itemId,
-						personId: personId
+						personId: personId,
+						token:token
 					},
 					dataType:'json',//服务器返回json格式数据
 					type:'post',//HTTP请求类型
@@ -71,7 +73,21 @@
 						if(res.code == 0){
 							mui(mui("#makesure")).button('reset');
 							plus.nativeUI.toast("提交成功");
-							mui.back();
+							//弹框确认信息
+							var btnArray = ['否', '是'];
+							mui.confirm('服务完成，请为本次服务作出评价', '', btnArray, function(e) {
+								if (e.index == 1) {
+									var ownsuggest = plus.webview.create("./ownSuggest.html", ownsuggest,{},{
+										suggestId:suggestId
+									});
+									plus.webview.show(ownsuggest, "slide-in-right", 300)
+								} else {
+									mui.back();
+									
+									mui.toast('已取消评价');
+								}
+							})
+							
 						}else if(res.code == 401){
 							ajaxTokenInvalid();
 						}else{
