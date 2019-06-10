@@ -1,0 +1,28 @@
+@charset "utf-8";
+.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+	width: 74%;
+	height: 50px;
+	
+	
+}
+.mui-input-row label{
+	width: 26%;
+	padding-left: 7%;
+	height: 50px;
+	line-height:1.7;
+	
+}
+#submit{
+	width: 90%;
+	height: 50px;
+	background: rgba(44,154,255,0.9);;
+	margin: 10px 5% 0 5%;
+	text-align: center;
+	line-height: 50px;
+	border-radius: 5px;
+	margin-top: 40px;
+	color: white;
+}
+.mui-icon{
+	line-height: 1.5;
+}

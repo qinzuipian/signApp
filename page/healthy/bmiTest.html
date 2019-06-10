@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>体质指数计算</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/common.css">
@@ -25,12 +25,12 @@
 				</div>
 				<div class="mui-input-row">
 					<label>体重（kg）</label>
-					<input type="text" class="mui-input-clear" v-model="weight" placeholder="输入您的体重,如:46">
+					<input type="number" class="mui-input-clear" v-model="weight" placeholder="输入您的体重,如:46">
 				</div>
 			
 				<div class="mui-input-row mui-plus-visible">
 					<label>身高（cm）</label>
-					<input type="text" class="mui-input-clear" v-model="height" placeholder="输入您的身高,如:186">
+					<input type="number" class="mui-input-clear" v-model="height" placeholder="输入您的身高,如:186">
 				</div>
 			</form>
 			<button type="button" data-loading-icon-position="left" id="tobmiTest"  class="mui-btn mui-btn-primary toalldoctor">确认</button>
@@ -39,7 +39,12 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+				keyEventBind: {
+					backbutton: true //关闭back按键监听
+				}
+			})
 			var vm = new Vue({
 				el: "#app",
 				data: {
@@ -82,11 +87,10 @@
 					height:vm.height
 				}
 				if(vm.weight!=""&&vm.height!="") {
-					var bmiTestDetail = plus.webview.create("bmiTestDetail.html",bmiTestDetail,{},{
+					var bmiTestDetail = plus.webview.create("bmiTestDetail.html",'bmiTestDetail',{},{
 						alldata:alldata	
 					});
-					plus.webview.show(bmiTestDetail,"slide-in-right",300)
-					
+					plus.webview.show(bmiTestDetail,"slide-in-right",300);
 				} else {
 					mui.toast('请输入完整的信息')
 				}

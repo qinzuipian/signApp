@@ -17,7 +17,7 @@
 				<p class="iconfont mui-text-right set mui-pull-right" id="system">&#xe64d;</p>
 				<div class="title">
 					<p class="photo">
-						<img class="photo-pic" src="../img/owner/hashiqi.jpg">
+						<img class="photo-pic" src="../img/msg/jiqiren.png">
 					</p>
 					<p class="name" id="namePerson">登录/注册</p>
 				</div>
@@ -180,7 +180,7 @@
 				} else if (userStatus == 1) {
 					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
 				} else {
-					var performanceRecord = plus.webview.create("./set/signAndperfor.html", performanceRecord);
+					var performanceRecord = plus.webview.create("./set/signAndperfor.html", 'performanceRecord');
 					plus.webview.show(performanceRecord, "slide-in-right", 300);
 				}
 			}, {
@@ -195,7 +195,7 @@
 				} else if (userStatus == 1) {
 					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
 				} else {
-					var ownSuggest = plus.webview.create("./set/allSuggest.html", ownSuggest);
+					var ownSuggest = plus.webview.create("./set/allSuggest.html", 'allSuggest');
 					plus.webview.show(ownSuggest, "slide-in-right", 300);
 				}
 			},{

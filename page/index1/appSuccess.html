@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>预约成功</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/common.css" rel="stylesheet" />
@@ -31,7 +31,7 @@
 				</p> -->
 			</div>
 			<button type="button" data-loading-icon-position="left" id="toappBtn" class="mui-btn mui-btn-primary toappBtn">预约记录</button>
-			
+
 		</div>
 		<script src="../../js/common.js"></script>
 		<script src="../../js/mui.min.js"></script>
@@ -46,12 +46,12 @@
 			mui.plusReady(function() {
 				appdata();
 			});
-			
+
 			var app = new Vue({
 				el: "#app",
 				data: {
-					fatherData:"",
-					vaccineName:""
+					fatherData: "",
+					vaccineName: ""
 				}
 			})
 			//接受父页面的参数
@@ -62,9 +62,13 @@
 				app.vaccineName = ws.appdata.vaccineName;
 				// console.log(app.fatherData)
 			}
-			document.getElementById("toappBtn").addEventListener("tap",function() {
-				var appRecord = plus.webview.create("appRecord.html",appRecord);
-				plus.webview.show(appRecord, "slide-in-right", 300)
+			document.getElementById("toappBtn").addEventListener("tap", function() {
+				var appRecord = plus.webview.create("appRecord.html", 'appRecord');
+				plus.webview.show(appRecord, "slide-in-right", 300);
+				var success = plus.webview.getWebviewById("appSuccess");
+				plus.webview.close(success, "slide-out-left", 300)
+			}, {
+				passive: false
 			})
 		</script>
 	</body>

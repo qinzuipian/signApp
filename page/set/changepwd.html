@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>修改密码</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/changepwd.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav header-blue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "></a>
+			<h1 class="mui-title mui-text-center mui-action-back">修改密码</h1>
+		</header>
+		<div id="app">
+			<form class="mui-input-group">
+				<div class="mui-input-row" style="height: 50px;">
+					<label class="mui-icon" style="font-size: 16px;">原密码</label>
+					<input type="password" class="mui-input-clear" id="old" placeholder="请填写原密码">
+				</div>
+				<div class="mui-input-row" style="height: 50px;">
+					<label class="mui-icon" style="font-size: 16px;">新密码</label>
+					<input type="password" id="new" class="mui-input-clear" placeholder="请填写新密码">
+				</div>
+				<div class="mui-input-row" style="height: 50px;">
+					<label class="mui-icon" style="font-size: 16px;">新密码</label>
+					<input type="password" id="new_" class="mui-input-clear" placeholder="请再次填写新密码">
+				</div>
+			</form>
+			<div id="submit" data-loading-text ="数据提交...">提交</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+				keyEventBind: {
+					backbutton: false //关闭back按键监听
+	 			}
+			})
+			mui.plusReady(function() {
+				getStorageDate();
+			})
+			var old = document.getElementById("old"); //旧密码
+			var newpwd = document.getElementById("new"); //新密码
+			var newpwd_ = document.getElementById("new_"); //在输入密码
+			//提交修改密码
+			var submit = document.getElementById("submit");
+			submit.addEventListener("tap", function() {
+				if(old.value.length == 0 || newpwd.value.length == 0 || newpwd_.value.length == 0) {
+					mui.toast('请输入密码！');
+				} else if(newpwd.value != newpwd_.value) {
+					mui.toast('密码不一致！');
+				} else {
+					mui(submit).button("loading");
+					changepwd();
+				}
+			})
+
+			function changepwd() {
+				var data = JSON.stringify({
+					password: old.value,
+					newPassword: newpwd.value,
+					token: token
+				})
+				console.log(data);
+				mui.ajax(JTURL + 'sys/user/password', {
+					data: data,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post',           
+					headers: {
+						'Content-Type': 'application/json'
+					}, //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						mui(submit).button("reset");
+						if(res.code == 0) {
+							mui.toast('修改密码成功！');
+							var logined = plus.webview.create("../login/login.html");
+							plus.webview.show(logined, 'slide-in-left', 300);
+							closeActivePage();
+							clearStorage();
+						} else if(res.code == 401) {
+							closeActivePage()
+							tokenFail();
+						}else{
+							mui.toast(res.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						mui(submit).button("reset");
+						ajaxError(type)
+
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

@@ -6,8 +6,8 @@
 		<title>确认履约</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/toPerformance.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/toPerformance.css" />
 	</head>
 
 	<body>
@@ -15,37 +15,50 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title bind-title">确认履约</h1>
 		</header>
-		
+
 		<div id="app">
 			<p class="server-title">服务项</p>
 			<p class="server-value" id="serverValue"></p>
 			<p class="server-title">服务项内容</p>
 			<p class="server-value" id="serverContent"></p>
-			
+
 			<div class="foot-btn">
 				<button type="button" data-loading-text="提交中" id="makesure" class="mui-btn mui-btn-primary" onclick="submitPerformance()">确认</button>
 			</div>
 		</div>
-		
-		
-		
+
 		<script src="../../js/mui.js"></script>
 		<script src="../../js/common.js"></script>
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能
 				beforeback: function() {
+					var per_rec = plus.webview.getWebviewById('p_record');
+					mui.fire(per_rec, "refresh");
+					//返回true，继续页面关闭逻辑
 					closeActivePage();
-					
+				},
+				pullRefresh: {
+					container: '#app',
+					down: {
+						style: 'circle',
+						callback: pulldownRefresh
+					}
 				}
 			});
-			var packId,itemId,suggestId;
-			mui.plusReady(function () {
+			var packId, itemId, suggestId;
+			mui.plusReady(function() {
 				getStorageDate();
-			    toPerformanceInit();
+				toPerformanceInit();
 			});
-			
-			function toPerformanceInit (){
+			//下拉刷新
+			function pulldownRefresh() {
+				var ws = plus.webview.currentWebview();
+				ws.reload();
+				mui('#app').pullRefresh().endPulldownToRefresh(false);
+			}
+
+			function toPerformanceInit() {
 				var ws = plus.webview.currentWebview();
 				console.log(JSON.stringify(ws.performanceItem));
 				document.getElementById("serverValue").innerHTML = ws.performanceItem.taskName;
@@ -55,53 +68,52 @@
 				suggestId = ws.performanceItem.id;
 				// console.log(packId + " " + itemId + " " + personId);
 			}
-			
-			function submitPerformance(){
-				mui(mui("#makesure")).button('loading');//切换为loading状态
-				mui.ajax( JTURL + 'jkda/basservicetask/updateApplyFlag',{
-					data:{
+
+			function submitPerformance() {
+				console.log(teamCode);
+				mui(mui("#makesure")).button('loading'); //切换为loading状态
+				mui.ajax(JTURL + 'jkda/basservicetask/updateApplyFlag', {
+					data: {
 						packId: packId,
 						itemId: itemId,
 						personId: personId,
-						token:token
+						token: token,
+						teamCode: teamCode
 					},
-					dataType:'json',//服务器返回json格式数据
-					type:'post',//HTTP请求类型
-					timeout:10000,//超时时间设置为10秒；
-					success:function(res){
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
 						console.log(JSON.stringify(res));
-						if(res.code == 0){
+						if(res.code == 0) {
 							mui(mui("#makesure")).button('reset');
 							plus.nativeUI.toast("提交成功");
 							//弹框确认信息
 							var btnArray = ['否', '是'];
 							mui.confirm('服务完成，请为本次服务作出评价', '', btnArray, function(e) {
-								if (e.index == 1) {
-									var ownsuggest = plus.webview.create("./ownSuggest.html", ownsuggest,{},{
-										suggestId:suggestId
+								if(e.index == 1) {
+									var ownsuggest = plus.webview.create("./ownSuggest.html", 'ownsuggest', {}, {
+										suggestId: suggestId
 									});
 									plus.webview.show(ownsuggest, "slide-in-right", 300)
 								} else {
 									mui.back();
-									
 									mui.toast('已取消评价');
 								}
 							})
-							
-						}else if(res.code == 401){
+
+						} else if(res.code == 401) {
 							ajaxTokenInvalid();
-						}else{
+						} else {
 							otherErr();
 						}
 					},
-					error:function(xhr,type,errorThrown){
+					error: function(xhr, type, errorThrown) {
+						mui(mui("#makesure")).button('reset');
 						ajaxError();
 					}
 				});
 			}
-			
-			
-			
 		</script>
 	</body>
 

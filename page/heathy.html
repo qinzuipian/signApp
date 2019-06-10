@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>健康</title>
+		<title>服务</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
@@ -32,10 +32,10 @@
 				</div>
 				
 				<div class="flex">
-					<button type="button" class="mui-btn mui-btn-outlined motion-item" id="stepNum">
+					<!--<button type="button" class="mui-btn mui-btn-outlined motion-item" id="stepNum">
 						<img src="../img/fuwu/bushu.png" >
 						<p>步数</p>
-					</button>
+					</button>-->
 					<button type="button" class="mui-btn mui-btn-outlined motion-item" id="pressure">
 						<img src="../img/fuwu/xieya.png" >
 						<p>血压</p>
@@ -77,21 +77,21 @@
 						<p>身体质量随时跟踪</p>
 						<img src="../img/fuwu/bmi.jpg" >
 					</button>
-					<button type="button" class="mui-btn mui-btn-outlined assess-item" id="Preproduction">
+					<!--<button type="button" class="mui-btn mui-btn-outlined assess-item" id="Preproduction">
 						<p>预产期自测</p>
 						<p>宝宝降临及时准备</p>
 						<img src="../img/fuwu/woman.jpeg" >
-					</button>
+					</button>-->
 					<button type="button" class="mui-btn mui-btn-outlined assess-item" id="medRemind">
 						<p>用药提醒</p>
 						<p>准时提醒早日康复</p>
 						<img src="../img/fuwu/medical.jpg" >
 					</button>
-					<button type="button" class="mui-btn mui-btn-outlined assess-item" id="babyCheck">
+					<!--<button type="button" class="mui-btn mui-btn-outlined assess-item" id="babyCheck">
 						<p>儿童体格检查</p>
 						<p>宝宝发育定期检测</p>
 						<img src="../img/fuwu/child.jpg" >
-					</button>
+					</button>-->
 					<button type="button" class="mui-btn mui-btn-outlined assess-item" id="Constitution">
 						<p>中医体质辨识</p>
 						<p>明辨体质科学养生</p>
@@ -119,7 +119,7 @@
 				} else if (userStatus == 1) {
 					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
 				} else {
-					var stepNum = plus.webview.create("healthy/stepNum.html", stepNum);
+					var stepNum = plus.webview.create("healthy/stepNum.html", 'stepNum');
 					plus.webview.show(stepNum, "slide-in-right", 300)
 				}
 				
@@ -132,7 +132,7 @@
 				} else if (userStatus == 1) {
 					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
 				} else {
-					var pressure = plus.webview.create("healthy/pressure.html", pressure);
+					var pressure = plus.webview.create("healthy/pressure.html", 'pressure');
 					plus.webview.show(pressure, "slide-in-right", 300)
 				}
 				
@@ -145,7 +145,7 @@
 				} else if (userStatus == 1) {
 					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
 				} else {
-					var sugar = plus.webview.create("healthy/sugar.html", sugar);
+					var sugar = plus.webview.create("healthy/sugar.html", 'sugar');
 					plus.webview.show(sugar, "slide-in-right", 300)
 				}
 				
@@ -158,7 +158,7 @@
 				} else if (userStatus == 1) {
 					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
 				} else {
-					var ownWeight = plus.webview.create("healthy/ownWeight.html", ownWeight);
+					var ownWeight = plus.webview.create("healthy/ownWeight.html", 'ownWeight');
 					plus.webview.show(ownWeight, "slide-in-right", 300)
 				}
 				
@@ -171,7 +171,7 @@
 				} else if (userStatus == 1) {
 					plus.nativeUI.toast("检测到尚未认证,请绑定身份证")
 				} else {
-					var temperature = plus.webview.create("healthy/temperature.html", temperature);
+					var temperature = plus.webview.create("healthy/temperature.html", 'temperature');
 					plus.webview.show(temperature, "slide-in-right", 300)
 				}
 				
@@ -179,24 +179,24 @@
 			
 			//百科全书Encyclopedia
 			document.getElementById("Encyclopedia").addEventListener("tap",function() {
-				var Encyclopedia = plus.webview.create("healthy/Encyclopedia.html", Encyclopedia);
+				var Encyclopedia = plus.webview.create("healthy/Encyclopedia.html", 'Encyclopedia');
 				plus.webview.show(Encyclopedia, "slide-in-right", 300)
 			})
 			
 			//bmi自測
 			document.getElementById("bmiTest").addEventListener("tap",function() {
-				var bmiTest = plus.webview.create("healthy/bmiTest.html",bmiTest);
+				var bmiTest = plus.webview.create("healthy/bmiTest.html",'bmiTest');
 				plus.webview.show(bmiTest,"slide-in-right",300)
 			})
 			//预产期自测
 			document.getElementById("Preproduction").addEventListener("tap",function() {
-				var Preproduction = plus.webview.create("healthy/Preproduction.html",Preproduction);
+				var Preproduction = plus.webview.create("healthy/Preproduction.html",'Preproduction');
 				plus.webview.show(Preproduction,"slide-in-right",300);
 			})
 			
 			//用药提醒
 			document.getElementById("medRemind").addEventListener("tap",function() {
-				var medRemind = plus.webview.create("healthy/medRemind.html",medRemind);
+				var medRemind = plus.webview.create("healthy/medRemind.html",'medRemind');
 				plus.webview.show(medRemind,"slide-in-right",300);
 			})
 			

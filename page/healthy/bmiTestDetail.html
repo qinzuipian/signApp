@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>体质指数</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/common.css">
@@ -31,81 +31,85 @@
 						<th>体重（kg）</th>
 					</tr>
 					<tr>
-						<td v-text="tableData.sex">女</td>
-						<td v-text="tableData.height">163</td>
-						<td v-text="tableData.weight">48</td>
+						<td v-text="tableData.sex"></td>
+						<td v-text="tableData.height"></td>
+						<td v-text="tableData.weight"></td>
 					</tr>
 				</table>
-				
+
 			</div>
 			<div class="sign">
 				注意：计算结果仅供参考，不作为指导医疗的唯一根据
 			</div>
-			
+
 		</div>
 		<script src="../../js/common.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
-			mui.init();
+			mui.init({
+				swipeBack: false, //启用右滑关闭功能,
+				keyEventBind: {
+					backbutton: true //关闭back按键监听
+				}
+			});
 			mui.plusReady(function() {
 				getallData();
 				Calculation();
 			})
-			
+
 			var vm = new Vue({
 				el: "#app",
 				data: {
-					tableData:{},
-					bmi:"",
-					bmisign:"",
-					standWeight:""
+					tableData: {},
+					bmi: "",
+					bmisign: "",
+					standWeight: ""
 				}
 			})
-			
+
 			function getallData() {
-				var ws = plus.webview.currentWebview();
+				var ws = plus.webview.getWebviewById("bmiTestDetail");
 				vm.tableData = ws.alldata;
-				console.log(JSON.stringify(ws))
 			}
-			
+
 			function Calculation() {
+//				var before = plus.webview.getWebviewById("bmiTest");
+//				plus.webview.close(before, "slide-out-left", 300)
 				var weight = vm.tableData.weight;
-				var height = (vm.tableData.height/100)*(vm.tableData.height/100)
-				var bmi = (weight/height).toFixed(2);
+				var height = ((vm.tableData.height) * (vm.tableData.height) / 100);
+				var bmi = ((weight / height) * 100).toFixed(1);
 				vm.bmi = bmi;
-				
-				vm.standWeight = (22*height).toFixed(2)		
+				vm.standWeight = ((22 * height)/100).toFixed(2)
 				// console.log(JSON.stringify(vm.standWeight))
-				if(vm.tableData.sex == '女'){
-					if(bmi<19) {
-						vm.bmisign = '偏瘦'	
-					} else if(19<=bmi<=24) {
-						vm.bmisign = '正常'	
-					}else if(25<=bmi<29) {
-						vm.bmisign = '过重'	
-					}else if(29<=bmi<=34) {
-						vm.bmisign = '肥胖'	
-					}else if(bmi>34) {
-						vm.bmisign = '超胖'	
+				if(vm.tableData.sex == '女') {
+					if(bmi < 19) {
+						vm.bmisign = '偏瘦'
+					} else if(bmi >= 19 && bmi <= 24) {
+						vm.bmisign = '正常'
+					} else if(bmi >= 25 && bmi < 29) {
+						vm.bmisign = '过重'
+					} else if(bmi >= 29 && bmi <= 34) {
+						vm.bmisign = '肥胖'
+					} else if(bmi > 34) {
+						vm.bmisign = '超胖'
 					}
-				} else if(vm.tableData.sex == '男'){
-					if(bmi<20) {
-						vm.bmisign = '偏瘦'	
-					}else if(20<=bmi<=25) {
-						vm.bmisign = '正常'	
-					}else if(26<=bmi<30) {
-						vm.bmisign = '过重'	
-					}else if(30<=bmi<=35) {
-						vm.bmisign = '肥胖'	
-					}else if(bmi>35) {
-						vm.bmisign = '超胖'	
+				} else if(vm.tableData.sex == '男') {
+					if(bmi < 20) {
+						vm.bmisign = '偏瘦'
+					} else if(bmi >= 20 && bmi <= 25) {
+						vm.bmisign = '正常'
+					} else if(bmi >= 26 && bmi < 30) {
+						vm.bmisign = '过重'
+					} else if(bmi >= 30 && bmi < 35) {
+						vm.bmisign = '肥胖'
+					} else if(bmi > 35) {
+						vm.bmisign = '超胖'
 					}
 				}
-				// var bmi = vm.tableData.weight/(vm.tableData.height/100)^2;
-				console.log(JSON.stringify(weight))
-				console.log(JSON.stringify(height))
-				console.log(JSON.stringify(bmi))
+//				console.log(JSON.stringify(weight))
+//				console.log(JSON.stringify(height))
+//				console.log(JSON.stringify(bmi))
 			}
 		</script>
 	</body>

@@ -17,7 +17,7 @@
 		</header>
 		<div id="app">
 			<ul class="mui-table-view">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="changpwd">
 					<a class="mui-navigate-right flex set-item">
 						<p>账号设置</p>
 						<p>可更改密码,更改绑定手机</p>
@@ -26,10 +26,9 @@
 			</ul>
 
 			<ul class="mui-table-view set-item-two">
-				<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell" id="update">
 					<a class="mui-navigate-right flex set-item">
-						<p>版本说明</p>
-						<p>V0.0.1</p>
+						<p>版本更新</p>
 					</a>
 				</li>
 
@@ -51,8 +50,6 @@
 			<button type="button" class="mui-btn mui-btn-blue mui-btn-block loginout" onclick="loginout()">退出登录</button>
 		</div>
 
-
-
 		<script src="../../js/mui.js"></script>
 		<script src="../../js/common.js"></script>
 		<script type="text/javascript">
@@ -69,32 +66,41 @@
 
 			function loginout() {
 				plus.nativeUI.confirm("确定退出登录", function(e) {
-					if(e.index == 0){ // 确定
-						mui.ajax( JTURL + 'jkda/ehrpiruser/logout',{
-							data:{
+					if(e.index == 0) { // 确定
+						mui.ajax(JTURL + 'jkda/ehrpiruser/logout', {
+							data: {
 								token: token,
-								deviceType:1
+								deviceType: 1
 							},
-							dataType:'json',//服务器返回json格式数据
-							type:'post',//HTTP请求类型
-							timeout:10000,//超时时间设置为10秒；
-							success:function(res){
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(res) {
 								console.log(JSON.stringify(res));
-								if(res.code == 0){ // 退出成功
+								if(res.code == 0) { // 退出成功
 									clearStorage();
-									
+
 									mui.back();
-								}else{
+								} else {
 									otherErr();
 								}
 							},
-							error:function(xhr,type,errorThrown){
+							error: function(xhr, type, errorThrown) {
 								ajaxError();
 							}
 						});
 					}
 				});
 			}
+			//版本更新
+			document.getElementById("update").addEventListener("tap", function() {
+				window.location.href = "https://www.pgyer.com/a0hd";
+			})
+			//修改密码
+			document.getElementById("changpwd").addEventListener("tap", function() {
+				var changepwd = plus.webview.create("./changepwd.html","changepwd");
+				plus.webview.show(changepwd,"slide-in-right",300);
+			},{passive:false})
 		</script>
 	</body>
 

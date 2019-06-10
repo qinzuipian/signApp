@@ -3,11 +3,11 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>上传报告</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/uploadfile.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
 	</head>
 
 	<body>
@@ -44,21 +44,19 @@
 						<p id="addphoto" style="width: 70px;height: 70px;background: rgb(246,246,246);margin: 4px 0 0 15px;">
 							<img src="../../img/set/camcer.png" style="width: 30px;height: 30px;width: 50%;margin:26% 0 0 25%;" />
 						</p>
-			
+
 					</div>
 					<div class="imglist">
 						<ul id="imgs"></ul>
 					</div>
-					
+
 					<button type="button" data-loading-icon-position="left" class="mui-btn mui-btn-yellow toProtect" id="doctorAppiont">预约解读</button>
 				</form>
-				
-				
-	
+
 				<p class="tipword" v-show="isInternet == 1">没有网络了！可能是您的网络设置未开启</p>
-				<button type="button" id="refresh"  class="mui-btn mui-btn-warning tipbtn" v-show="isInternet == 1">点击重试</button>
+				<button type="button" id="refresh" class="mui-btn mui-btn-warning tipbtn" v-show="isInternet == 1">点击重试</button>
 			</div>
-			
+
 		</div>
 
 		<script src="../../js/mui.js"></script>
@@ -72,9 +70,9 @@
 				el: "#app",
 				data: {
 					pickedtime: "",
-					isInternet:3,
-					database64list:[],
-					question:""
+					isInternet: 3,
+					database64list: [],
+					question: ""
 				}
 			})
 			mui.plusReady(function() {
@@ -91,16 +89,16 @@
 				addphoto.addEventListener("tap", function() {
 					galleryImgs();
 				})
-				refresh.addEventListener("tap",function(){
+				refresh.addEventListener("tap", function() {
 					app.isInternet = 3;
 					getdeviceStatus();
 				})
 
 			})
-			
-			
+
 			//接受父页面的参数
 			var doctorId;
+
 			function fatherDoctor() {
 				var ws = plus.webview.currentWebview();
 				console.log(JSON.stringify(ws))
@@ -141,78 +139,83 @@
 					}
 				});
 			}
-			
+
 			function setHtml(path) {
 				console.log(path)
-				  var ul = document.getElementById('imgs');
-			
-			　　　　//添加 li
-			　　　　var li = document.createElement("li");
-			
-			　　　　//添加 img
-			　　　　var img = document.createElement("img");
-			　		//删除图片
-					var closeButton = document.createElement('div');
-					closeButton.setAttribute('class', 'image-close');
-					closeButton.innerHTML = 'X';
-			
-			　　　　//设置 img 图片地址
-			　　　　img.src = path;
-			
-			　　　　li.appendChild(img);
-			　　　　li.appendChild(closeButton);
-			　　　　ul.appendChild(li);
-					
-				  closeButton.addEventListener('tap', function(event) {
-					 flag = true;
+				var ul = document.getElementById('imgs');
+
+				　　　　 //添加 li
+				　　　　
+				var li = document.createElement("li");
+
+				　　　　 //添加 img
+				　　　　
+				var img = document.createElement("img");
+				img.setAttribute("class","imglist")
+				//删除图片
+				var closeButton = document.createElement('div');
+				closeButton.setAttribute('class', 'image-close');
+				closeButton.innerHTML = 'X';
+
+				　　　　 //设置 img 图片地址
+				　　　　
+				img.src = path;
+
+				　　　　
+				li.appendChild(img);　　　　
+				li.appendChild(closeButton);　　　　
+				ul.appendChild(li);
+
+				closeButton.addEventListener('tap', function(event) {
+					flag = true;
 					setTimeout(function() {
 						ul.removeChild(li);
 						// setFile(path)
 					}, 10);
 					return false;
 				}, false);
-			
-				}
-				
-			function setFile(fileSrc){
+
+			}
+
+			function setFile(fileSrc) {
 				console.log(JSON.stringify(fileSrc))
 				// console.log(JSON.stringify(flag))
 				// var image = new Image();  
 				if(flag == true) {
 					// console.log(JSON.stringify(fileArr))
-					for(var i=0;i<fileArr.length;i++) {
+					for(var i = 0; i < fileArr.length; i++) {
 						if(fileSrc == fileArr[i].src) {
-							fileArr.splice(i,1);						
+							fileArr.splice(i, 1);
 						}
 					}
 				} else {
 					// var image = new Image();
 					getBase64(fileSrc);
-					
+
 					var image = {};  
 					image.src = fileSrc;
 					fileArr.push(image);
 					// console.log(JSON.stringify(fileArr))				
-					}
-				
-				
+				}
+
 			}
-			function getBase64(fileSrc) {		
+
+			function getBase64(fileSrc) {
 				//转成base64
 				var Img = new Image();
 				Img.src = fileSrc; // 传过来的图片路径在这里用。
-				/* console.log(Img.src)*/
+				//				/* console.log(Img.src)*/
 				Img.width = "280";
 				Img.height = "240";
-				
+
 				Img.onload = function() {
-					 var canvas = document.createElement("canvas");  
-					canvas.width = Img.width;  
-					canvas.height = Img.height;  
-					var ctx = canvas.getContext("2d");  
-					ctx.drawImage(Img, 0, 0, Img.width, Img.height);  
-					var ext = Img.src.substring(Img.src.lastIndexOf(".")+1).toLowerCase();  
-					var dataURL = canvas.toDataURL("image/"+ext);
+					var canvas = document.createElement("canvas");
+					canvas.width = Img.width;
+					canvas.height = Img.height;
+					var ctx = canvas.getContext("2d");
+					ctx.drawImage(Img, 0, 0, Img.width, Img.height);
+					var ext = Img.src.substring(Img.src.lastIndexOf(".") + 1).toLowerCase();
+					var dataURL = canvas.toDataURL("image/" + ext);
 					//截掉前缀
 					// var database64 = dataURL.substring(dataURL.indexOf(',') + 1);
 					// console.log(database64)
@@ -220,7 +223,7 @@
 					// console.log(JSON.stringify(app.database64list));
 				}
 			}
-			
+
 			function getdeviceStatus() {
 				var types = {};
 				//未知网络
@@ -233,34 +236,34 @@
 				types[plus.networkinfo.CONNECTION_WIFI] = "WiFi connection";
 
 				//wifi连接
-				if (types[plus.networkinfo.getCurrentType()] == types[plus.networkinfo.CONNECTION_NONE] || types[plus.networkinfo.getCurrentType()] ==
+				if(types[plus.networkinfo.getCurrentType()] == types[plus.networkinfo.CONNECTION_NONE] || types[plus.networkinfo.getCurrentType()] ==
 					types[plus.networkinfo.CONNECTION_UNKNOW]) {
 					// 无网络
 					plus.nativeUI.showWaiting("数据加载中...");
 					setTimeout(function() {
-					plus.nativeUI.closeWaiting();
-					app.isInternet = 1
-				}, 3000)
+						plus.nativeUI.closeWaiting();
+						app.isInternet = 1
+					}, 3000)
 
 				} else {
 					// 有网络
-//					plus.nativeUI.showWaiting("数据加载中...");
+					//					plus.nativeUI.showWaiting("数据加载中...");
 					//一些对数据的操作
 					app.isInternet = 0;
 
 				}
 			}
-			
+
 			//上传病案文件
-			document.getElementById("doctorAppiont").addEventListener("tap",function() {
+			document.getElementById("doctorAppiont").addEventListener("tap", function() {
 				var data = JSON.stringify({
-					personId:personId,
+					personId: personId,
 					token: token,
-					doctorCode:doctorId,
-					messageInfo:app.question,
-					file:app.database64list,
-					type:2
-					})
+					doctorCode: doctorId,
+					messageInfo: app.question,
+					file: app.database64list,
+					type: 2
+				})
 				console.log(data)
 				plus.nativeUI.showWaiting("等待中...");
 				mui.ajax(JTURL + 'jkda/medicalupload/upload', {
@@ -273,7 +276,7 @@
 					timeout: 100000, //超时时间设置为10秒；
 					success: function(res) {
 						console.log(JSON.stringify(res));
-						if (res.code == 0) {							
+						if(res.code == 0) {
 							plus.nativeUI.closeWaiting();
 							plus.nativeUI.toast(res.msg);
 							var c = plus.webview.currentWebview();
@@ -281,10 +284,10 @@
 							var a = c.opener().opener();
 							b.close();
 							c.close();
-						}else if(res.code == 401){
+						} else if(res.code == 401) {
 							plus.nativeUI.closeWaiting();
 							ajaxTokenInvalid();
-						}else{
+						} else {
 							plus.nativeUI.closeWaiting();
 							otherErr();
 						}
@@ -297,10 +300,8 @@
 					}
 				});
 			})
-			
-			
 		</script>
-		
+
 	</body>
 
 </html>

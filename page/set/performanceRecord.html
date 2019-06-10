@@ -41,30 +41,46 @@
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能
-				beforeback: function() {
-					closeActivePage();
+				pullRefresh: {
+					container: '#app',
+					down: {
+						style: 'circle',
+						callback: pulldownRefresh
+					}
 				}
 			});
-			
+
 			var app = new Vue({
 				el: "#app",
 				data: {
 					recordList: []
 				},
-				methods:{
-					performance: function(it, index){
-						var toPerformance = plus.webview.create("./toPerformance.html", toPerformance,{},{
+				methods: {
+					performance: function(it, index) {
+						var toPerformance = plus.webview.create("./toPerformance.html", 'toPerformance', {}, {
 							performanceItem: it
 						});
 						plus.webview.show(toPerformance, "slide-in-right", 300)
 					}
 				}
 			})
-			
+
 			mui.plusReady(function() {
 				getStorageDate();
 				performanceRecordInit();
 			});
+			//上个页面返回刷新页面
+			window.addEventListener("refresh", function() {
+				console.log(11);
+				var ws = plus.webview.currentWebview();
+				ws.reload();
+			})
+			//下拉刷新
+			function pulldownRefresh() {
+				var ws = plus.webview.currentWebview();
+				ws.reload();
+				mui('#app').pullRefresh().endPulldownToRefresh(false);
+			}
 
 			function performanceRecordInit() {
 				mui.ajax(JTURL + 'jkda/basservicetask/queryTaskList', {
@@ -77,9 +93,9 @@
 					timeout: 10000, //超时时间设置为10秒；
 					success: function(res) {
 						console.log(JSON.stringify(res));
-						if (res.code == 0) {
+						if(res.code == 0) {
 							app.recordList = res.data;
-						} else if (res.code == 401) {
+						} else if(res.code == 401) {
 							ajaxTokenInvalid();
 						} else {
 							otherErr();

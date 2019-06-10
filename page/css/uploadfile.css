@@ -88,7 +88,7 @@ input[type=color], input[type=date], input[type=datetime-local], input[type=date
 }
 #imgs li {
 	float: left;
-	width: 34%;
+	width: 30%;
 	margin: 0;
 	padding: 0;
 	position: relative;
@@ -115,10 +115,17 @@ input[type=color], input[type=date], input[type=datetime-local], input[type=date
 }
 
 .imglist {
-	width: 90%;
-	height: 18.75rem;
+	width: 98%;
+	/*height: 18.75rem;*/
+	background: gold;
 	/* border: 1px solid #aaa; */
-	border-radius: 8px;
-	margin-left: 4%;
-	background: rgb(246, 246, 246);
+	/*border-radius: 8px;*/
+	margin-left: 1%;
+	/*background: rgb(246, 246, 246);*/
+}
+.img_list{
+	/*display: flex;*/
+	/*margin-top: 10px;
+	left: 10px;*/
+	
 }

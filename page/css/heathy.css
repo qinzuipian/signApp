@@ -23,6 +23,7 @@
 .motion-box{
 	width: 100%;
 	height: 50px;
+	
 	/* margin-left: calc(50% - 50px); */
 	border-bottom: 1px solid #DDDDDD;
 }
@@ -68,7 +69,7 @@
     left: 143px;
 }
 .motion-item{
-	width: 20%;
+	width: 24%;
 	text-align: center;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -90,9 +91,9 @@
 	flex-wrap: wrap;
 }
 .assess-item{
-	width: 33%;
+	width: 50%;
 	text-align: center;
-	padding-top: 15px;
+	padding-top: 10px;
 	border: none;
 	border-radius: 10px;
 }

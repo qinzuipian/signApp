@@ -21,42 +21,42 @@
 		<div id="app" class="bg">
 			<div v-show="doc_list.length!=0">
 				<div class="banner mui-text-center" style="padding-top: 20px;">
-						<div class="photo">
-							<img src="../../img/set/team.png" class="photo" />
-						</div>
-						<p class="doc_team" v-text="team_name"></p>
-						<span class="doc">主治医生：</span>
-						<span class="doc" v-text="doc"></span>
+					<div class="photo">
+						<img src="../../img/set/team.png" class="photo" />
 					</div>
-					<div id="loc" class="loc">
-						<span class="mui-icon iconfont iconloc">&#xe602;</span>
-						<span class="iconaddress">团队介绍</span>
+					<p class="doc_team" v-text="team_name"></p>
+					<span class="doc">主治医生：</span>
+					<span class="doc" v-text="doc"></span>
+				</div>
+				<div id="loc" class="loc">
+					<span class="mui-icon iconfont iconloc">&#xe602;</span>
+					<span class="iconaddress">团队介绍</span>
+				</div>
+				<div style="background: white;height: 100px;">
+					<p class="team_description" v-text="des"></p>
+				</div>
+				<div class="team_meb" style="background: white;">
+					<div class="title">
+						<span class="mui-icon iconfont team_people">&#xe602;</span>
+						<span>团队成员</span>
 					</div>
-					<div style="background: white;height: 100px;">
-						<p class="team_description" v-text="des"></p>
-					</div>
-					<div class="team_meb" style="background: white;">
-						<div class="title">
-							<span class="mui-icon iconfont team_people">&#xe602;</span>
-							<span>团队成员</span>
-						</div>
-						<div class="swiper-container">
-							<div class="swiper-wrapper" style="width: 100%; height: 180px;" id="doc_">
-								<div class="swiper-slide" style="text-align: center; margin-right: 10px;" v-for="(it,index) in doc_list" @click="signDetail(it)">
-									<img src="../../img/set/doc (1).png" class="icondoc" />
-									<p class="doc_name" v-text="it.doctorName"></p>
-									<p class="doc_name" v-text="it.professional"></p>
-								</div>
+					<div class="swiper-container">
+						<div class="swiper-wrapper" style="width: 100%; height: 180px;" id="doc_">
+							<div class="swiper-slide" style="text-align: center; margin-right: 10px;" v-for="(it,index) in doc_list" @click="signDetail(it)">
+								<img src="../../img/set/doc (1).png" class="icondoc" />
+								<p class="doc_name" v-text="it.doctorName"></p>
+								<p class="doc_name" v-text="it.professional"></p>
 							</div>
-							<div class="swiper-pagination"></div>
 						</div>
-						
-						<div class="threeBtn">
-							<button type="button" class="mui-btn mui-btn-primary" id="performanceRecord">履约</button>
-							<button type="button" class="mui-btn mui-btn-success" id="goPerformance">续约</button>
-							<button type="button" class="mui-btn mui-btn-warning" id="noPerformance">解约</button>
-						</div>
+						<div class="swiper-pagination"></div>
 					</div>
+
+					<div class="threeBtn">
+						<button type="button" class="mui-btn mui-btn-primary" id="performanceRecord">履约</button>
+						<button type="button" class="mui-btn mui-btn-success" id="goPerformance">续约</button>
+						<button type="button" class="mui-btn mui-btn-warning" id="noPerformance">解约</button>
+					</div>
+				</div>
 			</div>
 			<div v-show="doc_list.length==0">
 				<p class="signMsg">还没有签约医生团队</p>
@@ -69,8 +69,8 @@
 		<script type="text/javascript">
 			mui.init({
 				swipeBack: false, //启用右滑关闭功能,
-					keyEventBind: {
-						backbutton: true //关闭back按键监听
+				keyEventBind: {
+					backbutton: true //关闭back按键监听
 				},
 				pullRefresh: {
 					container: '#app',
@@ -80,177 +80,182 @@
 					}
 				}
 			})
-			
+
 			var app = new Vue({
-					el:"#app",
-					data:{
-						doc_list:[],
-						team_name:"",
-						doc:"",
-						des:""
-					},
-					methods:{
-						signDetail:function(it){
-//							console.log(JSON.stringify(it))
-							detailFun(it);
-						}
+				el: "#app",
+				data: {
+					doc_list: [],
+					team_name: "",
+					doc: "",
+					des: ""
+				},
+				methods: {
+					signDetail: function(it) {
+						//							console.log(JSON.stringify(it))
+						detailFun(it);
 					}
-				})
+				}
+			})
 			//下拉刷新
 			function pulldownRefresh() {
-				var ws =plus.webview.currentWebview();
+				var ws = plus.webview.currentWebview();
 				ws.reload();
 				//这里写刷新代码
-//				mui.toast("下拉刷新");
+				//				mui.toast("下拉刷新");
 				mui('#app').pullRefresh().endPulldownToRefresh(false);
 			}
 
-				
-				mui.plusReady(function() {
-					getStorageDate();
-					team_meb();
-					docswiper();//医生轮播图
+			mui.plusReady(function() {
+				getStorageDate();
+				team_meb();
+				docswiper(); //医生轮播图
 				/*	document.getElementById("doc_team").innerHTML = team_name;
 					document.getElementById("doc_name").innerHTML = doc;
 					document.getElementById("team_description").innerHTML = des;*/
-					
+
+			})
+
+			function docswiper() {
+				setTimeout(function() {
+					var mySwiper = new Swiper('.swiper-container', {
+						slidesPerView: 3,
+						spaceBetween: 10,
+						autoplay: {
+							delay: 10000, //3秒切换一次
+							disableOnInteraction: false,
+						},
+						//spaceBetween : '10%',  按container的百分比
+						pagination: {
+							el: '.swiper-pagination',
+						},
+					})
+					mySwiper.pagination.$el.addClass('MyClass');
+				}, 1000)
+			}
+
+			function team_meb() {
+				mui.ajax(JTURL + 'jkda/basteam/list', {
+					data: {
+						teamCode: teamCode,
+						personId: personId,
+						token: token
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						if(res.code == 0) {
+							app.doc_list = res.page.list;
+							app.team_name = res.page.list[0].teamName;
+							app.doc = res.page.list[0].leadDoctor;
+							app.des = res.page.list[0].description;
+						} else if(res.code == 401) {
+							tokenFail();
+						} else {
+							mui.toast(res.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						ajaxError(type);
+					}
+				});
+			}
+
+			function detailFun(it) {
+				//					console.log(JSON.stringify(it))
+				var detail = plus.webview.create("./sign_detail.html", "doc_detail", {}, {
+					doc_detail: it
+				});
+				plus.webview.show(detail, "slide-in-right", 300)
+			}
+
+			//三个按钮时事件
+			//履约事件
+			document.getElementById("performanceRecord").addEventListener("tap", function() {
+				var performances = plus.webview.create("./performanceRecord.html", 'p_record');
+				plus.webview.show(performances, "slide-in-right", 300);
+			})
+			//续约事件
+			document.getElementById("goPerformance").addEventListener("tap", function() {
+				var btnArray = ['否', '是'];
+				mui.confirm('续约确认后，将会与此团队续约一年，是否继续？', '', btnArray, function(e) {
+					if(e.index == 1) {
+						mui.ajax(JTURL + 'jkda/basservicetask/changeTask', {
+							data: {
+								teamCode: teamCode,
+								personId: personId,
+								type: 1,
+								token: token,
+								pushFalg: "1"
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(res) {
+								console.log(JSON.stringify(res));
+								if(res.code == 0) {
+									plus.nativeUI.toast("续约成功");
+									var ws = plus.webview.currentWebview();
+									ws.reload();
+								} else if(res.code == 401) {
+									tokenFail();
+								} else {
+									mui.toast(res.msg)
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								ajaxError(type);
+							}
+						});
+
+					} else {
+						console.log('no')
+						plus.nativeUI.toast("续约失败")
+					}
 				})
 
-				function docswiper(){
-					setTimeout(function(){
-							var mySwiper = new Swiper('.swiper-container', {
-								slidesPerView: 3,
-								spaceBetween: 10,
-								autoplay: {
-									delay: 10000, //3秒切换一次
-									disableOnInteraction: false,
-								},
-								//spaceBetween : '10%',  按container的百分比
-								pagination: {
-									el: '.swiper-pagination',
-								},
-						})
-					mySwiper.pagination.$el.addClass('MyClass');
-				},1000)
-				}
-				
-				function team_meb(){
-					mui.ajax(JTURL + 'jkda/basteam/list',{
-						data:{
-							teamCode:teamCode,
-							personId:personId,
-							token:token
-						},
-						dataType:'json',//服务器返回json格式数据
-						type:'post',//HTTP请求类型
-						timeout:10000,//超时时间设置为10秒；
-						success:function(res){
-							console.log(JSON.stringify(res));
-							if(res.code == 0){
-								app.doc_list = res.page.list;
-								app.team_name = res.page.list[0].teamName;
-								app.doc = res.page.list[0].leadDoctor;
-								app.des = res.page.list[0].description;
-							} else if(res.code == 401) {
-								tokenFail();
-							}else{
-								mui.toast(res.msg)
+			})
+			//解约事件
+			document.getElementById("noPerformance").addEventListener("tap", function() {
+				var btnArray = ['否', '是'];
+				mui.confirm('解约确认后，此团队将不会继续为您服务，是否继续？', '', btnArray, function(e) {
+					if(e.index == 1) {
+						mui.ajax(JTURL + 'jkda/basservicetask/changeTask', {
+							data: {
+								teamCode: teamCode,
+								personId: personId,
+								type: 2,
+								token: token,
+								pushFalg: "1"
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(res) {
+								console.log(JSON.stringify(res));
+								if(res.code == 0) {
+									plus.nativeUI.toast("解约成功")
+									var ws = plus.webview.currentWebview();
+									ws.reload();
+								} else if(res.code == 401) {
+									tokenFail();
+								} else {
+									mui.toast(res.msg)
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								ajaxError(type);
 							}
-						},
-						error:function(xhr,type,errorThrown){
-							ajaxError(type);
-						}
-					});
-				}
-				
-				function detailFun(it) {
-//					console.log(JSON.stringify(it))
-					var detail = plus.webview.create("./sign_detail.html", "doc_detail", {}, {
-						doc_detail: it
-					});
-					plus.webview.show(detail, "slide-in-right", 300)
-				}
-				
-				//三个按钮时事件
-				//履约事件
-				document.getElementById("performanceRecord").addEventListener("tap",function() {
-					var performanceRecord = plus.webview.create("./performanceRecord.html", performanceRecord);
-					plus.webview.show(performanceRecord, "slide-in-right", 300);
+						});
+
+					} else {
+						console.log('no')
+						plus.nativeUI.toast("解约失败")
+					}
 				})
-				//续约事件
-				document.getElementById("goPerformance").addEventListener("tap",function(){
-					var btnArray = ['否', '是'];
-					mui.confirm('续约确认后，将会与此团队续约一年，是否继续？', '', btnArray, function(e) {
-						if (e.index == 1) {
-							mui.ajax(JTURL + 'jkda/basservicetask/changeTask',{
-								data:{
-									teamCode:teamCode,
-									personId:personId,
-									type:1,
-									token:token
-								},
-								dataType:'json',//服务器返回json格式数据
-								type:'post',//HTTP请求类型
-								timeout:10000,//超时时间设置为10秒；
-								success:function(res){
-									console.log(JSON.stringify(res));
-									if(res.code == 0){
-										plus.nativeUI.toast("续约成功")
-									} else if(res.code == 401) {
-										tokenFail();
-									}else{
-										mui.toast(res.msg)
-									}
-								},
-								error:function(xhr,type,errorThrown){
-									ajaxError(type);
-								}
-							});
-							
-						} else {
-							console.log('no')
-							plus.nativeUI.toast("续约失败")
-						}
-					})
-					
-				})
-				//解约事件
-				document.getElementById("noPerformance").addEventListener("tap",function(){
-					var btnArray = ['否', '是'];
-					mui.confirm('解约确认后，此团队将不会继续为您服务，是否继续？', '', btnArray, function(e) {
-						if (e.index == 1) {
-							mui.ajax(JTURL + 'jkda/basservicetask/changeTask',{
-								data:{
-									teamCode:teamCode,
-									personId:personId,
-									type:2,
-									token:token
-								},
-								dataType:'json',//服务器返回json格式数据
-								type:'post',//HTTP请求类型
-								timeout:10000,//超时时间设置为10秒；
-								success:function(res){
-									console.log(JSON.stringify(res));
-									if(res.code == 0){
-										plus.nativeUI.toast("解约成功")
-									} else if(res.code == 401) {
-										tokenFail();
-									}else{
-										mui.toast(res.msg)
-									}
-								},
-								error:function(xhr,type,errorThrown){
-									ajaxError(type);
-								}
-							});
-						
-						} else {
-							console.log('no')
-							plus.nativeUI.toast("解约失败")
-						}
-					})
-					
-				})
+
+			})
 		</script>
 	</body>
 
